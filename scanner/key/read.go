@@ -36,10 +36,10 @@ func Read(runeScanner io.RuneScanner) (initoken.Key, int, error) {
 			)
 		}
 		if io.EOF == err {
-			return initoken.Key{}, n, internalSyntaxErrorComplainer{
-				value: buffer.String(),
-				reason: "EOF in the middle of a key",
-			}
+			return initoken.Key{}, n, iniscanner_errror.SyntaxError(
+				"EOF in the middle of a key",
+				buffer.String(),
+			)
 		}
 
 		if !notFirst {

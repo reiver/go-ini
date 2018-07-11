@@ -44,10 +44,10 @@ func Read(runeScanner io.RuneScanner) (initoken.Comment, int, error) {
 			case ';','#':
 				// Nothing here.
 			default:
-				return initoken.Comment{}, n, internalSyntaxErrorComplainer{
-					value:  string(r),
-					reason: fmt.Sprintf("not a comment, comments begin with a \"#\" or a \";\" charcter."),
-				}
+				return initoken.Comment{}, n, iniscanner_error.SyntaxError(
+					fmt.Sprintf("not a comment, comments begin with a \"#\" or a \";\" charcter"),
+					string(r),
+				)
 			}
 		}
 

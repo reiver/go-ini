@@ -1,4 +1,4 @@
-package iniscanner_key
+package iniscanner_error
 
 import (
 	"fmt"
@@ -9,9 +9,16 @@ type SyntaxErrorComplainer interface {
 	SyntaxErrorComplainer()
 }
 
+func SyntaxError(reason string, value string) error {
+	return internalSyntaxErrorComplainer{
+		reason: reason,
+		value: value,
+	}
+}
+
 type internalSyntaxErrorComplainer struct{
-	value  string
 	reason string
+	value  string
 }
 
 func (complainer internalSyntaxErrorComplainer) Error() string {
