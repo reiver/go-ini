@@ -1,6 +1,7 @@
 package iniscanner_comment
 
 import (
+	"github.com/reiver/go-ini/scanner/error"
 	"github.com/reiver/go-ini/token"
 
 	"bytes"
@@ -10,7 +11,7 @@ import (
 
 func Read(runeScanner io.RuneScanner) (initoken.Comment, int, error) {
 	if nil == runeScanner  {
-		return initoken.Comment{}, 0, errNilRuneScanner
+		return initoken.Comment{}, 0, iniscanner_error.NilRuneScanner
 	}
 
 	var buffer bytes.Buffer

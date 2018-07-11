@@ -1,6 +1,7 @@
 package iniscanner_key
 
 import (
+	"github.com/reiver/go-ini/scanner/error"
 	"github.com/reiver/go-ini/token"
 
 	"github.com/reiver/go-whitespace"
@@ -13,7 +14,7 @@ import (
 
 func Read(runeScanner io.RuneScanner) (initoken.Key, int, error) {
 	if nil == runeScanner  {
-		return initoken.Key{}, 0, errNilRuneScanner
+		return initoken.Key{}, 0, iniscanner_error.NilRuneScanner
 	}
 
 	var buffer bytes.Buffer
