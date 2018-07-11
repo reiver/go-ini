@@ -24,11 +24,11 @@ func Read(runeScanner io.RuneScanner) (initoken.Comment, int, error) {
 		r, n2, err := runeScanner.ReadRune()
 		n += n2
 		if nil != err && io.EOF != err {
-			return initoken.SomeComment( buffer.String() ), n, internalInternalErrorComplainer{
-				value:    buffer.String(),
-				activity: "trying to read rune",
-				err:      err,
-			}
+			return initoken.SomeComment( buffer.String() ), n, iniscanner_error.InternalError(
+				buffer.String(),
+				"trying to read rune",
+				err,
+			)
 		}
 		if io.EOF == err {
 			if 0 < n {
@@ -60,11 +60,11 @@ func Read(runeScanner io.RuneScanner) (initoken.Comment, int, error) {
 		     '\u2029': // paragraph separator
 
 			if err := runeScanner.UnreadRune(); nil != err {
-				return initoken.SomeComment( buffer.String() ), n, internalInternalErrorComplainer{
-					value:     buffer.String(),
-					activity: "trying to unread rune",
-					err:       err,
-				}
+				return initoken.SomeComment( buffer.String() ), n, iniscanner_error.InternalError(
+					buffer.String(),
+					"trying to unread rune",
+					err,
+				)
 			}
 
 			n -= n2

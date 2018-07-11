@@ -1,4 +1,4 @@
-package iniscanner_key
+package iniscanner_error
 
 import (
 	"fmt"
@@ -8,6 +8,14 @@ type InternalErrorComplainer interface {
 	error
 	Err()
 	InternalErrorComplainer()
+}
+
+func InternalError(value string, activity string, err error) error {
+	return internalInternalErrorComplainer{
+		err: err,
+		activity: activity,
+		value: value,
+	}
 }
 
 type internalInternalErrorComplainer struct{
