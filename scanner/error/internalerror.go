@@ -25,7 +25,7 @@ type internalInternalErrorComplainer struct{
 }
 
 func (complainer internalInternalErrorComplainer) Error() string {
-	return fmt.Sprintf("Internal error parsing comment %q when: %s; because: %s", complainer.value, complainer.activity, complainer.err.Error())
+	return fmt.Sprintf("Internal error parsing %q when: %s; because: %s", complainer.value, complainer.activity, complainer.err.Error())
 }
 
 func (complainer internalInternalErrorComplainer) Err() error {
