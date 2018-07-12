@@ -4,6 +4,8 @@ import (
 	"github.com/reiver/go-ini/scanner/error"
 	"github.com/reiver/go-ini/token"
 
+	"github.com/reiver/go-whitespace"
+
 	"bytes"
 	"fmt"
 	"io"
@@ -40,8 +42,8 @@ func Read(runeScanner io.RuneScanner) (initoken.Comment, int, error) {
 
 		if !notFirst {
 			notFirst = true
-			switch r {
-			case ';','#':
+			switch {
+			case Peek(r):
 				// Nothing here.
 			default:
 				return initoken.Comment{}, n, iniscanner_error.SyntaxError(
@@ -51,13 +53,7 @@ func Read(runeScanner io.RuneScanner) (initoken.Comment, int, error) {
 			}
 		}
 
-		switch r {
-		case '\u000A', // line feed
-		     '\u000D', // carriage return
-		     '\u000B', // vertical tab
-		     '\u0085', // next line
-		     '\u2028', // line separator
-		     '\u2029': // paragraph separator
+		if whitespace.IsMandatoryBreak(r) {
 
 			if err := runeScanner.UnreadRune(); nil != err {
 				return initoken.SomeComment( buffer.String() ), n, iniscanner_error.InternalError(
@@ -71,7 +67,6 @@ func Read(runeScanner io.RuneScanner) (initoken.Comment, int, error) {
 
 			return initoken.SomeComment( buffer.String() ), n, nil
 		}
-
 
 		buffer.WriteRune(r)
 	}
