@@ -34,8 +34,8 @@ func Read(runeScanner io.RuneScanner) (initoken.Separator, int, error) {
 				)
 		}
 
-		switch r {
-		case '=',':':
+		switch {
+		case Peek(r):
 			// Nothing here.
 		default:
 			return initoken.Separator{}, n, iniscanner_error.SyntaxError(
