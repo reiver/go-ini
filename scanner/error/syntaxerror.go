@@ -22,7 +22,7 @@ type internalSyntaxErrorComplainer struct{
 }
 
 func (complainer internalSyntaxErrorComplainer) Error() string {
-	return fmt.Sprintf("Syntax Error parsing key %q because: %s", complainer.value, complainer.reason)
+	return fmt.Sprintf("Syntax Error parsing %q because: %s", complainer.value, complainer.reason)
 }
 
 func (complainer internalSyntaxErrorComplainer) SyntaxErrorComplainer() {
