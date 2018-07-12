@@ -36,7 +36,7 @@ func Read(runeScanner io.RuneScanner) (initoken.Key, int, error) {
 			)
 		}
 		if io.EOF == err {
-			return initoken.Key{}, n, iniscanner_errror.SyntaxError(
+			return initoken.Key{}, n, iniscanner_error.SyntaxError(
 				"EOF in the middle of a key",
 				buffer.String(),
 			)
@@ -46,10 +46,10 @@ func Read(runeScanner io.RuneScanner) (initoken.Key, int, error) {
 			notFirst = true
 			switch r {
 			case '=',':',';','#':
-				return initoken.Key{}, n, internalSyntaxErrorComplainer{
-					value:  string(r),
-					reason: fmt.Sprintf("not a key, keys do not begin with a %q or a charcter.", r),
-				}
+				return initoken.Key{}, n, iniscanner_error.SyntaxError(
+					fmt.Sprintf("not a key, keys do not begin with a %q or a charcter", r),
+					string(r),
+				)
 			default:
 				// Nothing here.
 			}
@@ -104,10 +104,10 @@ func Read(runeScanner io.RuneScanner) (initoken.Key, int, error) {
 			case ':':
 				buffer.WriteRune(':')
 			default:
-				return initoken.Key{}, n, internalSyntaxErrorComplainer{
-					value: buffer.String(),
-					reason: "unknown escape sequence",
-				}
+				return initoken.Key{}, n, iniscanner_error.SyntaxError(
+					"unknown escape sequence",
+					buffer.String(),
+				)
 			}
 		} else {
 			buffer.WriteRune(r)
