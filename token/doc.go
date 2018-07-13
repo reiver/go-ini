@@ -4,6 +4,58 @@ Package intoken provides types useful for representing tokens that result from p
 Note that parsing, scanning, and tokenizing does NOT happen in this package.
 
 
+INI Tokens
+
+Conceptually, there are 6 different kinds of INI tokens:
+
+• comments,
+
+• keys,
+
+• sections,
+
+• separators,
+
+• values, and
+
+• whitespace.
+
+
+An example INI file with all of these tokens would be:
+
+	# This is a comment.
+	
+	the_key=the value
+
+The tokens in this example INI file would be:
+
+• comment: "# This is a comment."
+
+• whitespace: "\n\n"
+
+• key: "the_key"
+
+• separator: "="
+
+• value: "the value"
+
+• whitespace: "\n"
+
+From the perspective of this package, these would be encoded as:
+
+• initoken.Somecomment("# This is a comment.")
+
+• initoken.SomeWhitespace("\n\n")
+
+• initoken.SOmeKey("the_key")
+
+• initoken.SomeSeparator("=")
+
+• initoken.SomeValue("the value")
+
+• initoken.SomeWhitespace("\n")
+
+
 Creation
 
 The way these are created are with the "some funcs" or the "none func",
@@ -28,6 +80,24 @@ And, for example the "none func" looks like this:
 
 	var token initoken.Type = initoken.None()
 
+Probably Errors
+
+If you received a token from these:
+
+	var token initoken.Type = initoken.SomeUndefined("")
+.
+	var token initoken.Type = initoken.None()
+
+Then likely some kind of error has happened, and you should handle it in whatever is the appropriate way for your application.
+
+
+Discerning
+
+Being to discern between the different kinds of tokens is important.
+
+That can be done using the Golang type-switch.
+
+Here are some example of that in use:
 
 Example
 
