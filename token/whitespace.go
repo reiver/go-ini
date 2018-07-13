@@ -29,6 +29,10 @@ func (receiver Whitespace) String() string {
 	return fmt.Sprintf("initoken.SomeWhitespace(%q)", receiver.value)
 }
 
+func (receiver Whitespace) Unwrap() string {
+	return receiver.value
+}
+
 func (receiver Whitespace) WriteTo(writer io.Writer) (int64, error) {
 	n, err := io.WriteString(writer, receiver.value)
 	n64 := int64(n)

@@ -29,6 +29,10 @@ func (receiver Comment) String() string {
 	return fmt.Sprintf("initoken.SomeComment(%q)", receiver.value)
 }
 
+func (receiver Comment) Unwrap() string {
+	return receiver.value
+}
+
 func (receiver Comment) WriteTo(writer io.Writer) (int64, error) {
 	n, err := io.WriteString(writer, receiver.value)
 	n64 := int64(n)

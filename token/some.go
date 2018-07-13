@@ -9,5 +9,6 @@ type SomeType interface {
 
 	INITokenSome() SomeType
 
+	Unwrap() string
 	WriteTo(io.Writer) (int64, error)
 }

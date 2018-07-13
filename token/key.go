@@ -29,6 +29,10 @@ func (receiver Key) String() string {
 	return fmt.Sprintf("initoken.SomeKey(%q)", receiver.value)
 }
 
+func (receiver Key) Unwrap() string {
+	return receiver.value
+}
+
 func (receiver Key) WriteTo(writer io.Writer) (int64, error) {
 	n, err := io.WriteString(writer, receiver.value)
 	n64 := int64(n)
