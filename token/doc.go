@@ -11,17 +11,17 @@ The way these are created are with the "some funcs" or the "none func",
 For example, the "some funcs" look like this:
 
 	var token initoken.Type = initoken.SomeComment("; This is a comment.")
-
+.
 	var token initoken.Type = initoken.SomeKey("the_key")
-
+.
 	var token initoken.Type = initoken.SomeSection("[the section]")
-
+.
 	var token initoken.Type = initoken.SomeSeparator("=")
-
+.
 	var token initoken.Type = initoken.SomeUndefined("")
-
+.
 	var token initoken.Type = initoken.SomeValue("the value")
-
+.
 	var token initoken.Type = initoken.SomeWhitespace("\n\n    \n")
 
 And, for example the "none func" looks like this:
