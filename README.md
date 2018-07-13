@@ -103,4 +103,20 @@ here {
 	beta:  two_۲
 	gamma: three_۳
 }
+
+ab {
+	cd = ef
+
+	gh: ij
+
+	kl {
+		mn: op
+		qr: st
+	}
+
+	uv: wx
+
+	y = z
+}
+
 ```
