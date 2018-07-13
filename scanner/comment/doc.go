@@ -4,6 +4,8 @@ Package iniscanner_comment provides tools for scanning an INI comment.
 
 Reading
 
+Getting an INI comment token is done with code like the following:
+
 	var runeScanner io.RuneScanner
 	
 	// ...
