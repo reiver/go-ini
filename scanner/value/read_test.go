@@ -680,14 +680,14 @@ func TestRead(t *testing.T) {
 			continue
 		}
 
-		if expected, actual := test.ExpectedValue, token.String(); expected != actual {
+		if expected, actual := test.ExpectedValue, token.Unwrap(); expected != actual {
 			t.Errorf("For test #%d, for %q expected %q, but actually got %q.", testNumber, test.Value, expected, actual)
 			continue
 		}
 		if expected, actual := test.ExpectedSize, actualSize; expected != actual {
 			t.Errorf("For test #%d, for %q expected %d, but actually got %d.", testNumber, test.Value, expected, actual)
 			t.Errorf("EXPECTED value: %q", test.ExpectedValue)
-			t.Errorf("ACTUAL   value  %q", token.String())
+			t.Errorf("ACTUAL   value  %q", token.Unwrap())
 			t.Errorf("")
 			continue
 		}
