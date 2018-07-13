@@ -1,6 +1,7 @@
 package initoken
 
 import (
+	"fmt"
 	"io"
 )
 
@@ -21,7 +22,7 @@ func (receiver Undefined) INITokenSome() SomeType {
 }
 
 func (receiver Undefined) String() string {
-	return string(receiver.value)
+	return fmt.Sprintf("initoken.SomeUndefined(%q)", receiver.value)
 }
 
 func (receiver Undefined) WriteTo(writer io.Writer) (int64, error) {

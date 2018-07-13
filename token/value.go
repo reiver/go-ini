@@ -1,6 +1,7 @@
 package initoken
 
 import (
+	"fmt"
 	"io"
 )
 
@@ -25,7 +26,7 @@ func (Value) INITokenValue() {
 }
 
 func (receiver Value) String() string {
-	return string(receiver.value)
+	return fmt.Sprintf("initoken.SomeValue(%q)", receiver.value)
 }
 
 func (receiver Value) WriteTo(writer io.Writer) (int64, error) {

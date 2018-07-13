@@ -19,3 +19,7 @@ func (receiver internalNone) INIToken() Type {
 func (internalNone) INITokenNone() {
 	// Nothing here.
 }
+
+func (internalNone) String() string {
+	return "initoken.None()"
+}

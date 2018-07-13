@@ -1,6 +1,7 @@
 package initoken
 
 import (
+	"fmt"
 	"io"
 )
 
@@ -25,7 +26,7 @@ func (Separator) INITokenSeparator() {
 }
 
 func (receiver Separator) String() string {
-	return string(receiver.value)
+	return fmt.Sprintf("initoken.SomeSeparator(%q)", receiver.value)
 }
 
 func (receiver Separator) WriteTo(writer io.Writer) (int64, error) {
