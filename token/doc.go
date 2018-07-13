@@ -91,6 +91,42 @@ If you received a token from these:
 Then likely some kind of error has happened, and you should handle it in whatever is the appropriate way for your application.
 
 
+Unwrapping
+
+If you want to get the string value of the token, use the .Wrap() method.
+
+For example:
+
+	var token initoken = initoken.SomeKey("the_key")
+	
+	// ...
+	
+	switch token {
+	case initoken.Key:
+
+		fmt.Printf("The key is: %q", token.Unwrap())
+		
+	// ...
+	
+	}
+
+You can also use the .WriteTo(io.Writer) method to unwrap. For example:
+
+	var token initoken = initoken.SomeKey("the_key")
+	
+	// ...
+	
+	switch token {
+	case initoken.Key:
+
+		var buffer bytes.Buffer
+
+		token.WriteTo(&buffer)
+		
+	// ...
+	
+	}
+
 Discerning
 
 Being to discern between the different kinds of tokens is important.
