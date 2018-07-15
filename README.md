@@ -58,7 +58,7 @@ organization=Acme Inc.
 # This is also a comment in the de facto INI format.
 
 [de facto]
-legth: 5cm
+length: 5cm
 count: ۵
 color: red
 ```
@@ -89,7 +89,7 @@ organization=Acme Inc.
 # This is also a comment in the de facto INI format.
 
 [de facto]
-legth: 5cm
+length: 5cm
 count: ۵
 color: red
 
