@@ -1,6 +1,12 @@
 /*
 Package ini provides tools for working with the INI data format.
 
+The INI format is a popular format used for configuration files, and, to a lesser extend, database files.
+
+Some prefer INI formats files, for this kind of usage, because they feel INI files are more user friendly (than various alternative formats).
+
+Meaning that, some feel that humans find it easier read, create, and edit (by hand) INI files (rather than the various alternative formats).
+
 
 Classic INI Format
 
@@ -102,5 +108,17 @@ Here is an example:
 		uv: wx
 		y = z
 	}
+
+
+Writing INI
+
+Note that although this package can write INI data, usually the intent is that INI is written by hand by a human.
+
+Nevertheless, INI data can be written with code like the following:
+
+	p, err := ini.Marshal(v)
+
+In that code example, `p` would be a `[]byte` that contains UTF-8 encoded text.
+
 */
 package ini
