@@ -129,7 +129,7 @@ You can also use the .WriteTo(io.Writer) method to unwrap. For example:
 
 Discerning
 
-Being to discern between the different kinds of tokens is important.
+Being able to discern between the different kinds of tokens is important.
 
 That can be done using the Golang type-switch.
 
