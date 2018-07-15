@@ -106,16 +106,12 @@ here {
 
 ab {
 	cd = ef
-
 	gh: ij
-
 	kl {
 		mn: op
 		qr: st
 	}
-
 	uv: wx
-
 	y = z
 }
 
