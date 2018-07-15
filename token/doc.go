@@ -93,7 +93,7 @@ Then likely some kind of error has happened, and you should handle it in whateve
 
 Unwrapping
 
-If you want to get the string value of the token, use the .Wrap() method.
+If you want to get the string value of the token, use the .Unwrap() method.
 
 For example:
 
