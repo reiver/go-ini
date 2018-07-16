@@ -53,7 +53,7 @@ import (
 //	type Centimeter64 struct {
 //		Value int64
 //	}
-	
+//	
 //	func (receiver Centimeter64) EncodeINI(writer, io.Writer) error {
 //		fmt.Fprintf(writer, "%d", receiver.Value)
 //		io.WriteString(writer, "cm")
@@ -121,7 +121,7 @@ import (
 //		WidthUnit  string
 //		Color      string
 //	}
-	
+//	
 //	func (receiver Border) EncodeINI(writer, io.Writer) error {
 //		io.WriteString(writer, "{")
 //
