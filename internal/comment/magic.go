@@ -4,8 +4,8 @@ package inicomment
 //
 // If the first character is a ';' or a '#', then it is a comment.
 //
-// IsCommentMagic returns true if 'magic' is a INI file comment, and returns false otherwise.
-func IsCommentMagic(magic rune) bool {
+// IsMagic returns true if 'magic' is a INI file comment, and returns false otherwise.
+func IsMagic(magic rune) bool {
 	switch magic {
 	case '#',';':
 		return true
