@@ -4,8 +4,8 @@ package iniscanner_section
 //
 // If the first character is a '[', then it is a section.
 //
-// IsSection returns true if 'magic' is a INI file section, and returns false otherwise.
-func IsSection(r rune) bool {
+// IsSectionMagic returns true if 'magic' is a INI file section, and returns false otherwise.
+func IsSectionMagic(r rune) bool {
 	switch r {
 	case '[':
 		return true
