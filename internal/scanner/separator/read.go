@@ -1,7 +1,7 @@
 package iniscanner_separator
 
 import (
-	"github.com/reiver/go-ini/scanner/error"
+	"github.com/reiver/go-ini/internal/scanner/error"
 	"github.com/reiver/go-ini/token"
 
 	"bytes"

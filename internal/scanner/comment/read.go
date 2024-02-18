@@ -1,7 +1,7 @@
 package iniscanner_comment
 
 import (
-	"github.com/reiver/go-ini/scanner/error"
+	"github.com/reiver/go-ini/internal/scanner/error"
 	"github.com/reiver/go-ini/token"
 
 	"github.com/reiver/go-whitespace"
