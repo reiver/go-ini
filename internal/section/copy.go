@@ -1,61 +1,99 @@
 package inisection
 
 import (
-	"github.com/reiver/go-ini/internal/scanner/error"
-	"github.com/reiver/go-ini/token"
-
-	"bytes"
 	"io"
+
+	"github.com/reiver/go-runewriter"
+
+	"sourcecode.social/reiver/go-eol/cr"
+	"sourcecode.social/reiver/go-eol/lf"
+	"sourcecode.social/reiver/go-eol/ls"
+	"sourcecode.social/reiver/go-eol/nel"
+	"sourcecode.social/reiver/go-erorr"
 )
 
-
-func Read(runeScanner io.RuneScanner) (initoken.Section, int, error) {
+func Copy(runeWriter runewriter.RuneWriter, runeScanner io.RuneScanner) error {
 	if nil == runeScanner  {
-		return initoken.Section{}, 0, iniscanner_error.NilRuneScanner
+		return errNilRuneScanner
+	}
+	if nil == runeWriter {
+		return errNilRuneWriter
 	}
 
-	var buffer bytes.Buffer
+	// handle the first character differently, since it must be a '[' character.
+	{
+		r, err := readrune(runeScanner)
+		if io.EOF == err {
+			return erorr.Errorf("ini: not a section — a section must at least start with a '[' (U+005B) character")
+		}
+		if nil != err {
+			return err
+		}
+		if !IsSectionMagic(r) {
+			return erorr.Errorf("ini: not a section — a section does not begin with a %q (%U)", r, r)
+		}
 
-	var n int
-
-	var notFirst bool
+		{
+			_, err := runeWriter.WriteRune(r)
+			if nil != err {
+				return erorr.Errorf("ini: problem writing rune: %w", err)
+			}
+		}
+	}
 
 	for {
-		r, n2, err := runeScanner.ReadRune()
-		n += n2
-		if nil != err && io.EOF != err {
-			return initoken.SomeSection( buffer.String() ), n, iniscanner_error.InternalError(
-				buffer.String(),
-				"trying to read rune",
-				err,
-			)
-		}
+		r, err := readrune(runeScanner)
 		if io.EOF == err {
-			return initoken.Section{}, n, iniscanner_error.SyntaxError(
-				"not a section, sections end with a \"]\" charcter",
-				string(r),
-			)
+			return nil
+		}
+		if nil != err {
+			return err
 		}
 
-		if !notFirst {
-			notFirst = true
-			switch r {
-			case '[':
-				// Nothing here.
-			default:
-				return initoken.Section{}, n, iniscanner_error.SyntaxError(
-					"not a section, sections begin with a \"[\" charcter",
-					string(r),
-				)
+		{
+			_, err := runeWriter.WriteRune(r)
+			if nil != err {
+				return erorr.Errorf("ini: problem writing rune: %w", err)
 			}
 		}
 
-		if ']' == r {
-			buffer.WriteRune(r)
-
-			return initoken.SomeSection( buffer.String() ), n, nil
+		switch r {
+		case lf.Rune:
+			r2, err := readrune(runeScanner)
+			switch {
+			case io.EOF == err:
+				// Nothing here.
+			case cr.Rune == r2:
+				_, err := runeWriter.WriteRune(r2)
+				if nil != err {
+					return erorr.Errorf("ini: problem writing rune: %w", err)
+				}
+			default:
+				err := runeScanner.UnreadRune()
+				if nil != err {
+					return erorr.Errorf("ini: problem unreading rune: %w", err)
+				}
+			}
+			return nil
+		case cr.Rune:
+			r2, err := readrune(runeScanner)
+			switch {
+			case io.EOF == err:
+				// Nothing here.
+			case lf.Rune == r2:
+				_, err := runeWriter.WriteRune(r2)
+				if nil != err {
+					return erorr.Errorf("ini: problem writing rune: %w", err)
+				}
+			default:
+				err := runeScanner.UnreadRune()
+				if nil != err {
+					return erorr.Errorf("ini: problem unreading rune: %w", err)
+				}
+			}
+			return nil
+		case nel.Rune, ls.Rune:
+			return nil
 		}
-
-		buffer.WriteRune(r)
 	}
 }

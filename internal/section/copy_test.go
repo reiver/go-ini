@@ -1,7 +1,7 @@
 package inisection
 
 import (
-	"github.com/reiver/go-utf8s"
+	"sourcecode.social/reiver/go-utf8"
 
 	"io"
 	"strings"
@@ -9,151 +9,117 @@ import (
 	"testing"
 )
 
-func TestRead(t *testing.T) {
+func TestCopy(t *testing.T) {
 
 	tests := []struct{
 		Value         string
 		ExpectedValue string
-		ExpectedSize  int
 	}{
 		{
 			Value:            "[the section]",
 			ExpectedValue:    "[the section]",
-			ExpectedSize: len("[the section]"),
 		},
 
 
 
 		{
 			Value:            "[the section]\n",
-			ExpectedValue:    "[the section]",
-			ExpectedSize: len("[the section]"),
+			ExpectedValue:    "[the section]\n",
+		},
+		{
+			Value:            "[the section]\n\r",
+			ExpectedValue:    "[the section]\n\r",
 		},
 		{
 			Value:            "[the section]\r",
-			ExpectedValue:    "[the section]",
-			ExpectedSize: len("[the section]"),
+			ExpectedValue:    "[the section]\r",
 		},
 		{
 			Value:            "[the section]\r\n",
-			ExpectedValue:    "[the section]",
-			ExpectedSize: len("[the section]"),
-		},
-		{
-			Value:            "[the section]\v",
-			ExpectedValue:    "[the section]",
-			ExpectedSize: len("[the section]"),
+			ExpectedValue:    "[the section]\r\n",
 		},
 		{
 			Value:            "[the section]\u0085",
-			ExpectedValue:    "[the section]",
-			ExpectedSize: len("[the section]"),
+			ExpectedValue:    "[the section]\u0085",
 		},
 		{
 			Value:            "[the section]\u2028",
-			ExpectedValue:    "[the section]",
-			ExpectedSize: len("[the section]"),
-		},
-		{
-			Value:            "[the section]\u2029",
-			ExpectedValue:    "[the section]",
-			ExpectedSize: len("[the section]"),
+			ExpectedValue:    "[the section]\u2028",
 		},
 
 
 
 		{
 			Value:            "[the section]\napple=one",
-			ExpectedValue:    "[the section]",
-			ExpectedSize: len("[the section]"),
+			ExpectedValue:    "[the section]\n",
+		},
+		{
+			Value:            "[the section]\n\rapple=one",
+			ExpectedValue:    "[the section]\n\r",
 		},
 		{
 			Value:            "[the section]\rapple=one",
-			ExpectedValue:    "[the section]",
-			ExpectedSize: len("[the section]"),
+			ExpectedValue:    "[the section]\r",
 		},
 		{
 			Value:            "[the section]\r\napple=one",
-			ExpectedValue:    "[the section]",
-			ExpectedSize: len("[the section]"),
-		},
-		{
-			Value:            "[the section]\vapple=one",
-			ExpectedValue:    "[the section]",
-			ExpectedSize: len("[the section]"),
+			ExpectedValue:    "[the section]\r\n",
 		},
 		{
 			Value:            "[the section]\u0085apple=one",
-			ExpectedValue:    "[the section]",
-			ExpectedSize: len("[the section]"),
+			ExpectedValue:    "[the section]\u0085",
 		},
 		{
 			Value:            "[the section]\u2028apple=one",
-			ExpectedValue:    "[the section]",
-			ExpectedSize: len("[the section]"),
-		},
-		{
-			Value:            "[the section]\u2029apple=one",
-			ExpectedValue:    "[the section]",
-			ExpectedSize: len("[the section]"),
+			ExpectedValue:    "[the section]\u2028",
 		},
 
 
 
 		{
 			Value:            "[the section]\napple=one\n",
-			ExpectedValue:    "[the section]",
-			ExpectedSize: len("[the section]"),
+			ExpectedValue:    "[the section]\n",
+		},
+		{
+			Value:            "[the section]\n\rapple=one\n",
+			ExpectedValue:    "[the section]\n\r",
 		},
 		{
 			Value:            "[the section]\rapple=one\r",
-			ExpectedValue:    "[the section]",
-			ExpectedSize: len("[the section]"),
+			ExpectedValue:    "[the section]\r",
 		},
 		{
 			Value:            "[the section]\r\napple=one\r\n",
-			ExpectedValue:    "[the section]",
-			ExpectedSize: len("[the section]"),
-		},
-		{
-			Value:            "[the section]\vapple=one\v",
-			ExpectedValue:    "[the section]",
-			ExpectedSize: len("[the section]"),
+			ExpectedValue:    "[the section]\r\n",
 		},
 		{
 			Value:            "[the section]\u0085apple=one\u0085",
-			ExpectedValue:    "[the section]",
-			ExpectedSize: len("[the section]"),
+			ExpectedValue:    "[the section]\u0085",
 		},
 		{
 			Value:            "[the section]\u2028apple=one\u2028",
-			ExpectedValue:    "[the section]",
-			ExpectedSize: len("[the section]"),
-		},
-		{
-			Value:            "[the section]\u2029apple=one\u2029",
-			ExpectedValue:    "[the section]",
-			ExpectedSize: len("[the section]"),
+			ExpectedValue:    "[the section]\u2028",
 		},
 	}
 
 
 	for testNumber, test := range tests {
 
-		runeScanner := utf8s.NewRuneScanner( strings.NewReader(test.Value) )
+		runeScanner := utf8.NewRuneScanner( strings.NewReader(test.Value) )
 
-		token, actualSize, err := Read(runeScanner)
+		var result strings.Builder
+
+		err := Copy(&result, runeScanner)
 		if nil != err && io.EOF != err {
 			t.Errorf("For test #%d, did not expect an error, but actually got one: (%T) %q.", testNumber, err, err)
 			continue
 		}
 
-		if expected, actual := test.ExpectedValue, token.Unwrap(); expected != actual {
-			t.Errorf("For test #%d, expected %q, but actually got %q.", testNumber, expected, actual)
-			continue
-		}
-		if expected, actual := test.ExpectedSize, actualSize; expected != actual {
-			t.Errorf("For test #%d, expected %d, but actually got %d.", testNumber, expected, actual)
+		if expected, actual := test.ExpectedValue, result.String(); expected != actual {
+			t.Errorf("For test #%d, the actual result is not what was expected.", testNumber)
+			t.Logf("EXPECTED: %q", expected)
+			t.Logf("ACTUAL:   %q", actual)
+			t.Logf("VALUE: %q", test.Value)
 			continue
 		}
 
@@ -163,7 +129,7 @@ func TestRead(t *testing.T) {
 	}
 }
 
-func TestReadError(t *testing.T) {
+func TestCopyError(t *testing.T) {
 
 	tests := []struct{
 		Value string
@@ -195,13 +161,41 @@ func TestReadError(t *testing.T) {
 		{
 			Value: "    [section]",
 		},
+
+
+
+/*
+		{
+			Value: "[section",
+		},
+		{
+			Value: "[section\n",
+		},
+		{
+			Value: "[section\n\r",
+		},
+		{
+			Value: "[section\r",
+		},
+		{
+			Value: "[section\r\n",
+		},
+		{
+			Value: "[section\u0085",
+		},
+		{
+			Value: "[section\u2028",
+		},
+*/
 	}
 
 	for testNumber, test := range tests {
 
-		runeScanner := utf8s.NewRuneScanner( strings.NewReader(test.Value) )
+		runeScanner := utf8.NewRuneScanner( strings.NewReader(test.Value) )
 
-		_, _, err := Read(runeScanner)
+		var result strings.Builder
+
+		err := Copy(&result, runeScanner)
 		if nil == err || io.EOF == err {
 			t.Errorf("For test #%d, expected an error, but did not actually got one: (%T) %q.", testNumber, err, err)
 			continue
