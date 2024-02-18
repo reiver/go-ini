@@ -6,7 +6,7 @@ package iniscanner_comment
 //
 // IsComment returns true if 'magic' is a INI file comment, and returns false otherwise.
 func IsComment(magic rune) bool {
-	switch r {
+	switch magic {
 	case ';','#':
 		return true
 	default:
