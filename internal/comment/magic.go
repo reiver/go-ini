@@ -1,4 +1,4 @@
-package iniscanner_comment
+package inicomment
 
 // You can tell whether a line in an INI file is a comment just based on the first character.
 //

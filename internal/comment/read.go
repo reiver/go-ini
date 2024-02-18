@@ -1,4 +1,4 @@
-package iniscanner_comment
+package inicomment
 
 import (
 	"github.com/reiver/go-ini/internal/scanner/error"

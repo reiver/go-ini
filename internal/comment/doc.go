@@ -34,4 +34,4 @@ For example:
 	}
 
 */
-package iniscanner_comment
+package inicomment
