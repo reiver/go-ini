@@ -29,7 +29,7 @@ func Copy(runeWriter runewriter.RuneWriter, runeScanner io.RuneScanner) error {
 		if nil != err {
 			return err
 		}
-		if !IsCommentMagic(r) {
+		if !IsMagic(r) {
 			return erorr.Errorf("ini: not a comment — a comment does not begin with a %q (%U)", r, r)
 		}
 
