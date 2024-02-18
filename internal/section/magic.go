@@ -1,4 +1,4 @@
-package iniscanner_section
+package inisection
 
 // You can tell whether a line in an INI file is a section just based on the first character.
 //

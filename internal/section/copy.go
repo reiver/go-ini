@@ -1,4 +1,4 @@
-package iniscanner_section
+package inisection
 
 import (
 	"github.com/reiver/go-ini/internal/scanner/error"
