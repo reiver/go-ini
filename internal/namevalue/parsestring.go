@@ -38,6 +38,8 @@ func ParseString(str string) (name string, value string, err error) {
 			switch r {
 			case '\t', ' ', ':', '=':
 				break nameLoop
+			case lf.Rune, cr.Rune, nel.Rune, ls.Rune:
+				break nameLoop
 			default:
 				s = s[size:]
 				nameBytes = append(nameBytes, string(r)...)
