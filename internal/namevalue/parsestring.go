@@ -1,6 +1,7 @@
 package ininamevalue
 
 import (
+	"unicode"
 	"unicode/utf8"
 
 	"sourcecode.social/reiver/go-eol/cr"
@@ -42,7 +43,7 @@ func ParseString(str string) (name string, value string, err error) {
 				break nameLoop
 			default:
 				s = s[size:]
-				nameBytes = append(nameBytes, string(r)...)
+				nameBytes = append(nameBytes, string(unicode.ToLower(r))...)
 			}
 		}
 

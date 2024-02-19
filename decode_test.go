@@ -1269,11 +1269,11 @@ func TestDecode(t *testing.T) {
 				"two=22"          +"\n"+
 				"[three]"         +"\n"+
 				"apple=red"       +"\n"+
-				"banana = yellow" +"\n"+
+				"BANANA = yellow" +"\n"+
 				""                +"\n"+
 				"[four]"          +"\n"+
 				""                +"\n"+
-				"cherry: red"     +"\n"+
+				"Cherry: red"     +"\n"+
 				"date : red, yellow",
 			Expected: map[string]string{
 				`one`:`1`,
@@ -1290,11 +1290,11 @@ func TestDecode(t *testing.T) {
 				"two=22"          +"\n\r"+
 				"[three]"         +"\n\r"+
 				"apple=red"       +"\n\r"+
-				"banana = yellow" +"\n\r"+
+				"BANANA = yellow" +"\n\r"+
 				""                +"\n\r"+
 				"[four]"          +"\n\r"+
 				""                +"\n\r"+
-				"cherry: red"     +"\n\r"+
+				"Cherry: red"     +"\n\r"+
 				"date : red, yellow",
 			Expected: map[string]string{
 				`one`:`1`,
@@ -1311,11 +1311,11 @@ func TestDecode(t *testing.T) {
 				"two=22"          +"\r"+
 				"[three]"         +"\r"+
 				"apple=red"       +"\r"+
-				"banana = yellow" +"\r"+
+				"BANANA = yellow" +"\r"+
 				""                +"\r"+
 				"[four]"          +"\r"+
 				""                +"\r"+
-				"cherry: red"     +"\r"+
+				"Cherry: red"     +"\r"+
 				"date : red, yellow",
 			Expected: map[string]string{
 				`one`:`1`,
@@ -1332,11 +1332,11 @@ func TestDecode(t *testing.T) {
 				"two=22"          +"\r\n"+
 				"[three]"         +"\r\n"+
 				"apple=red"       +"\r\n"+
-				"banana = yellow" +"\r\n"+
+				"BANANA = yellow" +"\r\n"+
 				""                +"\r\n"+
 				"[four]"          +"\r\n"+
 				""                +"\r\n"+
-				"cherry: red"     +"\r\n"+
+				"Cherry: red"     +"\r\n"+
 				"date : red, yellow",
 			Expected: map[string]string{
 				`one`:`1`,
@@ -1353,11 +1353,11 @@ func TestDecode(t *testing.T) {
 				"two=22"          +"\u0085"+
 				"[three]"         +"\u0085"+
 				"apple=red"       +"\u0085"+
-				"banana = yellow" +"\u0085"+
+				"BANANA = yellow" +"\u0085"+
 				""                +"\u0085"+
 				"[four]"          +"\u0085"+
 				""                +"\u0085"+
-				"cherry: red"     +"\u0085"+
+				"Cherry: red"     +"\u0085"+
 				"date : red, yellow",
 			Expected: map[string]string{
 				`one`:`1`,
@@ -1374,11 +1374,11 @@ func TestDecode(t *testing.T) {
 				"two=22"          +"\u2028"+
 				"[three]"         +"\u2028"+
 				"apple=red"       +"\u2028"+
-				"banana = yellow" +"\u2028"+
+				"BANANA = yellow" +"\u2028"+
 				""                +"\u2028"+
 				"[four]"          +"\u2028"+
 				""                +"\u2028"+
-				"cherry: red"     +"\u2028"+
+				"Cherry: red"     +"\u2028"+
 				"date : red, yellow",
 			Expected: map[string]string{
 				`one`:`1`,
@@ -1404,7 +1404,7 @@ func TestDecode(t *testing.T) {
 				""                +"\n"+
 				"[four]"          +"\n"+
 				""                +"\n"+
-				"cherry: red"     +"\n"+
+				"Cherry: red"     +"\n"+
 				"date : red, yellow",
 			Expected: map[string]string{
 				`one`:`1`,
@@ -1427,7 +1427,7 @@ func TestDecode(t *testing.T) {
 				""                +"\n\r"+
 				"[four]"          +"\n\r"+
 				""                +"\n\r"+
-				"cherry: red"     +"\n\r"+
+				"Cherry: red"     +"\n\r"+
 				"date : red, yellow",
 			Expected: map[string]string{
 				`one`:`1`,
@@ -1450,7 +1450,7 @@ func TestDecode(t *testing.T) {
 				""                +"\r"+
 				"[four]"          +"\r"+
 				""                +"\r"+
-				"cherry: red"     +"\r"+
+				"Cherry: red"     +"\r"+
 				"date : red, yellow",
 			Expected: map[string]string{
 				`one`:`1`,
@@ -1473,7 +1473,7 @@ func TestDecode(t *testing.T) {
 				""                +"\r\n"+
 				"[four]"          +"\r\n"+
 				""                +"\r\n"+
-				"cherry: red"     +"\r\n"+
+				"Cherry: red"     +"\r\n"+
 				"date : red, yellow",
 			Expected: map[string]string{
 				`one`:`1`,
@@ -1496,7 +1496,7 @@ func TestDecode(t *testing.T) {
 				""                +"\u0085"+
 				"[four]"          +"\u0085"+
 				""                +"\u0085"+
-				"cherry: red"     +"\u0085"+
+				"Cherry: red"     +"\u0085"+
 				"date : red, yellow",
 			Expected: map[string]string{
 				`one`:`1`,
@@ -1519,7 +1519,7 @@ func TestDecode(t *testing.T) {
 				""                +"\u2028"+
 				"[four]"          +"\u2028"+
 				""                +"\u2028"+
-				"cherry: red"     +"\u2028"+
+				"Cherry: red"     +"\u2028"+
 				"date : red, yellow",
 			Expected: map[string]string{
 				`one`:`1`,
