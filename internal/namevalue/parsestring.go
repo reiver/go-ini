@@ -1,154 +1,98 @@
 package ininamevalue
 
 import (
-	"unicode"
 	"unicode/utf8"
 
-	"sourcecode.social/reiver/go-eol/cr"
-	"sourcecode.social/reiver/go-eol/lf"
-	"sourcecode.social/reiver/go-eol/ls"
-	"sourcecode.social/reiver/go-eol/nel"
+	"github.com/reiver/go-ini/internal/eol"
+	"github.com/reiver/go-ini/internal/name"
+	"github.com/reiver/go-ini/internal/spacing"
+	"github.com/reiver/go-ini/internal/value"
 )
 
-func ParseString(str string) (name string, value string, err error) {
-	if len(str) <= 0 {
-		return "", "", errEmptyString
+func ParseBytes(bytes []byte) (name string, value string, size int, err error) {
+	if len(bytes) <= 0 {
+		return "", "", 0, nil
 	}
 
-	var s string = str
+	var p []byte = bytes
 
 	{
-		var nameBuffer [bufferSize]byte
-		var nameBytes []byte = nameBuffer[0:0]
-		nameLoop: for {
-			length := len(s)
-			if length <= 0 {
-				return string(nameBytes), "", nil
-			}
+		var nameSize int
 
-			r, size := utf8.DecodeRuneInString(s)
-			if utf8.RuneError == r {
-				switch size {
-				case 1:
-					return "", "", errRuneError
-				default:
-					return "", "", errInternalError
-				}
-			}
-
-			switch r {
-			case '\t', ' ', ':', '=':
-				break nameLoop
-			case lf.Rune, cr.Rune, nel.Rune, ls.Rune:
-				break nameLoop
-			default:
-				s = s[size:]
-				nameBytes = append(nameBytes, string(unicode.ToLower(r))...)
-			}
+		name, nameSize, err = ininame.ParseBytes(p)
+		if nil != err {
+			return "", "", 0, err
 		}
 
-		name = string(nameBytes)
+		size += nameSize
+		p = p[nameSize:]
 	}
 
 	{
-		gapLoop1: for {
-			length := len(s)
-			if length <= 0 {
-				return name, "", nil
-			}
+		var spacingSize int
 
-			r, size := utf8.DecodeRuneInString(s)
-			if utf8.RuneError == r {
-				switch size {
-				case 1:
-					return name, "", errRuneError
-				default:
-					return name, "", errInternalError
-				}
-			}
-
-			switch r {
-			case '\t', ' ':
-				s = s[size:]
-			default:
-				break gapLoop1
-			}
+		spacingSize, err := inispacing.ParseBytes(p)
+		if nil != err {
+			return "", "", 0, err
 		}
+
+		size += spacingSize
+		p = p[spacingSize:]
 	}
 
 	{
-		r, size := utf8.DecodeRuneInString(s)
+		r, runeSize := utf8.DecodeRune(p)
 		if utf8.RuneError == r {
 			switch size {
 			case 1:
-				return name, "", errRuneError
+				return "", "", 0, errRuneError
 			default:
-				return name, "", errInternalError
+				return "", "", 0, errInternalError
 			}
 		}
 
 		switch r {
 		case ':', '=':
-			s = s[size:]
+			size += runeSize
+			p = p[runeSize:]
 		}
 	}
 
 	{
-		gapLoop2: for {
-			length := len(s)
-			if length <= 0 {
-				return name, "", nil
-			}
+		var spacingSize int
 
-			r, size := utf8.DecodeRuneInString(s)
-			if utf8.RuneError == r {
-				switch size {
-				case 1:
-					return name, "", errRuneError
-				default:
-					return name, "", errInternalError
-				}
-			}
-
-			switch r {
-			case '\t', ' ':
-				s = s[size:]
-			default:
-				break gapLoop2
-			}
+		spacingSize, err := inispacing.ParseBytes(p)
+		if nil != err {
+			return "", "", 0, err
 		}
+
+		size += spacingSize
+		p = p[spacingSize:]
 	}
 
 	{
-		r, size := utf8.DecodeLastRuneInString(s)
+		var valueSize int
 
-		switch r {
-		case lf.Rune:
-			s = s[:len(s)-size]
-			{
-				r2, size2 := utf8.DecodeLastRuneInString(s)
-				if cr.Rune == r2 {
-					s = s[:len(s)-size2]
-				}
-			}
-		case cr.Rune:
-			s = s[:len(s)-size]
-			{
-				r2, size2 := utf8.DecodeLastRuneInString(s)
-				if lf.Rune == r2 {
-					s = s[:len(s)-size2]
-				}
-			}
-		case nel.Rune:
-			s = s[:len(s)-size]
-		case ls.Rune:
-			s = s[:len(s)-size]
-		default:
-			// Nothing here.
+		value, valueSize, err = inivalue.ParseBytes(p)
+		if nil != err {
+			return "", "", 0, err
 		}
 
-		value = s
+		size += valueSize
+		p = p[valueSize:]
 	}
 
-	return name, value, nil
+	{
+		var eolSize int
+
+		eolSize, err := inieol.ParseBytes(p)
+		if nil != err {
+			return "", "", 0, err
+		}
+
+		size += eolSize
+		p = p[eolSize:]
+	}
+
+	return name, value, size, nil
 }
