@@ -7,40 +7,87 @@ import (
 	"sourcecode.social/reiver/go-eol/lf"
 	"sourcecode.social/reiver/go-eol/ls"
 	"sourcecode.social/reiver/go-eol/nel"
+	"sourcecode.social/reiver/go-erorr"
+
+	"github.com/reiver/go-ini/internal/eol"
 )
 
-func ParseString(str string) (string, error) {
-	if len(str) <= 0 {
-		return "", errEmptyString
+func ParseBytes(bytes []byte) (section string, size int, err error) {
+
+	if len(bytes) <= 0 {
+		return "", 0, nil
+	}
+
+	var p []byte = bytes
+
+	var magicSize int
+	{
+		r, runeSize := utf8.DecodeRune(p)
+		if utf8.RuneError == r {
+			switch runeSize {
+			case 1:
+				return "", 0, errRuneError
+			default:
+				return "", 0, errInternalError
+			}
+		}
+
+		if !IsMagic(r) {
+			return "", 0, erorr.Errorf("ini: not a section — a seciton must begin with a '[' (U+005B) character")
+		}
+
+		magicSize = runeSize
+		size += runeSize
+		p = p[runeSize:]
 	}
 
 	{
-		str0 := str[0]
+		var r rune
+		var runeSize int
 
-		if '[' != str0 {
-			return "", errMagicNotFound
+		loop: for {
+			length := len(p)
+			if length <= 0 {
+				break loop
+			}
+
+			r, runeSize = utf8.DecodeRune(p)
+			if utf8.RuneError == r {
+				switch runeSize {
+				case 1:
+					return "", 0, errRuneError
+				default:
+					return "", 0, errInternalError
+				}
+			}
+
+			switch r {
+			case ']':
+				break loop
+			case lf.Rune, cr.Rune, nel.Rune, ls.Rune:
+				break loop
+			default:
+				size += runeSize
+				p = p[runeSize:]
+			}
+		}
+
+		section = string(bytes[magicSize:size])
+
+		if ']' == r {
+			size += runeSize
+			p = p[runeSize:]
 		}
 	}
 
-	var result string = str[1:]
-
-	for {
-		length := len(result)
-
-		if length <= 0 {
-			return "", nil
+	{
+		eolSize, err := inieol.ParseBytes(p)
+		if nil != err {
+			return "", 0, err
 		}
 
-		r, size := utf8.DecodeLastRuneInString(result)
-
-		switch r {
-		case cr.Rune, lf.Rune, ls.Rune, nel.Rune:
-			result = result[:length-size]
-		case ']':
-			result = result[:length-size]
-			return result, nil
-		default:
-			return result, nil
-		}
+		size += eolSize
 	}
+
+	return section, size, nil
 }
