@@ -17,6 +17,18 @@ func ParseBytes(bytes []byte) (name string, value string, size int, err error) {
 	var p []byte = bytes
 
 	{
+		var spacingSize int
+
+		spacingSize, err := inispacing.ParseBytes(p)
+		if nil != err {
+			return "", "", 0, err
+		}
+
+		size += spacingSize
+		p = p[spacingSize:]
+	}
+
+	{
 		var nameSize int
 
 		name, nameSize, err = ininame.ParseBytes(p)

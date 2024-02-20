@@ -417,8 +417,598 @@ func TestParseBytes(t *testing.T) {
 			ExpectedValue:         "value",
 			ExpectedSize: len("name value\u2028"),
 		},
-	}
 
+
+
+		{
+			String:           "name     value\nline2=something",
+			ExpectedName:     "name",
+			ExpectedValue:             "value",
+			ExpectedSize: len("name     value\n"),
+		},
+		{
+			String:           "name     value\n\rline2=something",
+			ExpectedName:     "name",
+			ExpectedValue:             "value",
+			ExpectedSize: len("name     value\n\r"),
+		},
+		{
+			String:           "name     value\rline2=something",
+			ExpectedName:     "name",
+			ExpectedValue:             "value",
+			ExpectedSize: len("name     value\r"),
+		},
+		{
+			String:           "name     value\r\nline2=something",
+			ExpectedName:     "name",
+			ExpectedValue:             "value",
+			ExpectedSize: len("name     value\r\n"),
+		},
+		{
+			String:           "name     value\u0085line2=something",
+			ExpectedName:     "name",
+			ExpectedValue:             "value",
+			ExpectedSize: len("name     value\u0085"),
+		},
+		{
+			String:           "name     value\u2028line2=something",
+			ExpectedName:     "name",
+			ExpectedValue:             "value",
+			ExpectedSize: len("name     value\u2028"),
+		},
+
+
+
+		{
+			String:           "name\tvalue\nline2=something",
+			ExpectedName:     "name",
+			ExpectedValue:          "value",
+			ExpectedSize: len("name\tvalue\n"),
+		},
+		{
+			String:           "name\tvalue\n\rline2=something",
+			ExpectedName:     "name",
+			ExpectedValue:          "value",
+			ExpectedSize: len("name\tvalue\n\r"),
+		},
+		{
+			String:           "name\tvalue\rline2=something",
+			ExpectedName:     "name",
+			ExpectedValue:          "value",
+			ExpectedSize: len("name\tvalue\r"),
+		},
+		{
+			String:           "name\tvalue\r\nline2=something",
+			ExpectedName:     "name",
+			ExpectedValue:          "value",
+			ExpectedSize: len("name\tvalue\r\n"),
+		},
+		{
+			String:           "name\tvalue\u0085line2=something",
+			ExpectedName:     "name",
+			ExpectedValue:          "value",
+			ExpectedSize: len("name\tvalue\u0085"),
+		},
+		{
+			String:           "name\tvalue\u2028line2=something",
+			ExpectedName:     "name",
+			ExpectedValue:          "value",
+			ExpectedSize: len("name\tvalue\u2028"),
+		},
+
+
+
+		{
+			String:           "name\t\t\tvalue\nline2=something",
+			ExpectedName:     "name",
+			ExpectedValue:              "value",
+			ExpectedSize: len("name\t\t\tvalue\n"),
+		},
+		{
+			String:           "name\t\t\tvalue\n\rline2=something",
+			ExpectedName:     "name",
+			ExpectedValue:              "value",
+			ExpectedSize: len("name\t\t\tvalue\n\r"),
+		},
+		{
+			String:           "name\t\t\tvalue\rline2=something",
+			ExpectedName:     "name",
+			ExpectedValue:              "value",
+			ExpectedSize: len("name\t\t\tvalue\r"),
+		},
+		{
+			String:           "name\t\t\tvalue\r\nline2=something",
+			ExpectedName:     "name",
+			ExpectedValue:              "value",
+			ExpectedSize: len("name\t\t\tvalue\r\n"),
+		},
+		{
+			String:           "name\t\t\tvalue\u0085line2=something",
+			ExpectedName:     "name",
+			ExpectedValue:              "value",
+			ExpectedSize: len("name\t\t\tvalue\u0085"),
+		},
+		{
+			String:           "name\t\t\tvalue\u2028line2=something",
+			ExpectedName:     "name",
+			ExpectedValue:              "value",
+			ExpectedSize: len("name\t\t\tvalue\u2028"),
+		},
+
+
+
+		{
+			String:           "name: value\nline2=something",
+			ExpectedName:     "name",
+			ExpectedValue:          "value",
+			ExpectedSize: len("name: value\n"),
+		},
+		{
+			String:           "name: value\n\rline2=something",
+			ExpectedName:     "name",
+			ExpectedValue:          "value",
+			ExpectedSize: len("name: value\n\r"),
+		},
+		{
+			String:           "name: value\rline2=something",
+			ExpectedName:     "name",
+			ExpectedValue:          "value",
+			ExpectedSize: len("name: value\r"),
+		},
+		{
+			String:           "name: value\r\nline2=something",
+			ExpectedName:     "name",
+			ExpectedValue:          "value",
+			ExpectedSize: len("name: value\r\n"),
+		},
+		{
+			String:           "name: value\u0085line2=something",
+			ExpectedName:     "name",
+			ExpectedValue:          "value",
+			ExpectedSize: len("name: value\u0085"),
+		},
+		{
+			String:           "name: value\u2028line2=something",
+			ExpectedName:     "name",
+			ExpectedValue:          "value",
+			ExpectedSize: len("name: value\u2028"),
+		},
+
+
+
+		{
+			String:           "name : value\nline2=something",
+			ExpectedName:     "name",
+			ExpectedValue:           "value",
+			ExpectedSize: len("name : value\n"),
+		},
+		{
+			String:           "name : value\n\rline2=something",
+			ExpectedName:     "name",
+			ExpectedValue:           "value",
+			ExpectedSize: len("name : value\n\r"),
+		},
+		{
+			String:           "name : value\rline2=something",
+			ExpectedName:     "name",
+			ExpectedValue:           "value",
+			ExpectedSize: len("name : value\r"),
+		},
+		{
+			String:           "name : value\r\nline2=something",
+			ExpectedName:     "name",
+			ExpectedValue:           "value",
+			ExpectedSize: len("name : value\r\n"),
+		},
+		{
+			String:           "name : value\u0085line2=something",
+			ExpectedName:     "name",
+			ExpectedValue:           "value",
+			ExpectedSize: len("name : value\u0085"),
+		},
+		{
+			String:           "name : value\u2028line2=something",
+			ExpectedName:     "name",
+			ExpectedValue:           "value",
+			ExpectedSize: len("name : value\u2028"),
+		},
+
+
+
+		{
+			String:           "name=value\nline2=something",
+			ExpectedName:     "name",
+			ExpectedValue:         "value",
+			ExpectedSize: len("name=value\n"),
+		},
+		{
+			String:           "name=value\n\rline2=something",
+			ExpectedName:     "name",
+			ExpectedValue:         "value",
+			ExpectedSize: len("name=value\n\r"),
+		},
+		{
+			String:           "name=value\rline2=something",
+			ExpectedName:     "name",
+			ExpectedValue:         "value",
+			ExpectedSize: len("name=value\r"),
+		},
+		{
+			String:           "name=value\r\nline2=something",
+			ExpectedName:     "name",
+			ExpectedValue:         "value",
+			ExpectedSize: len("name=value\r\n"),
+		},
+		{
+			String:           "name=value\u0085line2=something",
+			ExpectedName:     "name",
+			ExpectedValue:         "value",
+			ExpectedSize: len("name=value\u0085"),
+		},
+		{
+			String:           "name=value\u2028line2=something",
+			ExpectedName:     "name",
+			ExpectedValue:         "value",
+			ExpectedSize: len("name=value\u2028"),
+		},
+
+
+
+		{
+			String:           "name = value\nline2=something",
+			ExpectedName:     "name",
+			ExpectedValue:           "value",
+			ExpectedSize: len("name = value\n"),
+		},
+		{
+			String:           "name = value\n\rline2=something",
+			ExpectedName:     "name",
+			ExpectedValue:           "value",
+			ExpectedSize: len("name = value\n\r"),
+		},
+		{
+			String:           "name = value\rline2=something",
+			ExpectedName:     "name",
+			ExpectedValue:           "value",
+			ExpectedSize: len("name = value\r"),
+		},
+		{
+			String:           "name = value\r\nline2=something",
+			ExpectedName:     "name",
+			ExpectedValue:           "value",
+			ExpectedSize: len("name = value\r\n"),
+		},
+		{
+			String:           "name = value\u0085line2=something",
+			ExpectedName:     "name",
+			ExpectedValue:           "value",
+			ExpectedSize: len("name = value\u0085"),
+		},
+		{
+			String:           "name = value\u2028line2=something",
+			ExpectedName:     "name",
+			ExpectedValue:           "value",
+			ExpectedSize: len("name = value\u2028"),
+		},
+
+
+
+
+
+
+
+
+
+		{
+			String:           "\t name value\nline2=something",
+			ExpectedName:        "name",
+			ExpectedValue:            "value",
+			ExpectedSize: len("\t name value\n"),
+		},
+		{
+			String:           "\t name value\n\rline2=something",
+			ExpectedName   :     "name",
+			ExpectedValue:            "value",
+			ExpectedSize: len("\t name value\n\r"),
+		},
+		{
+			String:           "\t name value\rline2=something",
+			ExpectedName:        "name",
+			ExpectedValue:            "value",
+			ExpectedSize: len("\t name value\r"),
+		},
+		{
+			String:           "\t name value\r\nline2=something",
+			ExpectedName:        "name",
+			ExpectedValue:            "value",
+			ExpectedSize: len("\t name value\r\n"),
+		},
+		{
+			String:           "\t name value\u0085line2=something",
+			ExpectedName:        "name",
+			ExpectedValue:            "value",
+			ExpectedSize: len("\t name value\u0085"),
+		},
+		{
+			String:           "\t name value\u2028line2=something",
+			ExpectedName:        "name",
+			ExpectedValue:            "value",
+			ExpectedSize: len("\t name value\u2028"),
+		},
+
+
+
+		{
+			String:           "\t name     value\nline2=something",
+			ExpectedName:        "name",
+			ExpectedValue:                "value",
+			ExpectedSize: len("\t name     value\n"),
+		},
+		{
+			String:           "\t name     value\n\rline2=something",
+			ExpectedName:        "name",
+			ExpectedValue:                "value",
+			ExpectedSize: len("\t name     value\n\r"),
+		},
+		{
+			String:           "\t name     value\rline2=something",
+			ExpectedName:        "name",
+			ExpectedValue:                "value",
+			ExpectedSize: len("\t name     value\r"),
+		},
+		{
+			String:           "\t name     value\r\nline2=something",
+			ExpectedName:        "name",
+			ExpectedValue:                "value",
+			ExpectedSize: len("\t name     value\r\n"),
+		},
+		{
+			String:           "\t name     value\u0085line2=something",
+			ExpectedName:        "name",
+			ExpectedValue:                "value",
+			ExpectedSize: len("\t name     value\u0085"),
+		},
+		{
+			String:           "\t name     value\u2028line2=something",
+			ExpectedName:        "name",
+			ExpectedValue:                "value",
+			ExpectedSize: len("\t name     value\u2028"),
+		},
+
+
+
+		{
+			String:           "\t name\tvalue\nline2=something",
+			ExpectedName:        "name",
+			ExpectedValue:             "value",
+			ExpectedSize: len("\t name\tvalue\n"),
+		},
+		{
+			String:           "\t name\tvalue\n\rline2=something",
+			ExpectedName:        "name",
+			ExpectedValue:             "value",
+			ExpectedSize: len("\t name\tvalue\n\r"),
+		},
+		{
+			String:           "\t name\tvalue\rline2=something",
+			ExpectedName:        "name",
+			ExpectedValue:             "value",
+			ExpectedSize: len("\t name\tvalue\r"),
+		},
+		{
+			String:           "\t name\tvalue\r\nline2=something",
+			ExpectedName:        "name",
+			ExpectedValue:             "value",
+			ExpectedSize: len("\t name\tvalue\r\n"),
+		},
+		{
+			String:           "\t name\tvalue\u0085line2=something",
+			ExpectedName:        "name",
+			ExpectedValue:             "value",
+			ExpectedSize: len("\t name\tvalue\u0085"),
+		},
+		{
+			String:           "\t name\tvalue\u2028line2=something",
+			ExpectedName:        "name",
+			ExpectedValue:             "value",
+			ExpectedSize: len("\t name\tvalue\u2028"),
+		},
+
+
+
+		{
+			String:           "\t name\t\t\tvalue\nline2=something",
+			ExpectedName:        "name",
+			ExpectedValue:                 "value",
+			ExpectedSize: len("\t name\t\t\tvalue\n"),
+		},
+		{
+			String:           "\t name\t\t\tvalue\n\rline2=something",
+			ExpectedName:        "name",
+			ExpectedValue:                 "value",
+			ExpectedSize: len("\t name\t\t\tvalue\n\r"),
+		},
+		{
+			String:           "\t name\t\t\tvalue\rline2=something",
+			ExpectedName:        "name",
+			ExpectedValue:                 "value",
+			ExpectedSize: len("\t name\t\t\tvalue\r"),
+		},
+		{
+			String:           "\t name\t\t\tvalue\r\nline2=something",
+			ExpectedName:        "name",
+			ExpectedValue:                 "value",
+			ExpectedSize: len("\t name\t\t\tvalue\r\n"),
+		},
+		{
+			String:           "\t name\t\t\tvalue\u0085line2=something",
+			ExpectedName:        "name",
+			ExpectedValue:                 "value",
+			ExpectedSize: len("\t name\t\t\tvalue\u0085"),
+		},
+		{
+			String:           "\t name\t\t\tvalue\u2028line2=something",
+			ExpectedName:        "name",
+			ExpectedValue:                 "value",
+			ExpectedSize: len("\t name\t\t\tvalue\u2028"),
+		},
+
+
+
+		{
+			String:           "\t name: value\nline2=something",
+			ExpectedName:        "name",
+			ExpectedValue:             "value",
+			ExpectedSize: len("\t name: value\n"),
+		},
+		{
+			String:           "\t name: value\n\rline2=something",
+			ExpectedName:        "name",
+			ExpectedValue:             "value",
+			ExpectedSize: len("\t name: value\n\r"),
+		},
+		{
+			String:           "\t name: value\rline2=something",
+			ExpectedName:        "name",
+			ExpectedValue:             "value",
+			ExpectedSize: len("\t name: value\r"),
+		},
+		{
+			String:           "\t name: value\r\nline2=something",
+			ExpectedName:        "name",
+			ExpectedValue:             "value",
+			ExpectedSize: len("\t name: value\r\n"),
+		},
+		{
+			String:           "\t name: value\u0085line2=something",
+			ExpectedName:        "name",
+			ExpectedValue:             "value",
+			ExpectedSize: len("\t name: value\u0085"),
+		},
+		{
+			String:           "\t name: value\u2028line2=something",
+			ExpectedName:        "name",
+			ExpectedValue:             "value",
+			ExpectedSize: len("\t name: value\u2028"),
+		},
+
+
+
+		{
+			String:           "\t name : value\nline2=something",
+			ExpectedName:        "name",
+			ExpectedValue:              "value",
+			ExpectedSize: len("\t name : value\n"),
+		},
+		{
+			String:           "\t name : value\n\rline2=something",
+			ExpectedName:        "name",
+			ExpectedValue:              "value",
+			ExpectedSize: len("\t name : value\n\r"),
+		},
+		{
+			String:           "\t name : value\rline2=something",
+			ExpectedName:        "name",
+			ExpectedValue:              "value",
+			ExpectedSize: len("\t name : value\r"),
+		},
+		{
+			String:           "\t name : value\r\nline2=something",
+			ExpectedName:        "name",
+			ExpectedValue:              "value",
+			ExpectedSize: len("\t name : value\r\n"),
+		},
+		{
+			String:           "\t name : value\u0085line2=something",
+			ExpectedName:        "name",
+			ExpectedValue:              "value",
+			ExpectedSize: len("\t name : value\u0085"),
+		},
+		{
+			String:           "\t name : value\u2028line2=something",
+			ExpectedName:        "name",
+			ExpectedValue:              "value",
+			ExpectedSize: len("\t name : value\u2028"),
+		},
+
+
+
+		{
+			String:           "\t name=value\nline2=something",
+			ExpectedName:        "name",
+			ExpectedValue:            "value",
+			ExpectedSize: len("\t name=value\n"),
+		},
+		{
+			String:           "\t name=value\n\rline2=something",
+			ExpectedName:        "name",
+			ExpectedValue:            "value",
+			ExpectedSize: len("\t name=value\n\r"),
+		},
+		{
+			String:           "\t name=value\rline2=something",
+			ExpectedName:        "name",
+			ExpectedValue:            "value",
+			ExpectedSize: len("\t name=value\r"),
+		},
+		{
+			String:           "\t name=value\r\nline2=something",
+			ExpectedName:        "name",
+			ExpectedValue:            "value",
+			ExpectedSize: len("\t name=value\r\n"),
+		},
+		{
+			String:           "\t name=value\u0085line2=something",
+			ExpectedName:        "name",
+			ExpectedValue:            "value",
+			ExpectedSize: len("\t name=value\u0085"),
+		},
+		{
+			String:           "\t name=value\u2028line2=something",
+			ExpectedName:        "name",
+			ExpectedValue:            "value",
+			ExpectedSize: len("\t name=value\u2028"),
+		},
+
+
+
+		{
+			String:           "\t name = value\nline2=something",
+			ExpectedName:        "name",
+			ExpectedValue:              "value",
+			ExpectedSize: len("\t name = value\n"),
+		},
+		{
+			String:           "\t name = value\n\rline2=something",
+			ExpectedName:        "name",
+			ExpectedValue:              "value",
+			ExpectedSize: len("\t name = value\n\r"),
+		},
+		{
+			String:           "\t name = value\rline2=something",
+			ExpectedName:        "name",
+			ExpectedValue:              "value",
+			ExpectedSize: len("\t name = value\r"),
+		},
+		{
+			String:           "\t name = value\r\nline2=something",
+			ExpectedName:        "name",
+			ExpectedValue:              "value",
+			ExpectedSize: len("\t name = value\r\n"),
+		},
+		{
+			String:           "\t name = value\u0085line2=something",
+			ExpectedName:        "name",
+			ExpectedValue:              "value",
+			ExpectedSize: len("\t name = value\u0085"),
+		},
+		{
+			String:           "\t name = value\u2028line2=something",
+			ExpectedName:        "name",
+			ExpectedValue:              "value",
+			ExpectedSize: len("\t name = value\u2028"),
+		},
+	}
 
 	for testNumber, test := range tests {
 
