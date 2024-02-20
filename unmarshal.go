@@ -1,10 +1,8 @@
 package ini
 
 import (
-	"io"
-	"strings"
+	"unicode/utf8"
 
-	"github.com/reiver/go-runewriter"
 	"sourcecode.social/reiver/go-erorr"
 
 	"github.com/reiver/go-ini/internal/comment"
@@ -12,87 +10,105 @@ import (
 	"github.com/reiver/go-ini/internal/section"
 )
 
-func Decode(dst any, runescanner io.RuneScanner) error {
+// Unmarshal parses the INI-encoded data and stores the result in the value pointed to by 'dst'.
+// If 'dst' is nil or not a pointer, Unmarshal returns an InvalidUnmarshalError.
+func Unmarshal(data []byte, dst any) error {
 
-	if nil == runescanner {
-		return errNilRuneScanner
+	if nil == data {
+		return errNilBytes
 	}
 
-	var result *map[string]string
+	var publisher Publisher
 	{
-		var casted bool
-
-		result, casted = dst.(*map[string]string)
-		if !casted {
-			return erorr.Errorf("ini: cannot decode into %T", dst)
+		switch casted := dst.(type) {
+		case Publisher:
+			publisher = casted
+		case Setter:
+			publisher = &internalSetterPublisher{
+				setter:casted,
+			}
+		case *map[string]string:
+			setter := internalMapStringStringSetter{
+				mapStringString: casted,
+			}
+			publisher = &internalSetterPublisher{
+				setter:setter,
+			}
+		default:
+			return invalidUnmarshalError(dst)
 		}
 	}
 
-	var section string = ""
+	return unmarshal(data, publisher)
+}
+
+func unmarshal(data []byte, publisher Publisher) error {
+
+	if nil == data {
+		return errNilBytes
+	}
+	if nil == publisher {
+		return errNilPublisher
+	}
+
+	var p []byte = data
 
 	for {
-
-		r, _, err := runescanner.ReadRune()
-		if io.EOF == err {
-			return nil
+		if len(p) <= 0 {
+			break
 		}
-		if nil != err {
-			return erorr.Errorf("ini: problem reading rune: %w", err)
+
+		var r rune
+		{
+			var size int
+
+			r, size = utf8.DecodeRune(p)
+			if utf8.RuneError == r {
+				switch size {
+				case 1:
+                        	        return errRuneError
+				default:
+        	                        return errInternalError
+				}
+			}
 		}
 
 		switch {
 		case inicomment.IsMagic(r):
-			err := runescanner.UnreadRune()
-			if nil != err {
-				return erorr.Errorf("ini: problem un-reading rune: %w", err)
-			}
-
-			err = inicomment.Copy(runewriter.Discard, runescanner)
+			comment, size, err := inicomment.ParseBytes(p)
 			if nil != err {
 				return erorr.Errorf("ini: problem reading ini comment: %w", err)
 			}
-		case inisection.IsMagic(r):
-			err := runescanner.UnreadRune()
-			if nil != err {
-				return erorr.Errorf("ini: problem un-reading rune: %w", err)
+
+			if err := publisher.PublishINIComment(comment); nil != err {
+				return erorr.Errorf("ini: problem publishing INI comment: %w", err)
 			}
-
-			var runeWriter strings.Builder
-
-			err = inisection.Copy(&runeWriter, runescanner)
+			p = p[size:]
+		case inisection.IsMagic(r):
+			section, size, err := inisection.ParseBytes(p)
 			if nil != err {
 				return erorr.Errorf("ini: problem reading ini section: %w", err)
 			}
 
-			section, err = inisection.ParseString(runeWriter.String())
-			if nil != err {
-				return err
+			if err := publisher.PublishINISection(section); nil != err {
+				return erorr.Errorf("ini: problem publishing INI section: %w", err)
 			}
+			p = p[size:]
 		default:
-			err := runescanner.UnreadRune()
+			name, value, size, err := ininamevalue.ParseBytes(p)
 			if nil != err {
-				return erorr.Errorf("ini: problem un-reading rune: %w", err)
+				return erorr.Errorf("ini: problem reading ini name-value: %w", err)
 			}
-
-			var runeWriter strings.Builder
-
-			err = ininamevalue.Copy(&runeWriter, runescanner)
-			if nil != err {
-				return erorr.Errorf("ini: problem reading ini name-value pair: %w", err)
-			}
-
-			name, value, err := ininamevalue.ParseString(runeWriter.String())
 
 			if "" != name {
-				var fullname string = name
-				if "" != section {
-					fullname = section + "." + name
+				if err := publisher.PublishININameValue(name, value); nil != err {
+					return erorr.Errorf("ini: problem publishing INI name-value: %w", err)
 				}
-
-				(*result)[fullname] = value
 			}
+			p = p[size:]
 		}
 	}
 
 	return nil
 }
+

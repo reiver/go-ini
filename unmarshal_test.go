@@ -3,15 +3,12 @@ package ini_test
 import (
 	"testing"
 
-	"io"
 	"reflect"
-	"strings"
 
 	"github.com/reiver/go-ini"
-	"sourcecode.social/reiver/go-utf8"
 )
 
-func TestDecode(t *testing.T) {
+func TestUnmarshal(t *testing.T) {
 
 	tests := []struct{
 		INI string
@@ -1530,14 +1527,46 @@ func TestDecode(t *testing.T) {
 				`four.date`: `red, yellow`,
 			},
 		},
+
+
+
+
+
+
+
+
+
+		{
+			INI:
+				";INI/1"            +"\u2028"+
+				""                  +"\u2028"+
+				"one=1"             +"\u2028"+
+				"two=22"            +"\u2028"+
+				"[three]"           +"\u2028"+
+				"\tapple=red"       +"\u2028"+
+				"\tbanana = yellow" +"\u2028"+
+				""                  +"\u2028"+
+				"[four]"            +"\u2028"+
+				""                  +"\u2028"+
+				"Cherry: red"       +"\u2028"+
+				"date : red, yellow",
+			Expected: map[string]string{
+				`one`:`1`,
+				`two`:`22`,
+				`three.apple`:`red`,
+				`three.banana`:`yellow`,
+				`four.cherry`: `red`,
+				`four.date`: `red, yellow`,
+			},
+		},
 	}
 
 	for testNumber, test := range tests {
 		var actual map[string]string = map[string]string{}
 
-		var runescanner io.RuneScanner = utf8.NewRuneScanner(strings.NewReader(test.INI))
+		var p []byte = []byte(test.INI)
 
-		err := ini.Decode(&actual, runescanner)
+		err := ini.Unmarshal(p, &actual)
 
 		if nil != err {
 			t.Errorf("For test #%d, did not expect an error but actually got one.", testNumber)
@@ -1550,7 +1579,7 @@ func TestDecode(t *testing.T) {
 			expected := test.Expected
 
 			if !reflect.DeepEqual(expected, actual) {
-				t.Errorf("For test #%d, the actual decoded result is not what was expected..", testNumber)
+				t.Errorf("For test #%d, the actual decoded result is not what was expected.", testNumber)
 				t.Logf("EXPECTED: %#v", expected)
 				t.Logf("ACTUAL:   %#v", actual)
 				t.Logf("INI: %s", test.INI)
