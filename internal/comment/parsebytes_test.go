@@ -1,362 +1,589 @@
-package inicomment
+package inicomment_test
 
 import (
-	"sourcecode.social/reiver/go-utf8"
-
-	"io"
-	"strings"
-
 	"testing"
+
+	"github.com/reiver/go-ini/internal/comment"
 )
 
-func TestCopy(t *testing.T) {
+func TestParseBytes(t *testing.T) {
 
 	tests := []struct{
-		Value         string
-		ExpectedValue string
+		String          string
+		ExpectedComment string
+		ExpectedSize    int
 	}{
 		{
-			Value:            ";this is a comment",
-			ExpectedValue:    ";this is a comment",
+			String:           ";",
+			ExpectedComment:   "",
+			ExpectedSize: len(";"),
 		},
 		{
-			Value:            ";this is a comment\n",
-			ExpectedValue:    ";this is a comment\n",
+			String:           ";\n",
+			ExpectedComment:   "",
+			ExpectedSize: len(";\n"),
 		},
 		{
-			Value:            ";this is a comment\n\r",
-			ExpectedValue:    ";this is a comment\n\r",
+			String:           ";\n\r",
+			ExpectedComment:   "",
+			ExpectedSize: len(";\n\r"),
 		},
 		{
-			Value:            ";this is a comment\r",
-			ExpectedValue:    ";this is a comment\r",
+			String:           ";\r",
+			ExpectedComment:   "",
+			ExpectedSize: len(";\r"),
 		},
 		{
-			Value:            ";this is a comment\r\n",
-			ExpectedValue:    ";this is a comment\r\n",
+			String:           ";\r\n",
+			ExpectedComment:   "",
+			ExpectedSize: len(";\r\n"),
 		},
 		{
-			Value:            ";this is a comment\u0085",
-			ExpectedValue:    ";this is a comment\u0085",
+			String:           ";\u0085",
+			ExpectedComment:   "",
+			ExpectedSize: len(";\u0085"),
 		},
 		{
-			Value:            ";this is a comment\u2028",
-			ExpectedValue:    ";this is a comment\u2028",
-		},
-
-
-
-		{
-			Value:            "#this is a comment",
-			ExpectedValue:    "#this is a comment",
-		},
-		{
-			Value:            "#this is a comment\n",
-			ExpectedValue:    "#this is a comment\n",
-		},
-		{
-			Value:            "#this is a comment\n\r",
-			ExpectedValue:    "#this is a comment\n\r",
-		},
-		{
-			Value:            "#this is a comment\r",
-			ExpectedValue:    "#this is a comment\r",
-		},
-		{
-			Value:            "#this is a comment\r\n",
-			ExpectedValue:    "#this is a comment\r\n",
-		},
-		{
-			Value:            "#this is a comment\u0085",
-			ExpectedValue:    "#this is a comment\u0085",
-		},
-		{
-			Value:            "#this is a comment\u2028",
-			ExpectedValue:    "#this is a comment\u2028",
+			String:           ";\u2028",
+			ExpectedComment:   "",
+			ExpectedSize: len(";\u2028"),
 		},
 
 
 
 		{
-			Value:            ";this is a comment\n[the section]",
-			ExpectedValue:    ";this is a comment\n",
+			String:           "#",
+			ExpectedComment:   "",
+			ExpectedSize: len("#"),
 		},
 		{
-			Value:            ";this is a comment\n\r[the section]",
-			ExpectedValue:    ";this is a comment\n\r",
+			String:           "#\n",
+			ExpectedComment:   "",
+			ExpectedSize: len("#\n"),
 		},
 		{
-			Value:            ";this is a comment\r[the section]",
-			ExpectedValue:    ";this is a comment\r",
+			String:           "#\n\r",
+			ExpectedComment:   "",
+			ExpectedSize: len("#\n\r"),
 		},
 		{
-			Value:            ";this is a comment\r\n[the section]",
-			ExpectedValue:    ";this is a comment\r\n",
+			String:           "#\r",
+			ExpectedComment:   "",
+			ExpectedSize: len("#\r"),
 		},
 		{
-			Value:            ";this is a comment\u0085[the section]",
-			ExpectedValue:    ";this is a comment\u0085",
+			String:           "#\r\n",
+			ExpectedComment:   "",
+			ExpectedSize: len("#\r\n"),
 		},
 		{
-			Value:            ";this is a comment\u2028[the section]",
-			ExpectedValue:    ";this is a comment\u2028",
-		},
-
-
-
-		{
-			Value:            "#this is a comment\n[the section]",
-			ExpectedValue:    "#this is a comment\n",
+			String:           "#\u0085",
+			ExpectedComment:   "",
+			ExpectedSize: len("#\u0085"),
 		},
 		{
-			Value:            "#this is a comment\n\r[the section]",
-			ExpectedValue:    "#this is a comment\n\r",
-		},
-		{
-			Value:            "#this is a comment\r[the section]",
-			ExpectedValue:    "#this is a comment\r",
-		},
-		{
-			Value:            "#this is a comment\r\n[the section]",
-			ExpectedValue:    "#this is a comment\r\n",
-		},
-		{
-			Value:            "#this is a comment\u0085[the section]",
-			ExpectedValue:    "#this is a comment\u0085",
-		},
-		{
-			Value:            "#this is a comment\u2028[the section]",
-			ExpectedValue:    "#this is a comment\u2028",
+			String:           "#\u2028",
+			ExpectedComment:   "",
+			ExpectedSize: len("#\u2028"),
 		},
 
 
 
 		{
-			Value:            ";this is a comment\n[the section]\n",
-			ExpectedValue   : ";this is a comment\n",
+			String:          ";\n[section]",
+			ExpectedComment: "",
+			ExpectedSize: len(";\n"),
 		},
 		{
-			Value:            ";this is a comment\n\r[the section]\n",
-			ExpectedValue   : ";this is a comment\n\r",
+			String:          ";\n\r[section]",
+			ExpectedComment: "",
+			ExpectedSize: len(";\r\n"),
 		},
 		{
-			Value:            ";this is a comment\r[the section]\r",
-			ExpectedValue:    ";this is a comment\r",
+			String:          ";\r[section]",
+			ExpectedComment: "",
+			ExpectedSize: len(";\r"),
 		},
 		{
-			Value:            ";this is a comment\r\n[the section]\r\n",
-			ExpectedValue:    ";this is a comment\r\n",
+			String:          ";\r\n[section]",
+			ExpectedComment: "",
+			ExpectedSize: len(";\r\n"),
 		},
 		{
-			Value:            ";this is a comment\u0085[the section]\u0085",
-			ExpectedValue:    ";this is a comment\u0085",
+			String:          ";\u0085[section]",
+			ExpectedComment: "",
+			ExpectedSize: len(";\u0085"),
 		},
 		{
-			Value:            ";this is a comment\u2028[the section]\u2028",
-			ExpectedValue:    ";this is a comment\u2028",
-		},
-
-
-
-		{
-			Value:            "#this is a comment\n[the section]\n",
-			ExpectedValue:    "#this is a comment\n",
-		},
-		{
-			Value:            "#this is a comment\n\r[the section]\n",
-			ExpectedValue:    "#this is a comment\n\r",
-		},
-		{
-			Value:            "#this is a comment\r[the section]\r",
-			ExpectedValue:    "#this is a comment\r",
-		},
-		{
-			Value:            "#this is a comment\r\n[the section]\r\n",
-			ExpectedValue:    "#this is a comment\r\n",
-		},
-		{
-			Value:            "#this is a comment\u0085[the section]\u0085",
-			ExpectedValue:    "#this is a comment\u0085",
-		},
-		{
-			Value:            "#this is a comment\u2028[the section]\u2028",
-			ExpectedValue:    "#this is a comment\u2028",
+			String:          ";\u2028[section]",
+			ExpectedComment: "",
+			ExpectedSize: len(";\u2028"),
 		},
 
 
 
 		{
-			Value:            ";this is a comment\n[the section]\napple=one",
-			ExpectedValue:    ";this is a comment\n",
+			String:          "#\n[section]",
+			ExpectedComment: "",
+			ExpectedSize: len("#\n"),
 		},
 		{
-			Value:            ";this is a comment\n\r[the section]\napple=one",
-			ExpectedValue:    ";this is a comment\n\r",
+			String:          "#\n\r[section]",
+			ExpectedComment: "",
+			ExpectedSize: len("#\n\r"),
 		},
 		{
-			Value:            ";this is a comment\r[the section]\rapple=one",
-			ExpectedValue:    ";this is a comment\r",
+			String:          "#\r[section]",
+			ExpectedComment: "",
+			ExpectedSize: len("#\r"),
 		},
 		{
-			Value:            ";this is a comment\r\n[the section]\r\napple=one",
-			ExpectedValue:    ";this is a comment\r\n",
+			String:          "#\r\n[section]",
+			ExpectedComment: "",
+			ExpectedSize: len("#\r\n"),
 		},
 		{
-			Value:            ";this is a comment\u0085[the section]\u0085apple=one",
-			ExpectedValue:    ";this is a comment\u0085",
+			String:          "#\u0085[section]",
+			ExpectedComment: "",
+			ExpectedSize: len("#\u0085"),
 		},
 		{
-			Value:            ";this is a comment\u2028[the section]\u2028apple=one",
-			ExpectedValue:    ";this is a comment\u2028",
+			String:          "#\u2028[section]",
+			ExpectedComment: "",
+			ExpectedSize: len("#\u2028"),
+		},
+
+
+
+
+
+
+
+
+
+		{
+			String:           ";this is a comment",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len(";this is a comment"),
+		},
+		{
+			String:           ";this is a comment\n",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len(";this is a comment\n"),
+		},
+		{
+			String:           ";this is a comment\n\r",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len(";this is a comment\n\r"),
+		},
+		{
+			String:           ";this is a comment\r",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len(";this is a comment\r"),
+		},
+		{
+			String:           ";this is a comment\r\n",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len(";this is a comment\r\n"),
+		},
+		{
+			String:           ";this is a comment\u0085",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len(";this is a comment\u0085"),
+		},
+		{
+			String:           ";this is a comment\u2028",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len(";this is a comment\u2028"),
 		},
 
 
 
 		{
-			Value:            "#this is a comment\n[the section]\napple=one",
-			ExpectedValue:    "#this is a comment\n",
+			String:           "#this is a comment",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len("#this is a comment"),
 		},
 		{
-			Value:            "#this is a comment\n\r[the section]\napple=one",
-			ExpectedValue:    "#this is a comment\n\r",
+			String:           "#this is a comment\n",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len("#this is a comment\n"),
 		},
 		{
-			Value:            "#this is a comment\r[the section]\rapple=one",
-			ExpectedValue:    "#this is a comment\r",
+			String:           "#this is a comment\n\r",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len("#this is a comment\n\r"),
 		},
 		{
-			Value:            "#this is a comment\r\n[the section]\r\napple=one",
-			ExpectedValue:    "#this is a comment\r\n",
+			String:           "#this is a comment\r",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len("#this is a comment\r"),
 		},
 		{
-			Value:            "#this is a comment\u0085[the section]\u0085apple=one",
-			ExpectedValue:    "#this is a comment\u0085",
+			String:           "#this is a comment\r\n",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len("#this is a comment\r\n"),
 		},
 		{
-			Value:            "#this is a comment\u2028[the section]\u2028apple=one",
-			ExpectedValue:    "#this is a comment\u2028",
-		},
-
-
-
-		{
-			Value:            ";this is a comment\n[the section]\napple=one\n",
-			ExpectedValue:    ";this is a comment\n",
+			String:           "#this is a comment\u0085",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len("#this is a comment\u0085"),
 		},
 		{
-			Value:            ";this is a comment\n\r[the section]\napple=one\n",
-			ExpectedValue:    ";this is a comment\n\r",
-		},
-		{
-			Value:            ";this is a comment\r[the section]\rapple=one\r",
-			ExpectedValue:    ";this is a comment\r",
-		},
-		{
-			Value:            ";this is a comment\r\n[the section]\r\napple=one\r\n",
-			ExpectedValue:    ";this is a comment\r\n",
-		},
-		{
-			Value:            ";this is a comment\u0085[the section]\u0085apple=one\u0085",
-			ExpectedValue:    ";this is a comment\u0085",
-		},
-		{
-			Value:            ";this is a comment\u2028[the section]\u2028apple=one\u2028",
-			ExpectedValue:    ";this is a comment\u2028",
+			String:           "#this is a comment\u2028",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len("#this is a comment\u2028"),
 		},
 
 
 
 		{
-			Value:            "#this is a comment\n[the section]\napple=one\n",
-			ExpectedValue:    "#this is a comment\n",
+			String:           ";this is a comment\n[the section]",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len(";this is a comment\n"),
 		},
 		{
-			Value:            "#this is a comment\n\r[the section]\napple=one\n",
-			ExpectedValue:    "#this is a comment\n\r",
+			String:           ";this is a comment\n\r[the section]",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len(";this is a comment\n\r"),
 		},
 		{
-			Value:            "#this is a comment\r[the section]\rapple=one\r",
-			ExpectedValue:    "#this is a comment\r",
+			String:           ";this is a comment\r[the section]",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len(";this is a comment\r"),
 		},
 		{
-			Value:            "#this is a comment\r\n[the section]\r\napple=one\r\n",
-			ExpectedValue:    "#this is a comment\r\n",
+			String:           ";this is a comment\r\n[the section]",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len(";this is a comment\r\n"),
 		},
 		{
-			Value:            "#this is a comment\u0085[the section]\u0085apple=one\u0085",
-			ExpectedValue:    "#this is a comment\u0085",
+			String:           ";this is a comment\u0085[the section]",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len(";this is a comment\u0085"),
 		},
 		{
-			Value:            "#this is a comment\u2028[the section]\u2028apple=one\u2028",
-			ExpectedValue:    "#this is a comment\u2028",
+			String:           ";this is a comment\u2028[the section]",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len(";this is a comment\u2028"),
+		},
+
+
+
+		{
+			String:           "#this is a comment\n[the section]",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len("#this is a comment\n"),
+		},
+		{
+			String:           "#this is a comment\n\r[the section]",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len("#this is a comment\n\r"),
+		},
+		{
+			String:           "#this is a comment\r[the section]",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len("#this is a comment\r"),
+		},
+		{
+			String:           "#this is a comment\r\n[the section]",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len("#this is a comment\r\n"),
+		},
+		{
+			String:           "#this is a comment\u0085[the section]",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len("#this is a comment\u0085"),
+		},
+		{
+			String:           "#this is a comment\u2028[the section]",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len("#this is a comment\u2028"),
+		},
+
+
+
+		{
+			String:           ";this is a comment\n[the section]\n",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len(";this is a comment\n"),
+		},
+		{
+			String:           ";this is a comment\n\r[the section]\n",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len(";this is a comment\n\r"),
+		},
+		{
+			String:           ";this is a comment\r[the section]\r",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len(";this is a comment\r"),
+		},
+		{
+			String:           ";this is a comment\r\n[the section]\r\n",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len(";this is a comment\r\n"),
+		},
+		{
+			String:           ";this is a comment\u0085[the section]\u0085",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len(";this is a comment\u0085"),
+		},
+		{
+			String:           ";this is a comment\u2028[the section]\u2028",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len(";this is a comment\u2028"),
+		},
+
+
+
+		{
+			String:           "#this is a comment\n[the section]\n",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len("#this is a comment\n"),
+		},
+		{
+			String:           "#this is a comment\n\r[the section]\n",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len("#this is a comment\n\r"),
+		},
+		{
+			String:           "#this is a comment\r[the section]\r",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len("#this is a comment\r"),
+		},
+		{
+			String:           "#this is a comment\r\n[the section]\r\n",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len("#this is a comment\r\n"),
+		},
+		{
+			String:           "#this is a comment\u0085[the section]\u0085",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len("#this is a comment\u0085"),
+		},
+		{
+			String:           "#this is a comment\u2028[the section]\u2028",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len("#this is a comment\u2028"),
+		},
+
+
+
+		{
+			String:           ";this is a comment\n[the section]\napple=one",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len(";this is a comment\n"),
+		},
+		{
+			String:           ";this is a comment\n\r[the section]\napple=one",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len(";this is a comment\n\n"),
+		},
+		{
+			String:           ";this is a comment\r[the section]\rapple=one",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len(";this is a comment\r"),
+		},
+		{
+			String:           ";this is a comment\r\n[the section]\r\napple=one",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len(";this is a comment\r\n"),
+		},
+		{
+			String:           ";this is a comment\u0085[the section]\u0085apple=one",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len(";this is a comment\u0085"),
+		},
+		{
+			String:           ";this is a comment\u2028[the section]\u2028apple=one",
+			ExpectedComment  : "this is a comment",
+			ExpectedSize: len(";this is a comment\u2028"),
+		},
+
+
+
+		{
+			String:           "#this is a comment\n[the section]\napple=one",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len("#this is a comment\n"),
+		},
+		{
+			String:           "#this is a comment\n\r[the section]\napple=one",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len("#this is a comment\n\r"),
+		},
+		{
+			String:           "#this is a comment\r[the section]\rapple=one",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len("#this is a comment\r"),
+		},
+		{
+			String:           "#this is a comment\r\n[the section]\r\napple=one",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len("#this is a comment\r\n"),
+		},
+		{
+			String:           "#this is a comment\u0085[the section]\u0085apple=one",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len("#this is a comment\u0085"),
+		},
+		{
+			String:           "#this is a comment\u2028[the section]\u2028apple=one",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len("#this is a comment\u2028"),
+		},
+
+
+
+		{
+			String:           ";this is a comment\n[the section]\napple=one\n",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len(";this is a comment\n"),
+		},
+		{
+			String:           ";this is a comment\n\r[the section]\napple=one\n",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len(";this is a comment\n\r"),
+		},
+		{
+			String:           ";this is a comment\r[the section]\rapple=one\r",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len(";this is a comment\r"),
+		},
+		{
+			String:           ";this is a comment\r\n[the section]\r\napple=one\r\n",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len(";this is a comment\r\n"),
+		},
+		{
+			String:           ";this is a comment\u0085[the section]\u0085apple=one\u0085",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len(";this is a comment\u0085"),
+		},
+		{
+			String:           ";this is a comment\u2028[the section]\u2028apple=one\u2028",
+			ExpectedComment: "this is a comment",
+			ExpectedSize: len(";this is a comment\u2028"),
+		},
+
+
+
+		{
+			String:           "#this is a comment\n[the section]\napple=one\n",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len("#this is a comment\n"),
+		},
+		{
+			String:          "#this is a comment\n\r[the section]\napple=one\n",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len("#this is a comment\n\r"),
+		},
+		{
+			String:          "#this is a comment\r[the section]\rapple=one\r",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len("#this is a comment\r"),
+		},
+		{
+			String:          "#this is a comment\r\n[the section]\r\napple=one\r\n",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len("#this is a comment\r\n"),
+		},
+		{
+			String:          "#this is a comment\u0085[the section]\u0085apple=one\u0085",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len("#this is a comment\u0085"),
+		},
+		{
+			String:           "#this is a comment\u2028[the section]\u2028apple=one\u2028",
+			ExpectedComment:   "this is a comment",
+			ExpectedSize: len("#this is a comment\u2028"),
 		},
 	}
 
 
 	for testNumber, test := range tests {
 
-		runeScanner := utf8.NewRuneScanner( strings.NewReader(test.Value) )
+		var p []byte = []byte(test.String)
 
-		var result strings.Builder
+		actualComment, actualSize, err := inicomment.ParseBytes(p)
 
-		err := Copy(&result, runeScanner)
-		if nil != err && io.EOF != err {
-			t.Errorf("For test #%d, did not expect an error, but actually got one: (%T) %q.", testNumber, err, err)
+		if nil != err {
+			t.Errorf("For test #%d, did not expect an error, but actually got one..", testNumber)
+			t.Logf("ERROR: (%T) %s", err, err)
+			t.Logf("STRING: %q", test.String)
 			continue
 		}
 
-		if expected, actual := test.ExpectedValue, result.String(); expected != actual {
-			t.Errorf("For test #%d, the actual copied value is not what was expected.", testNumber)
-			t.Logf("EXPECTED: %q", expected)
-			t.Logf("ACTUAL:   %q", actual)
-			t.Logf("VALUE: %q", test.Value)
-			continue
+		{
+			expected := test.ExpectedComment
+			actual   := actualComment
+
+			if expected != actual {
+				t.Errorf("For test #%d, the actual 'comment' is not what was expected." , testNumber)
+				t.Logf("EXPECTED: %q", expected)
+				t.Logf("ACTUAL:   %q", actual)
+				t.Logf("STRING: %q", test.String)
+				t.Logf("EXPECTED-SIZE: %d", test.ExpectedSize)
+				t.Logf("ACTUAL-SIZE:   %d", actualSize)
+				continue
+			}
 		}
 
-		if io.EOF == err {
-			continue
+		{
+			expected := test.ExpectedSize
+			actual   := actualSize
+
+			if expected != actual {
+				t.Errorf("For test #%d, the actual 'size' is not what was expected." , testNumber)
+				t.Logf("EXPECTED: %d", expected)
+				t.Logf("ACTUAL:   %d", actual)
+				t.Logf("STRING: %q", test.String)
+				continue
+			}
 		}
 	}
 }
 
-func TestCopyError(t *testing.T) {
+func TestParseBytesError(t *testing.T) {
 
 	tests := []struct{
-		Value string
+		String string
 	}{
 		{
-			Value: "key=value",
+			String:"key=value",
 		},
 		{
-			Value: "[section]",
+			String:"[section]",
 		},
 		{
-			Value: "    \r\n",
+			String:"    \r\n",
 		},
 		{
-			Value: "\n\n[section]\napple=one\nbanana=two\ncherry=three\n",
+			String:"\n\n[section]\napple=one\nbanana=two\ncherry=three\n",
 		},
 
 
 
 		{
-			Value: " ; This comment has whitespace in front of it.",
+			String:" ; This comment has whitespace in front of it.",
 		},
 		{
-			Value: " # This comment has whitespace in front of it.",
+			String:" # This comment has whitespace in front of it.",
 		},
 	}
 
 
 	for testNumber, test := range tests {
 
-		runeScanner := utf8.NewRuneScanner( strings.NewReader(test.Value) )
+		var p []byte = []byte(test.String)
 
-		var result strings.Builder
+		actualComment, actualSize, err := inicomment.ParseBytes(p)
 
-		err := Copy(&result, runeScanner)
-		if nil == err || io.EOF == err {
-			t.Errorf("For test #%d, expected an error, but did not actually got one: (%T) %q.", testNumber, err, err)
+		if nil == err {
+			t.Errorf("For test #%d, expected an error, but did not actually got one.", testNumber)
+			t.Logf("STRING: %q", test.String)
+			t.Logf("ACTUAL-COMMENT: %q", actualComment)
+			t.Logf("ACTUAL-SIZE: %d", actualSize)
 			continue
 		}
 	}

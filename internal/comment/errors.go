@@ -5,6 +5,6 @@ import (
 )
 
 const (
-	errNilRuneScanner = erorr.Error("ini: nil rune scanner")
-	errNilRuneWriter  = erorr.Error("ini: nil rune writer")
+	errInternalError = erorr.Error("ini: internal error")
+	errRuneError     = erorr.Error("ini: rune error")
 )
