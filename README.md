@@ -8,6 +8,40 @@ Online documentation, which includes examples, can be found at: http://godoc.org
 
 [![GoDoc](https://godoc.org/github.com/reiver/go-ini?status.svg)](https://godoc.org/github.com/reiver/go-ini)
 
+## Example
+
+Here is an example:
+
+```golang
+import "github.com/reiver/go-ini"
+
+// ...
+
+var inidata []byte = `
+apple  = 1
+banana = 2
+cherry = 3
+
+[count]
+
+once   = ۱
+
+twice  = ۱, ۲
+
+thrice = ۱, ۲, ۳
+
+fource = ۱, ۲, ۳, ۴
+
+`
+
+// ...
+
+err := ini.Unmarshal(inidata, dst)
+if nil != err {
+	return err
+}
+```
+
 ## Classic INI Format
 
 The classic INI data format looks like this:
