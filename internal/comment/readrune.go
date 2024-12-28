@@ -3,7 +3,7 @@ package inicomment
 import (
 	"io"
 
-	"sourcecode.social/reiver/go-erorr"
+	"github.com/reiver/go-erorr"
 )
 
 func readrune(runeScanner io.RuneScanner) (rune, error) {

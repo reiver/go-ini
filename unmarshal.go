@@ -3,7 +3,7 @@ package ini
 import (
 	"unicode/utf8"
 
-	"sourcecode.social/reiver/go-erorr"
+	"github.com/reiver/go-erorr"
 
 	"github.com/reiver/go-ini/internal/comment"
 	"github.com/reiver/go-ini/internal/namevalue"

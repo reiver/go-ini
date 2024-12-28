@@ -1,10 +1,10 @@
 module github.com/reiver/go-ini
 
-go 1.20
+go 1.22.4
+
+toolchain go1.23.4
 
 require (
-	github.com/reiver/go-runewriter v0.0.0-20240218202929-ad93e9f2b95d // indirect
-	sourcecode.social/reiver/go-eol v0.0.0-20240218181916-230937cb2e7c // indirect
-	sourcecode.social/reiver/go-erorr v0.0.0-20230922202459-231149d185a1 // indirect
-	sourcecode.social/reiver/go-utf8 v0.0.0-20231130152456-8769b5dac701 // indirect
+	github.com/reiver/go-eol v0.0.0-20241228123402-bd09ae292d56
+	github.com/reiver/go-erorr v0.0.0-20240801233437-8cbde6d1fa3f
 )

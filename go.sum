@@ -1,8 +1,4 @@
-github.com/reiver/go-runewriter v0.0.0-20240218202929-ad93e9f2b95d h1:iqvuAhmk5QVL/3N9Lu3aks+8VuUOPd8DTKS3m6Pj/P4=
-github.com/reiver/go-runewriter v0.0.0-20240218202929-ad93e9f2b95d/go.mod h1:A1cozHlZpZ20PTznWZvDD+KXJtO2PaMMueVySh/CABw=
-sourcecode.social/reiver/go-eol v0.0.0-20240218181916-230937cb2e7c h1:whd4igGMe6Opm5UmbiSB12COFM6+RGYDBe66T17S3Pc=
-sourcecode.social/reiver/go-eol v0.0.0-20240218181916-230937cb2e7c/go.mod h1:2OmaB7yZ5/S7rix/3mhFkLZ1HwkgCBt6NqdB4fFGQjI=
-sourcecode.social/reiver/go-erorr v0.0.0-20230922202459-231149d185a1 h1:wpnz4JicQBLWrgGphYBls7DysIFCcnWgDz/vce/sY8E=
-sourcecode.social/reiver/go-erorr v0.0.0-20230922202459-231149d185a1/go.mod h1:NFtd7fzEf0r6A6R7JXYZfayRhPaJy0zt/18VWoLzrxA=
-sourcecode.social/reiver/go-utf8 v0.0.0-20231130152456-8769b5dac701 h1:uD+KyIXYMTAAkkY1DRy5J4RANP0JIU9B9yd2XGFrC90=
-sourcecode.social/reiver/go-utf8 v0.0.0-20231130152456-8769b5dac701/go.mod h1:xZZIkdX6xIkkzalD1YTiM1F3Os9xPaIY7z9s6EBDmCI=
+github.com/reiver/go-eol v0.0.0-20241228123402-bd09ae292d56 h1:CpBXj0gkhyOX89L3n/zr7Nf90EIV5aPDQ5+EEMugXUs=
+github.com/reiver/go-eol v0.0.0-20241228123402-bd09ae292d56/go.mod h1:skwhMxG345FmpnAWJLjxGsc6qQaKB7WkiPfahuvrH04=
+github.com/reiver/go-erorr v0.0.0-20240801233437-8cbde6d1fa3f h1:D1QSxKHm8U73XhjsW3SFLkT0zT5pKJi+1KGboMhY1Rk=
+github.com/reiver/go-erorr v0.0.0-20240801233437-8cbde6d1fa3f/go.mod h1:F0HbBf+Ak2ZlE8YkDW4Y+KxaUmT0KaaIJK6CXY3cJxE=
