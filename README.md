@@ -92,3 +92,21 @@ length: 5cm
 count: ۵
 color: red
 ```
+
+## Import
+
+To import package **ini** use `import` code like the following:
+```
+import "github.com/reiver/go-ini"
+```
+
+## Installation
+
+To install package **ini** do the following:
+```
+GOPROXY=direct go get github.com/reiver/go-ini
+```
+
+## Author
+
+Package **ini** was written by [Charles Iliya Krempeaux](http://reiver.link)
