@@ -2,3 +2,5 @@ github.com/reiver/go-eol v0.0.0-20241228123402-bd09ae292d56 h1:CpBXj0gkhyOX89L3n
 github.com/reiver/go-eol v0.0.0-20241228123402-bd09ae292d56/go.mod h1:skwhMxG345FmpnAWJLjxGsc6qQaKB7WkiPfahuvrH04=
 github.com/reiver/go-erorr v0.0.0-20240801233437-8cbde6d1fa3f h1:D1QSxKHm8U73XhjsW3SFLkT0zT5pKJi+1KGboMhY1Rk=
 github.com/reiver/go-erorr v0.0.0-20240801233437-8cbde6d1fa3f/go.mod h1:F0HbBf+Ak2ZlE8YkDW4Y+KxaUmT0KaaIJK6CXY3cJxE=
+github.com/reiver/go-val v0.0.0-20241229160354-b4355e6e77c8 h1:k0djr1O2SH1RQnO03tNL3ZRmcerpKId+eNLIoM9JbLY=
+github.com/reiver/go-val v0.0.0-20241229160354-b4355e6e77c8/go.mod h1:lljtHDZyA3obpekXp1FyqECmF4IjVlQYUmUnrRReDAw=
