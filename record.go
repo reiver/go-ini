@@ -44,15 +44,6 @@ func (receiver Record) get(name string) (*val.Values[string], bool) {
 	return values, true
 }
 
-func (receiver Record) All(name string) []string {
-	values, found := receiver.get(name)
-	if !found {
-		return []string{}
-	}
-
-	return values.All()
-}
-
 func (receiver *Record) Append(name string, value string) {
 	if nil == receiver {
 		return
@@ -126,7 +117,7 @@ func (receiver Record) GoString() string {
 		p = append(p, "ini.EmptyRecord()"...)
 		for _, name := range receiver.Keys() {
 			var quotedValues []string
-			for _, value := range receiver.All(name) {
+			for _, value := range receiver.Values(name) {
 				var quotedValue string = fmt.Sprintf("%q", value)
 				quotedValues = append(quotedValues, quotedValue)
 			}
@@ -223,4 +214,13 @@ func (receiver *Record) Unset(name string) {
 	}
 
 	delete(receiver.data, name)
+}
+
+func (receiver Record) Values(name string) []string {
+	values, found := receiver.get(name)
+	if !found {
+		return []string{}
+	}
+
+	return values.All()
 }

@@ -8,7 +8,7 @@ import (
 	"github.com/reiver/go-val"
 )
 
-func TestRecord_All(t *testing.T) {
+func TestRecord_Values(t *testing.T) {
 
 	tests := []struct{
 		Record Record
@@ -201,12 +201,12 @@ func TestRecord_All(t *testing.T) {
 
 	for testNumber, test := range tests {
 
-		actual := test.Record.All(test.Name)
+		actual := test.Record.Values(test.Name)
 
 		expected := test.Expected
 
 		if !reflect.DeepEqual(expected, actual) {
-			t.Errorf("For test #%d, the actual .All() results are not what were expected.", testNumber)
+			t.Errorf("For test #%d, the actual .Values() results are not what were expected.", testNumber)
 			t.Logf("EXPECTED: (%d) %#v", len(expected), expected)
 			t.Logf("ACTUAL:   (%d) %#v", len(actual), actual)
 			t.Logf("RECORD: %#v", test.Record)
