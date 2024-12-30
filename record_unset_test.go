@@ -44,34 +44,34 @@ func TestRecord_Unet(t *testing.T) {
 
 
 		{
-			Record: NewEmptyRecord().ChainSet("apple", "one","two","three","four").Record(),
+			Record: NewEmptyRecord().ChainSet("apple", "one","two","three","four").ToRecord(),
 			Name: "",
 			Expected: Record{data:map[string]*val.Values[string]{
 				"apple":val.NewValues[string]("one","two","three","four"),
 			}},
 		},
 		{
-			Record: NewEmptyRecord().ChainSet("apple", "one","two","three","four").Record(),
+			Record: NewEmptyRecord().ChainSet("apple", "one","two","three","four").ToRecord(),
 			Name: "apple",
 			Expected: Record{data:map[string]*val.Values[string]{
 			}},
 		},
 		{
-			Record: NewEmptyRecord().ChainSet("apple", "one","two","three","four").Record(),
+			Record: NewEmptyRecord().ChainSet("apple", "one","two","three","four").ToRecord(),
 			Name: "Banana",
 			Expected: Record{data:map[string]*val.Values[string]{
 				"apple":val.NewValues[string]("one","two","three","four"),
 			}},
 		},
 		{
-			Record: NewEmptyRecord().ChainSet("apple", "one","two","three","four").Record(),
+			Record: NewEmptyRecord().ChainSet("apple", "one","two","three","four").ToRecord(),
 			Name: "CHERRY",
 			Expected: Record{data:map[string]*val.Values[string]{
 				"apple":val.NewValues[string]("one","two","three","four"),
 			}},
 		},
 		{
-			Record: NewEmptyRecord().ChainSet("apple", "one","two","three","four").Record(),
+			Record: NewEmptyRecord().ChainSet("apple", "one","two","three","four").ToRecord(),
 			Name: "dAtE",
 			Expected: Record{data:map[string]*val.Values[string]{
 				"apple":val.NewValues[string]("one","two","three","four"),
@@ -85,7 +85,7 @@ func TestRecord_Unet(t *testing.T) {
 				NewEmptyRecord().
 				ChainSet("apple",  "one","two","three","four").
 				ChainSet("Banana", "Once", "Twice", "Thrice", "Fource").
-				Record(),
+				ToRecord(),
 			Name: "",
 			Expected: Record{data:map[string]*val.Values[string]{
 				"apple":val.NewValues[string]("one","two","three","four"),
@@ -97,7 +97,7 @@ func TestRecord_Unet(t *testing.T) {
 				NewEmptyRecord().
 				ChainSet("apple",  "one","two","three","four").
 				ChainSet("Banana", "Once", "Twice", "Thrice", "Fource").
-				Record(),
+				ToRecord(),
 			Name: "apple",
 			Expected: Record{data:map[string]*val.Values[string]{
 				"Banana":val.NewValues[string]("Once", "Twice", "Thrice", "Fource"),
@@ -108,7 +108,7 @@ func TestRecord_Unet(t *testing.T) {
 				NewEmptyRecord().
 				ChainSet("apple",  "one","two","three","four").
 				ChainSet("Banana", "Once", "Twice", "Thrice", "Fource").
-				Record(),
+				ToRecord(),
 			Name: "Banana",
 			Expected: Record{data:map[string]*val.Values[string]{
 				"apple":val.NewValues[string]("one","two","three","four"),
@@ -119,7 +119,7 @@ func TestRecord_Unet(t *testing.T) {
 				NewEmptyRecord().
 				ChainSet("apple",  "one","two","three","four").
 				ChainSet("Banana", "Once", "Twice", "Thrice", "Fource").
-				Record(),
+				ToRecord(),
 			Name: "CHERRY",
 			Expected: Record{data:map[string]*val.Values[string]{
 				"apple":val.NewValues[string]("one","two","three","four"),
@@ -131,7 +131,7 @@ func TestRecord_Unet(t *testing.T) {
 				NewEmptyRecord().
 				ChainSet("apple",  "one","two","three","four").
 				ChainSet("Banana", "Once", "Twice", "Thrice", "Fource").
-				Record(),
+				ToRecord(),
 			Name: "dAtE",
 			Expected: Record{data:map[string]*val.Values[string]{
 				"apple":val.NewValues[string]("one","two","three","four"),
@@ -147,7 +147,7 @@ func TestRecord_Unet(t *testing.T) {
 				ChainSet("apple",  "one","two","three","four").
 				ChainSet("Banana", "Once", "Twice", "Thrice", "Fource").
 				ChainSet("CHERRY", "1","2","3","4").
-				Record(),
+				ToRecord(),
 			Name: "",
 			Expected: Record{data:map[string]*val.Values[string]{
 				"apple":val.NewValues[string]("one","two","three","four"),
@@ -160,7 +160,7 @@ func TestRecord_Unet(t *testing.T) {
 				NewEmptyRecord().
 				ChainSet("Banana", "Once", "Twice", "Thrice", "Fource").
 				ChainSet("CHERRY", "1","2","3","4").
-				Record(),
+				ToRecord(),
 			Name: "apple",
 			Expected: Record{data:map[string]*val.Values[string]{
 				"Banana":val.NewValues[string]("Once", "Twice", "Thrice", "Fource"),
@@ -172,7 +172,7 @@ func TestRecord_Unet(t *testing.T) {
 				NewEmptyRecord().
 				ChainSet("apple",  "one","two","three","four").
 				ChainSet("CHERRY", "1","2","3","4").
-				Record(),
+				ToRecord(),
 			Name: "Banana",
 			Expected: Record{data:map[string]*val.Values[string]{
 				"apple":val.NewValues[string]("one","two","three","four"),
@@ -184,7 +184,7 @@ func TestRecord_Unet(t *testing.T) {
 				NewEmptyRecord().
 				ChainSet("apple",  "one","two","three","four").
 				ChainSet("Banana", "Once", "Twice", "Thrice", "Fource").
-				Record(),
+				ToRecord(),
 			Name: "CHERRY",
 			Expected: Record{data:map[string]*val.Values[string]{
 				"apple":val.NewValues[string]("one","two","three","four"),
@@ -197,7 +197,7 @@ func TestRecord_Unet(t *testing.T) {
 				ChainSet("apple",  "one","two","three","four").
 				ChainSet("Banana", "Once", "Twice", "Thrice", "Fource").
 				ChainSet("CHERRY", "1","2","3","4").
-				Record(),
+				ToRecord(),
 			Name: "dAtE",
 			Expected: Record{data:map[string]*val.Values[string]{
 				"apple":val.NewValues[string]("one","two","three","four"),

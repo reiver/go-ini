@@ -54,7 +54,7 @@ func TestRecord_FirstElse(t *testing.T) {
 			Record:
 				ini.NewEmptyRecord().
 				ChainSet("apple", "ONE","TWO","THREE","FOUR").
-				Record(),
+				ToRecord(),
 			Name: "",
 			Alternative: "ALT",
 			Expected:    "ALT",
@@ -63,7 +63,7 @@ func TestRecord_FirstElse(t *testing.T) {
 			Record:
 				ini.NewEmptyRecord().
 				ChainSet("apple", "ONE","TWO","THREE","FOUR").
-				Record(),
+				ToRecord(),
 			Name: "apple",
 			Alternative: "ALT",
 			Expected:    "ONE",
@@ -72,7 +72,7 @@ func TestRecord_FirstElse(t *testing.T) {
 			Record:
 				ini.NewEmptyRecord().
 				ChainSet("apple", "ONE","TWO","THREE","FOUR").
-				Record(),
+				ToRecord(),
 			Name: "Banana",
 			Alternative: "ALT",
 			Expected:    "ALT",
@@ -81,7 +81,7 @@ func TestRecord_FirstElse(t *testing.T) {
 			Record:
 				ini.NewEmptyRecord().
 				ChainSet("apple", "ONE","TWO","THREE","FOUR").
-				Record(),
+				ToRecord(),
 			Name: "CHERRY",
 			Alternative: "ALT",
 			Expected:    "ALT",
@@ -90,7 +90,7 @@ func TestRecord_FirstElse(t *testing.T) {
 			Record:
 				ini.NewEmptyRecord().
 				ChainSet("apple", "ONE","TWO","THREE","FOUR").
-				Record(),
+				ToRecord(),
 			Name: "dAtE",
 			Alternative: "ALT",
 			Expected:    "ALT",
@@ -103,7 +103,7 @@ func TestRecord_FirstElse(t *testing.T) {
 				ini.NewEmptyRecord().
 				ChainSet("apple",  "ONE","TWO","THREE","FOUR").
 				ChainSet("Banana", "Once", "Twice", "Thrice", "Fource").
-				Record(),
+				ToRecord(),
 			Name: "",
 			Alternative: "ALT",
 			Expected:    "ALT",
@@ -113,7 +113,7 @@ func TestRecord_FirstElse(t *testing.T) {
 				ini.NewEmptyRecord().
 				ChainSet("apple", "ONE","TWO","THREE","FOUR").
 				ChainSet("Banana", "Once", "Twice", "Thrice", "Fource").
-				Record(),
+				ToRecord(),
 			Name: "apple",
 			Alternative: "ALT",
 			Expected:    "ONE",
@@ -123,7 +123,7 @@ func TestRecord_FirstElse(t *testing.T) {
 				ini.NewEmptyRecord().
 				ChainSet("apple", "ONE","TWO","THREE","FOUR").
 				ChainSet("Banana", "Once", "Twice", "Thrice", "Fource").
-				Record(),
+				ToRecord(),
 			Name: "Banana",
 			Alternative: "ALT",
 			Expected:    "Once",
@@ -133,7 +133,7 @@ func TestRecord_FirstElse(t *testing.T) {
 				ini.NewEmptyRecord().
 				ChainSet("apple", "ONE","TWO","THREE","FOUR").
 				ChainSet("Banana", "Once", "Twice", "Thrice", "Fource").
-				Record(),
+				ToRecord(),
 			Name: "CHERRY",
 			Alternative: "ALT",
 			Expected:    "ALT",
@@ -143,7 +143,7 @@ func TestRecord_FirstElse(t *testing.T) {
 				ini.NewEmptyRecord().
 				ChainSet("apple", "ONE","TWO","THREE","FOUR").
 				ChainSet("Banana", "Once", "Twice", "Thrice", "Fource").
-				Record(),
+				ToRecord(),
 			Name: "dAtE",
 			Alternative: "ALT",
 			Expected:    "ALT",
@@ -157,7 +157,7 @@ func TestRecord_FirstElse(t *testing.T) {
 				ChainSet("apple",  "ONE","TWO","THREE","FOUR").
 				ChainSet("Banana", "Once", "Twice", "Thrice", "Fource").
 				ChainSet("CHERRY", "1","2","3","4").
-				Record(),
+				ToRecord(),
 			Name: "",
 			Alternative: "ALT",
 			Expected:    "ALT",
@@ -168,7 +168,7 @@ func TestRecord_FirstElse(t *testing.T) {
 				ChainSet("apple", "ONE","TWO","THREE","FOUR").
 				ChainSet("Banana", "Once", "Twice", "Thrice", "Fource").
 				ChainSet("CHERRY", "1","2","3","4").
-				Record(),
+				ToRecord(),
 			Name: "apple",
 			Alternative: "ALT",
 			Expected:    "ONE",
@@ -179,7 +179,7 @@ func TestRecord_FirstElse(t *testing.T) {
 				ChainSet("apple", "ONE","TWO","THREE","FOUR").
 				ChainSet("Banana", "Once", "Twice", "Thrice", "Fource").
 				ChainSet("CHERRY", "1","2","3","4").
-				Record(),
+				ToRecord(),
 			Name: "Banana",
 			Alternative: "ALT",
 			Expected:    "Once",
@@ -190,7 +190,7 @@ func TestRecord_FirstElse(t *testing.T) {
 				ChainSet("apple", "ONE","TWO","THREE","FOUR").
 				ChainSet("Banana", "Once", "Twice", "Thrice", "Fource").
 				ChainSet("CHERRY", "1","2","3","4").
-				Record(),
+				ToRecord(),
 			Name: "CHERRY",
 			Alternative: "ALT",
 			Expected:    "1",
@@ -201,7 +201,7 @@ func TestRecord_FirstElse(t *testing.T) {
 				ChainSet("apple", "ONE","TWO","THREE","FOUR").
 				ChainSet("Banana", "Once", "Twice", "Thrice", "Fource").
 				ChainSet("CHERRY", "1","2","3","4").
-				Record(),
+				ToRecord(),
 			Name: "dAtE",
 			Alternative: "ALT",
 			Expected:    "ALT",

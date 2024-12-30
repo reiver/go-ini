@@ -183,14 +183,6 @@ func (receiver Record) Len() int {
 	return len(receiver.data)
 }
 
-func (receiver *Record) Record() Record {
-	if nil == receiver {
-		return EmptyRecord()
-	}
-
-	return *receiver
-}
-
 func (receiver *Record) Set(name string, values ...string) {
 	if nil == receiver {
 		return
@@ -202,6 +194,14 @@ func (receiver *Record) Set(name string, values ...string) {
 	receiver.init()
 
 	receiver.data[name] = val.NewValues(values...)
+}
+
+func (receiver *Record) ToRecord() Record {
+	if nil == receiver {
+		return EmptyRecord()
+	}
+
+	return *receiver
 }
 
 func (receiver *Record) Unset(name string) {

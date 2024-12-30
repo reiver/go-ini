@@ -28,7 +28,7 @@ func TestRecord_Keys(t *testing.T) {
 			Record:
 				ini.NewEmptyRecord().
 				ChainSet("apple",  "one","two","three","four").
-				Record(),
+				ToRecord(),
 			Expected: []string{"apple"},
 		},
 		{
@@ -36,7 +36,7 @@ func TestRecord_Keys(t *testing.T) {
 				ini.NewEmptyRecord().
 				ChainSet("apple",  "one","two","three","four").
 				ChainSet("Banana", "Once", "Twice", "Thrice", "Fource").
-				Record(),
+				ToRecord(),
 			Expected: []string{"Banana","apple"},
 		},
 		{
@@ -45,7 +45,7 @@ func TestRecord_Keys(t *testing.T) {
 				ChainSet("apple",  "one","two","three","four").
 				ChainSet("Banana", "Once", "Twice", "Thrice", "Fource").
 				ChainSet("CHERRY", "1","2","3","4").
-				Record(),
+				ToRecord(),
 			Expected: []string{"Banana","CHERRY","apple"},
 		},
 	}

@@ -26,7 +26,7 @@ func TestRecord_IsEmpty(t *testing.T) {
 			Record:
 				ini.NewEmptyRecord().
 				ChainSet("something").
-				Record(),
+				ToRecord(),
 			Expected: true,
 		},
 
@@ -36,7 +36,7 @@ func TestRecord_IsEmpty(t *testing.T) {
 			Record:
 				ini.NewEmptyRecord().
 				ChainSet("apple", "one","two","three","four").
-				Record(),
+				ToRecord(),
 			Expected: false,
 		},
 		{
@@ -44,7 +44,7 @@ func TestRecord_IsEmpty(t *testing.T) {
 				ini.NewEmptyRecord().
 				ChainSet("apple",  "one","two","three","four").
 				ChainSet("Banana", "Once", "Twice", "Thrice", "Fource").
-				Record(),
+				ToRecord(),
 			Expected: false,
 		},
 		{
@@ -53,7 +53,7 @@ func TestRecord_IsEmpty(t *testing.T) {
 				ChainSet("apple",  "one","two","three","four").
 				ChainSet("Banana", "Once", "Twice", "Thrice", "Fource").
 				ChainSet("CHERRY", "1","2","3","4").
-				Record(),
+				ToRecord(),
 			Expected: false,
 		},
 	}
