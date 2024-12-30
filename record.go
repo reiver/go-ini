@@ -46,7 +46,7 @@ func (receiver Record) get(name string) (*val.Values[string], bool) {
 	return values, true
 }
 
-func (receiver *Record) Append(name string, value string) {
+func (receiver *Record) Append(value string, name string) {
 	if nil == receiver {
 		return
 	}
@@ -71,9 +71,9 @@ func (receiver *Record) Chain(fn func(*Record)) *Record {
 	return receiver
 }
 
-func (receiver *Record) ChainAppend(name string, value string) *Record {
+func (receiver *Record) ChainAppend(value string, name string) *Record {
 	return receiver.Chain(func(record *Record) {
-		record.Append(name, value)
+		record.Append(value, name)
 	})
 }
 

@@ -191,7 +191,7 @@ func TestRecord_Append(t *testing.T) {
 	for testNumber, test := range tests {
 
 		actual := test.Record
-		actual.Append(test.Name, test.Value)
+		actual.Append(test.Value, test.Name)
 
 		expected := test.Expected
 

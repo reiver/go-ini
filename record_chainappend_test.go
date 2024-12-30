@@ -23,10 +23,10 @@ func TestRecord_ChainAppend(t *testing.T) {
 
 		{
 			Record: NewEmptyRecord().
-				ChainAppend("apple", "one").
-				ChainAppend("apple", "two").
-				ChainAppend("apple", "three").
-				ChainAppend("apple", "four").
+				ChainAppend("one",   "apple",).
+				ChainAppend("two",   "apple",).
+				ChainAppend("three", "apple").
+				ChainAppend("four",  "apple").
 				ToRecord(),
 			Expected: Record{data:map[string]*val.Values[string]{
 				"apple":val.NewValues[string]("one","two","three","four"),
@@ -38,55 +38,55 @@ func TestRecord_ChainAppend(t *testing.T) {
 		{
 			Record:
 				NewEmptyRecord().
-				ChainAppend("apple", "one").
-				ChainAppend("apple", "two").
-				ChainAppend("apple", "three").
-				ChainAppend("apple", "four").
-				ChainAppend("Banana", "Once").
-				ChainAppend("Banana", "Twice").
-				ChainAppend("Banana", "Thrice").
-				ChainAppend("Banana", "Fource").
-				ToRecord(),
-			Expected: Record{data:map[string]*val.Values[string]{
-				"apple":val.NewValues[string]("one","two","three","four"),
-				"Banana":val.NewValues[string]("Once", "Twice", "Thrice", "Fource"),
-			}},
-		},
-		{
-			Record:
-				NewEmptyRecord().
-				ChainAppend("apple", "one").
-				ChainAppend("Banana", "Once").
-				ChainAppend("apple", "two").
-				ChainAppend("Banana", "Twice").
-				ChainAppend("apple", "three").
-				ChainAppend("Banana", "Thrice").
-				ChainAppend("apple", "four").
-				ChainAppend("Banana", "Fource").
+				ChainAppend("one",   "apple",).
+				ChainAppend("two",   "apple",).
+				ChainAppend("three", "apple",).
+				ChainAppend("four",  "apple",).
+				ChainAppend("Once",   "Banana").
+				ChainAppend("Twice",  "Banana").
+				ChainAppend("Thrice", "Banana").
+				ChainAppend("Fource", "Banana").
 				ToRecord(),
 			Expected: Record{data:map[string]*val.Values[string]{
 				"apple":val.NewValues[string]("one","two","three","four"),
 				"Banana":val.NewValues[string]("Once", "Twice", "Thrice", "Fource"),
 			}},
 		},
+		{
+			Record:
+				NewEmptyRecord().
+				ChainAppend("one", "apple").
+				ChainAppend("Once", "Banana").
+				ChainAppend("two", "apple").
+				ChainAppend("Twice", "Banana").
+				ChainAppend("three", "apple").
+				ChainAppend("Thrice", "Banana").
+				ChainAppend("four", "apple").
+				ChainAppend("Fource", "Banana").
+				ToRecord(),
+			Expected: Record{data:map[string]*val.Values[string]{
+				"apple":val.NewValues[string]("one","two","three","four"),
+				"Banana":val.NewValues[string]("Once", "Twice", "Thrice", "Fource"),
+			}},
+		},
 
 
 
 		{
 			Record:
 				NewEmptyRecord().
-				ChainAppend("apple", "one").
-				ChainAppend("apple", "two").
-				ChainAppend("apple", "three").
-				ChainAppend("apple", "four").
-				ChainAppend("Banana", "Once").
-				ChainAppend("Banana", "Twice").
-				ChainAppend("Banana", "Thrice").
-				ChainAppend("Banana", "Fource").
-				ChainAppend("CHERRY", "1").
-				ChainAppend("CHERRY", "2").
-				ChainAppend("CHERRY", "3").
-				ChainAppend("CHERRY", "4").
+				ChainAppend("one",   "apple").
+				ChainAppend("two",   "apple").
+				ChainAppend("three", "apple").
+				ChainAppend("four",  "apple").
+				ChainAppend("Once",   "Banana").
+				ChainAppend("Twice",  "Banana").
+				ChainAppend("Thrice", "Banana").
+				ChainAppend("Fource", "Banana").
+				ChainAppend("1", "CHERRY").
+				ChainAppend("2", "CHERRY").
+				ChainAppend("3", "CHERRY").
+				ChainAppend("4", "CHERRY").
 				ToRecord(),
 			Expected: Record{data:map[string]*val.Values[string]{
 				"apple":val.NewValues[string]("one","two","three","four"),
@@ -97,18 +97,18 @@ func TestRecord_ChainAppend(t *testing.T) {
 		{
 			Record:
 				NewEmptyRecord().
-				ChainAppend("CHERRY", "1").
-				ChainAppend("Banana", "Once").
-				ChainAppend("apple", "one").
-				ChainAppend("Banana", "Twice").
-				ChainAppend("apple", "two").
-				ChainAppend("CHERRY", "2").
-				ChainAppend("apple", "three").
-				ChainAppend("CHERRY", "3").
-				ChainAppend("Banana", "Thrice").
-				ChainAppend("apple", "four").
-				ChainAppend("Banana", "Fource").
-				ChainAppend("CHERRY", "4").
+				ChainAppend("1", "CHERRY").
+				ChainAppend("Once", "Banana").
+				ChainAppend("one", "apple").
+				ChainAppend("Twice", "Banana").
+				ChainAppend("two", "apple").
+				ChainAppend("2", "CHERRY").
+				ChainAppend("three", "apple").
+				ChainAppend("3", "CHERRY").
+				ChainAppend("Thrice", "Banana").
+				ChainAppend("four", "apple").
+				ChainAppend("Fource", "Banana").
+				ChainAppend("4", "CHERRY").
 				ToRecord(),
 			Expected: Record{data:map[string]*val.Values[string]{
 				"apple":val.NewValues[string]("one","two","three","four"),
