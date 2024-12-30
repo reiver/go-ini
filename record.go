@@ -10,6 +10,8 @@ import (
 
 type Record struct {
 	data map[string]*val.Values[string]
+	sub map[string]Record
+	records []Record
 }
 
 func EmptyRecord() Record {
@@ -196,6 +198,12 @@ func (receiver *Record) Set(name string, values ...string) {
 	receiver.data[name] = val.NewValues(values...)
 }
 
+// ToRecord returns the `ini.Record` version of a `*ini.Record`.
+//
+// One way this is useful is if you are trying to construct a record.
+// For example:
+//
+//	var record ini.Record = ini.NewEmptyRecord().ChainSet("a","1").ToRecord()
 func (receiver *Record) ToRecord() Record {
 	if nil == receiver {
 		return EmptyRecord()
