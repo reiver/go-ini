@@ -218,8 +218,8 @@ func TestRecord_Unet(t *testing.T) {
 			t.Errorf("For test #%d, the actual .Unset() results are not what were expected.", testNumber)
 			t.Logf("EXPECTED: %#v", expected)
 			t.Logf("ACTUAL:   %#v", actual)
-			t.Logf("EXPECTED-NAMES: %#v", expected.Names())
-			t.Logf("ACTUAL-NAMES:   %#v", actual.Names())
+			t.Logf("EXPECTED-KEYS: %#v", expected.Keys())
+			t.Logf("ACTUAL-KEYS:   %#v", actual.Keys())
 			t.Logf("NAME: %q", test.Name)
 			continue
 		}

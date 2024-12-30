@@ -124,7 +124,7 @@ func (receiver Record) GoString() string {
 		var p []byte = buffer[0:0]
 
 		p = append(p, "ini.EmptyRecord()"...)
-		for _, name := range receiver.Names() {
+		for _, name := range receiver.Keys() {
 			var quotedValues []string
 			for _, value := range receiver.All(name) {
 				var quotedValue string = fmt.Sprintf("%q", value)
@@ -155,6 +155,21 @@ func (receiver Record) IsEmpty() bool {
 	return len(receiver.data) <= 0
 }
 
+func (receiver Record) Keys() []string {
+	if receiver.IsEmpty() {
+		return []string{}
+	}
+
+	var keys []string
+	for key, _ := range receiver.data {
+		keys = append(keys, key)
+	}
+
+	sort.Strings(keys)
+
+	return keys
+}
+
 func (receiver Record) Last(name string) (string, bool) {
 	values, found := receiver.get(name)
 	if !found {
@@ -175,21 +190,6 @@ func (receiver Record) LastElse(name string, alternative string) string {
 
 func (receiver Record) Len() int {
 	return len(receiver.data)
-}
-
-func (receiver Record) Names() []string {
-	if receiver.IsEmpty() {
-		return []string{}
-	}
-
-	var names []string
-	for name, _ := range receiver.data {
-		names = append(names, name)
-	}
-
-	sort.Strings(names)
-
-	return names
 }
 
 func (receiver *Record) Set(name string, values ...string) {

@@ -8,7 +8,7 @@ import (
 	"github.com/reiver/go-ini"
 )
 
-func TestRecord_Names(t *testing.T) {
+func TestRecord_Keys(t *testing.T) {
 
 	tests := []struct{
 		Record ini.Record
@@ -52,12 +52,12 @@ func TestRecord_Names(t *testing.T) {
 
 	for testNumber, test := range tests {
 
-		actual := test.Record.Names()
+		actual := test.Record.Keys()
 
 		expected := test.Expected
 
 		if !reflect.DeepEqual(expected, actual) {
-			t.Errorf("For test #%d, the actual .Names() results are not what were expected.", testNumber)
+			t.Errorf("For test #%d, the actual .Keys() results are not what were expected.", testNumber)
 			t.Logf("EXPECTED: %#v", expected)
 			t.Logf("ACTUAL:   %#v", actual)
 			t.Logf("RECORD: %#v", test.Record)
