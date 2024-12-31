@@ -2,7 +2,6 @@ package ini
 
 import (
 	"fmt"
-	"sort"
 	"strings"
 
 	"github.com/reiver/go-val"
@@ -158,7 +157,7 @@ func (receiver Record) Keys() []string {
 		keys = append(keys, key)
 	}
 
-	sort.Strings(keys)
+	SortKeys(keys)
 
 	return keys
 }
