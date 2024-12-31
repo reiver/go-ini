@@ -45,6 +45,10 @@ func TestEncodeKey(t *testing.T) {
 			Expected: `a\"b\"\"c`,
 		},
 		{
+			Key:      `a#b##c`,
+			Expected: `a\#b\#\#c`,
+		},
+		{
 			Key:      `a'b''c`,
 			Expected: `a\'b\'\'c`,
 		},
