@@ -37,7 +37,7 @@ func TestRecord_Keys(t *testing.T) {
 				ChainSet("apple",  "one","two","three","four").
 				ChainSet("Banana", "Once", "Twice", "Thrice", "Fource").
 				ToRecord(),
-			Expected: []string{"Banana","apple"},
+			Expected: []string{"apple","Banana"},
 		},
 		{
 			Record:
@@ -46,7 +46,7 @@ func TestRecord_Keys(t *testing.T) {
 				ChainSet("Banana", "Once", "Twice", "Thrice", "Fource").
 				ChainSet("CHERRY", "1","2","3","4").
 				ToRecord(),
-			Expected: []string{"Banana","CHERRY","apple"},
+			Expected: []string{"apple","Banana","CHERRY"},
 		},
 	}
 
