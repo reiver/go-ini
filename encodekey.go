@@ -1,10 +1,7 @@
 package ini
 
-// EncodeKey (potentially) encodes a key (from a key-value pair) to make it valid within INI content.
-func EncodeKey(key string) string {
-	var buffer [256]byte
-	var p []byte = buffer[0:0]
-
+// EncodeAndAppendKey is similar to [EncodeKey] except it appends the result to a []byte.
+func EncodeAndAppendKey(p []byte, key string) []byte {
 	var length int = len(key)
 
 	for index:=0; index<length; index++ {
@@ -27,6 +24,16 @@ func EncodeKey(key string) string {
 			p = append(p, b)
 		}
 	}
+
+	return p
+}
+
+// EncodeKey (potentially) encodes a key (from a key-value pair) to make it valid within INI content.
+func EncodeKey(key string) string {
+	var buffer [256]byte
+	var p []byte = buffer[0:0]
+
+	p = EncodeAndAppendKey(p, key)
 
 	return string(p)
 }
