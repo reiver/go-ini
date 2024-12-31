@@ -10,6 +10,8 @@ func EncodeAndAppendKey(p []byte, key string) []byte {
 		switch b {
 		case '"':  // U+0022
 			p = append(p, `\"`...)
+		case '#':  // U+0022
+			p = append(p, `\#`...)
 		case '\'': // U+0027
 			p = append(p, `\'`...)
 		case ':':  // U+003A
