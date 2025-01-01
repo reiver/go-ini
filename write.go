@@ -21,7 +21,7 @@ func Write(dst io.Writer, src any) error {
 	case KeyValueIterator:
 		keyvalueiter = casted
 	case map[string]string:
-		keyvalueiter = internalMapKeyValueIterator{casted}
+		keyvalueiter = internalMapStringStringKeyValueIterator{casted}
 	default:
 		return erorr.Errorf("ini: cannot write-ini for something of type %T", src)
 	}

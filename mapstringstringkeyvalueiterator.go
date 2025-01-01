@@ -1,10 +1,10 @@
 package ini
 
-type internalMapKeyValueIterator struct {
+type internalMapStringStringKeyValueIterator struct {
 	value map[string]string
 }
 
-func (receiver internalMapKeyValueIterator) For(fn func(string,string)error) error {
+func (receiver internalMapStringStringKeyValueIterator) For(fn func(string,string)error) error {
 	if nil == fn {
 		return nil
 	}
