@@ -1,13 +1,31 @@
 package ini
 
+import (
+	"github.com/reiver/go-ascii"
+	"github.com/reiver/go-unicode"
+)
+
 // EncodeAndAppendKey is similar to [EncodeKey] except it appends the result to a []byte.
 func EncodeAndAppendKey(p []byte, key string) []byte {
-	var length int = len(key)
+	const NELstr string = string(unicode.NEL)
+	const LSstr  string = string(unicode.LS)
+	const PSstr  string = string(unicode.PS)
 
-	for index:=0; index<length; index++ {
-		var b byte = key[index]
+	for _, r := range key {
 
-		switch b {
+		switch r {
+		case ascii.LF: // U+000A
+			p = append(p, '\\')
+			p = append(p, ascii.LF)
+		case ascii.VT: // U+000B
+			p = append(p, '\\')
+			p = append(p, ascii.VT)
+		case ascii.FF: // U+000C
+			p = append(p, '\\')
+			p = append(p, ascii.FF)
+		case ascii.CR: // U+000D
+			p = append(p, '\\')
+			p = append(p, ascii.CR)
 		case '"':  // U+0022
 			p = append(p, `\"`...)
 		case '#':  // U+0022
@@ -22,8 +40,17 @@ func EncodeAndAppendKey(p []byte, key string) []byte {
 			p = append(p, `\;`...)
 		case '\\': // U+009C
 			p = append(p, `\\`...)
+		case unicode.NEL: // U+0085
+			p = append(p, '\\')
+			p = append(p, NELstr...)
+		case unicode.LS: // U+2028
+			p = append(p, '\\')
+			p = append(p, LSstr...)
+		case unicode.PS: // U+2029
+			p = append(p, '\\')
+			p = append(p, PSstr...)
 		default:
-			p = append(p, b)
+			p = append(p, string(r)...)
 		}
 	}
 
