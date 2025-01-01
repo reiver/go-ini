@@ -16,20 +16,20 @@ func Write(dst io.Writer, src any) error {
 		return errNilWriter
 	}
 
-	var keyvaluer KeyValueIterator
+	var keyvalueiter KeyValueIterator
 	switch casted := src.(type) {
 	case KeyValueIterator:
-		keyvaluer = casted
+		keyvalueiter = casted
 	case map[string]string:
-		keyvaluer = internalMapKeyValueIterator{casted}
+		keyvalueiter = internalMapKeyValueIterator{casted}
 	default:
 		return erorr.Errorf("ini: cannot write-ini for something of type %T", src)
 	}
-	if nil == keyvaluer {
+	if nil == keyvalueiter {
 		return errNilKeyValueIterator
 	}
 
-	err := keyvaluer.For(func(key string, value string) error {
+	err := keyvalueiter.For(func(key string, value string) error {
 		var buffer [256]byte
 		var p []byte = buffer[0:0]
 
