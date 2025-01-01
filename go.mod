@@ -5,5 +5,7 @@ go 1.23.4
 require (
 	github.com/reiver/go-eol v0.0.0-20241228123402-bd09ae292d56
 	github.com/reiver/go-erorr v0.0.0-20240801233437-8cbde6d1fa3f
-	github.com/reiver/go-val v0.0.0-20241229160354-b4355e6e77c8
+	github.com/reiver/go-val v0.0.0-20241230161832-6c8b2de5bc88
 )
+
+require github.com/reiver/go-humane v0.0.0-20250101051026-1edff680dc45
