@@ -8,7 +8,7 @@ import (
 	"github.com/reiver/go-ini"
 )
 
-func TestWriteINI(t *testing.T) {
+func TestWrite(t *testing.T) {
 
 	tests := []struct{
 		Src any
@@ -169,7 +169,7 @@ func TestWriteINI(t *testing.T) {
 	for testNumber, test := range tests {
 
 		var dst strings.Builder
-		err := ini.WriteINI(&dst, test.Src)
+		err := ini.Write(&dst, test.Src)
 		if nil != err {
 			t.Errorf("For test #%d, did not expect an error but actually got one.", testNumber)
 			t.Logf("ERROR: (%T) %s", err, err)

@@ -8,7 +8,7 @@ import (
 func Marshal(value any) ([]byte, error) {
 	var buffer bytes.Buffer
 
-	err := WriteINI(&buffer, value)
+	err := Write(&buffer, value)
 	if nil != err {
 		return nil, err
 	}

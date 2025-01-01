@@ -10,7 +10,7 @@ const (
 	errNilKeyValueIterator = erorr.Error("ini: nil key-valuer")
 )
 
-func WriteINI(dst io.Writer, src any) error {
+func Write(dst io.Writer, src any) error {
 
 	if nil == dst {
 		return errNilWriter
