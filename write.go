@@ -25,12 +25,12 @@ func NestedWrite(dst io.Writer, src any, nesting ...string) error {
 		}
 	}
 
-	var keyvalueiter KeyValueIterator
+	var keyvalueiter KeyValuer
 	switch casted := src.(type) {
 	case Marshaler:
 		return writeMarshaler(dst, casted)
-	case KeyValueIterator:
-	keyvalueiter = casted
+	case KeyValuer:
+		keyvalueiter = casted
 	case map[string]string:
 		keyvalueiter = internalMapKeyValueIterator[string]{casted}
 	default:
@@ -48,7 +48,7 @@ func NestedWrite(dst io.Writer, src any, nesting ...string) error {
 	return nil
 }
 
-func write(dst io.Writer, src KeyValueIterator) error {
+func write(dst io.Writer, src KeyValuer) error {
 
 	if nil == dst {
 		return errNilWriter

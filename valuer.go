@@ -13,6 +13,8 @@ package ini
 //	func (recevier MyStruct) INIValue() (string, error) {
 //		// ...
 //	}
+//
+// For custom types that would be represented by more than just a simple INI value, see [KeyValuer]
 type Valuer interface {
 	INIValue() (string, error)
 }
