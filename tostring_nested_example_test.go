@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ExampleToString_mapStringString() {
+func ExampleNestedToString_mapStringString() {
 
 	var src = map[string]string{
 		"apple":"ONE",
@@ -17,7 +17,7 @@ func ExampleToString_mapStringString() {
 	var result string
 	var err error
 
-	result, err = ini.ToString(src)
+	result, err = ini.NestedToString(src, "fruits")
 	if nil != err {
 		fmt.Printf("ERROR: %s\n", err)
 		return
@@ -26,12 +26,14 @@ func ExampleToString_mapStringString() {
 	fmt.Print(result)
 
 	// Output:
+	// [fruits]
+	//
 	// apple = ONE
 	// Banana = TWO
 	// CHERRY = THREE
 }
 
-func ExampleToString_mapStringAny() {
+func ExampleNestedToString_mapStringAny() {
 
 	var src = map[string]any{
 		"cookies":"2",
@@ -51,7 +53,7 @@ func ExampleToString_mapStringAny() {
 	var result string
 	var err error
 
-	result, err = ini.ToString(src)
+	result, err = ini.NestedToString(src, "root", "node")
 	if nil != err {
 		fmt.Printf("ERROR: %s\n", err)
 		return
@@ -61,16 +63,18 @@ func ExampleToString_mapStringAny() {
 
 	// Output:
 	//
+	// [root.node]
+	//
 	// cookies = 2
 	// crackers = 1
 	//
-	// [dairy]
+	// [root.node.dairy]
 	//
 	// cheese = 20
 	// milk = 2
 	// yogurt = 12
 	//
-	// [fruits]
+	// [root.node.fruits]
 	//
 	// apple = ONE
 	// Banana = TWO
