@@ -1,5 +1,7 @@
 github.com/reiver/go-ascii v0.0.0-20241231150941-77b5f046e732 h1:ZuWdUYMnbfBtCN/FpAPceMw1kNYNH1eGslBFmqMLTMc=
 github.com/reiver/go-ascii v0.0.0-20241231150941-77b5f046e732/go.mod h1:f43/Y1zpLvqorZN0BelarPzO2GrotAQrBy3T08NUSTM=
+github.com/reiver/go-cast v0.0.0-20250101182008-cd84ca728c05 h1:ZvknA0+Y+n2gK0obB3ssl31Ua6i+Ypsy6ZplZdsPXfo=
+github.com/reiver/go-cast v0.0.0-20250101182008-cd84ca728c05/go.mod h1:baMIic1VWx4m5MRviwSyHFx1Z6POGMRrnVgsMvsLlAA=
 github.com/reiver/go-eol v0.0.0-20241228123402-bd09ae292d56 h1:CpBXj0gkhyOX89L3n/zr7Nf90EIV5aPDQ5+EEMugXUs=
 github.com/reiver/go-eol v0.0.0-20241228123402-bd09ae292d56/go.mod h1:skwhMxG345FmpnAWJLjxGsc6qQaKB7WkiPfahuvrH04=
 github.com/reiver/go-erorr v0.0.0-20240801233437-8cbde6d1fa3f h1:D1QSxKHm8U73XhjsW3SFLkT0zT5pKJi+1KGboMhY1Rk=

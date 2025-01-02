@@ -13,3 +13,5 @@ require github.com/reiver/go-humane v0.0.0-20250101051026-1edff680dc45
 require github.com/reiver/go-ascii v0.0.0-20241231150941-77b5f046e732
 
 require github.com/reiver/go-unicode v0.0.0-20240330202432-e385f372c7f8
+
+require github.com/reiver/go-cast v0.0.0-20250101182008-cd84ca728c05
