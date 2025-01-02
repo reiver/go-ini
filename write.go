@@ -28,7 +28,7 @@ func write(dst io.Writer, src KeyValueIterator) error {
 
 // Write writes the INI encoding of `src` to `dst`.
 //
-// See also [Marshal]
+// See also [Marshal] and [ToString]
 func Write(dst io.Writer, src any) error {
 	if nil == dst {
 		return errNilWriter

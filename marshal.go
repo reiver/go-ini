@@ -6,7 +6,7 @@ import (
 
 // Marshal returns the INI encoding of `value`.
 //
-// See also [Write]
+// See also [ToString] and [Write]
 func Marshal(value any) ([]byte, error) {
 	var buffer bytes.Buffer
 
