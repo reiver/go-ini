@@ -4,6 +4,7 @@ import (
 	"io"
 )
 
+// See also [SectionHeaderToString] and [WriteSectionHeader]
 func AppendSectionHeader(p []byte, name ...string) []byte {
 	if len(name) <= 0 {
 		return p
@@ -22,6 +23,7 @@ func AppendSectionHeader(p []byte, name ...string) []byte {
 	return p
 }
 
+// See also [AppendSectionHeader] and [WriteSectionHeader]
 func SectionHeaderToString(name ...string) string {
 	var buffer [256]byte
 	var p []byte = buffer[0:0]
@@ -31,6 +33,7 @@ func SectionHeaderToString(name ...string) string {
 	return string(p)
 }
 
+// See also [AppendSectionHeader] and [SectionHeaderToString]
 func WriteSectionHeader(dst io.Writer, name ...string) error {
 	if nil == dst {
 		return errNilWriter
