@@ -40,6 +40,10 @@ func EncodeAndAppendKey(p []byte, key string) []byte {
 			p = append(p, `\=`...)
 		case ';':  // U+003B
 			p = append(p, `\;`...)
+		case '[':  // U+005B
+			p = append(p, `\[`...)
+		case ']':  // U+005D
+			p = append(p, `\]`...)
 		case '\\': // U+009C
 			p = append(p, `\\`...)
 		case unicode.NEL: // U+0085
