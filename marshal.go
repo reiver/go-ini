@@ -17,3 +17,17 @@ func Marshal(value any) ([]byte, error) {
 
 	return buffer.Bytes(), nil
 }
+
+// NestedMarshal is similar to [Marshal] except nested.
+//
+// See also [NestedToString] and [NestedWrite]
+func NestedMarshal(value any, nesting ...string) ([]byte, error) {
+	var buffer bytes.Buffer
+
+	err := NestedWrite(&buffer, value, nesting...)
+	if nil != err {
+		return nil, err
+	}
+
+	return buffer.Bytes(), nil
+}

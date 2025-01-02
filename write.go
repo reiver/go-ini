@@ -10,6 +10,44 @@ const (
 	errNilKeyValueIterator = erorr.Error("ini: nil key-valuer")
 )
 
+// NestedWrite is similar to [Write] except nested.
+//
+// See also [NestedMarshal] and [NestedToString]
+func NestedWrite(dst io.Writer, src any, nesting ...string) error {
+	if nil == dst {
+		return errNilWriter
+	}
+
+	if 0 < len(nesting) {
+		err := WriteSectionHeader(dst, nesting...)
+		if nil != err {
+			return err
+		}
+	}
+
+	var keyvalueiter KeyValueIterator
+	switch casted := src.(type) {
+	case Marshaler:
+		return writeMarshaler(dst, casted)
+	case KeyValueIterator:
+	keyvalueiter = casted
+	case map[string]string:
+		keyvalueiter = internalMapKeyValueIterator[string]{casted}
+	default:
+		return erorr.Errorf("ini: cannot write-ini for something of type %T", src)
+	}
+	if nil == keyvalueiter {
+		return errNilKeyValueIterator
+	}
+
+	err := write(dst, keyvalueiter)
+	if nil != err {
+		return err
+	}
+
+	return nil
+}
+
 func write(dst io.Writer, src KeyValueIterator) error {
 
 	if nil == dst {
@@ -30,35 +68,10 @@ func write(dst io.Writer, src KeyValueIterator) error {
 //
 // See also [Marshal] and [ToString]
 func Write(dst io.Writer, src any) error {
-	if nil == dst {
-		return errNilWriter
-	}
-
-	var keyvalueiter KeyValueIterator
-	switch casted := src.(type) {
-	case Marshaler:
-		return WriteMarshaler(dst, casted)
-	case KeyValueIterator:
-	keyvalueiter = casted
-	case map[string]string:
-		keyvalueiter = internalMapKeyValueIterator[string]{casted}
-	default:
-		return erorr.Errorf("ini: cannot write-ini for something of type %T", src)
-	}
-	if nil == keyvalueiter {
-		return errNilKeyValueIterator
-	}
-
-	err := write(dst, keyvalueiter)
-	if nil != err {
-		return err
-	}
-
-	return nil
+	return NestedWrite(dst, src)
 }
 
-// WriteMarshaler is similar to [Write] except that it specifically writes the INI for a [Marshaler] rather than any.
-func WriteMarshaler(dst io.Writer, src Marshaler) error {
+func writeMarshaler(dst io.Writer, src Marshaler) error {
 	if nil == dst {
 		return errNilWriter
 	}
