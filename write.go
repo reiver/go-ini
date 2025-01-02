@@ -28,13 +28,14 @@ func write(dst io.Writer, src KeyValueIterator) error {
 
 // See also [Marshal]
 func Write(dst io.Writer, src any) error {
-
 	if nil == dst {
 		return errNilWriter
 	}
 
 	var keyvalueiter KeyValueIterator
 	switch casted := src.(type) {
+	case Marshaler:
+		return WriteMarshaler(dst, casted)
 	case KeyValueIterator:
 	keyvalueiter = casted
 	case map[string]string:
@@ -47,6 +48,27 @@ func Write(dst io.Writer, src any) error {
 	}
 
 	err := write(dst, keyvalueiter)
+	if nil != err {
+		return err
+	}
+
+	return nil
+}
+
+func WriteMarshaler(dst io.Writer, src Marshaler) error {
+	if nil == dst {
+		return errNilWriter
+	}
+	if nil == src {
+		return errNilMarshaler
+	}
+
+	p, err := src.MarshalINI()
+	if nil != err {
+		return err
+	}
+
+	_, err = dst.Write(p)
 	if nil != err {
 		return err
 	}

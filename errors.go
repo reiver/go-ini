@@ -7,6 +7,7 @@ import (
 const (
 	errNilBytes      = erorr.Error("ini: nil bytes")
 	errInternalError = erorr.Error("ini: internal error")
+	errNilMarshaler  = erorr.Error("ini: nil marshaler")
 	errNilMap        = erorr.Error("ini: nil map")
 	errNilPublisher  = erorr.Error("ini: nil publisher")
 	errNilReceiver   = erorr.Error("ini: nil receiver")
