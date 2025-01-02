@@ -26,6 +26,7 @@ func write(dst io.Writer, src KeyValueIterator) error {
 	return nil
 }
 
+// See also [Marshal]
 func Write(dst io.Writer, src any) error {
 
 	if nil == dst {
