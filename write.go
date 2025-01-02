@@ -55,6 +55,7 @@ func Write(dst io.Writer, src any) error {
 	return nil
 }
 
+// WriteMarshaler is similar to [Write] except that it specifically writes the INI for a [Marshaler] rather than any.
 func WriteMarshaler(dst io.Writer, src Marshaler) error {
 	if nil == dst {
 		return errNilWriter
