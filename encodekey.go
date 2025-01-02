@@ -32,6 +32,8 @@ func EncodeAndAppendKey(p []byte, key string) []byte {
 			p = append(p, `\#`...)
 		case '\'': // U+0027
 			p = append(p, `\'`...)
+		case '.': // U+002E
+			p = append(p, `\.`...)
 		case ':':  // U+003A
 			p = append(p, `\:`...)
 		case '=':  // U+003D
