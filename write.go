@@ -17,20 +17,7 @@ func write(dst io.Writer, src KeyValueIterator) error {
 	}
 
 	err := src.For(func(key string, value string) error {
-		var buffer [256]byte
-		var p []byte = buffer[0:0]
-
-		p = EncodeAndAppendKey(p, key)
-		p = append(p, " = "...)
-		p = EncodeAndAppendValue(p, value)
-		p = append(p, '\n')
-
-		_, err := dst.Write(p)
-		if nil != err {
-			return err
-		}
-
-		return nil
+		return WriteKeyValue(dst, key, value)
 	})
 	if nil != err {
 		return err
