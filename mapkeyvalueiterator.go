@@ -1,7 +1,6 @@
 package ini
 
 import (
-	"github.com/reiver/go-cast"
 	"github.com/reiver/go-erorr"
 )
 
@@ -31,7 +30,7 @@ func (receiver internalMapKeyValueIterator[T]) For(fn func(string,string)error) 
 		{
 			var err error
 
-			stringvalue, err = cast.String(value)
+			stringvalue, err = ValueOf(value)
 			if nil != err {
 				return erorr.Errorf("ini: problem casting from 'string' to '%T': %w", value, err)
 			}
