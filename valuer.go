@@ -1,8 +1,8 @@
 package ini
 
-// Valuer is used by custom types to return their INI value.
+// Valuer is used by custom types to return its INI value that can be represented by as a simple INI value.
 //
-// Valuer is used by [ValueOf]
+// Behind the scenes, Valuer is used by [ValueOf]
 //
 // For example:
 //
