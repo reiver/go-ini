@@ -11,6 +11,14 @@ import (
 // A custom type can also have an ini-content by implementing the [Marshaler] interface.
 //
 // See also [ToString] and [Write]
+//
+// Example of calling Marshal without a nesting:
+//
+//	bytes, err := ini.Marshal(data)
+//
+// Example of calling Marshal with a nesting:
+//
+//	bytes, err := ini.Marshal(data, "dairy", "milk")
 func Marshal(content any, nesting ...string) ([]byte, error) {
 	var marshaler Marshaler
 
