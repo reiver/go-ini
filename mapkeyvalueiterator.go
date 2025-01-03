@@ -1,8 +1,9 @@
 package ini
 
-import (
-	"github.com/reiver/go-erorr"
-)
+type internalKeyValueIterator interface {
+	For(fn func(string,string)error) error
+	Sub(fn func(internalKeyValueIterator)error) error
+}
 
 type internalMapKeyValueIterator[T any] struct {
 	value map[string]T
@@ -17,11 +18,13 @@ func (receiver internalMapKeyValueIterator[T]) For(fn func(string,string)error) 
 	}
 
 	var keys []string
-	for key, _ := range receiver.value {
-		keys = append(keys, key)
-	}
+	{
+		for key, _ := range receiver.value {
+			keys = append(keys, key)
+		}
 
-	SortKeys(keys)
+		SortKeys(keys)
+	}
 
 	for _, key := range keys {
 		var value T = receiver.value[key]
@@ -32,11 +35,56 @@ func (receiver internalMapKeyValueIterator[T]) For(fn func(string,string)error) 
 
 			stringvalue, err = ValueOf(value)
 			if nil != err {
-				return erorr.Errorf("ini: problem casting from 'string' to '%T': %w", value, err)
+	/////////////////////// CONTINUE
+				continue
 			}
 		}
 
 		err := fn(key, stringvalue)
+		if nil != err {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (receiver internalMapKeyValueIterator[T]) Sub(fn func(internalKeyValueIterator)error) error {
+	if nil == fn {
+		return nil
+	}
+	if len(receiver.value) <= 0 {
+		return nil
+	}
+
+	var keys []string
+	{
+		for key, _ := range receiver.value {
+			keys = append(keys, key)
+		}
+
+		SortKeys(keys)
+	}
+
+	for _, key := range keys {
+		var value T = receiver.value[key]
+
+		var something any = value
+
+		var iterator internalKeyValueIterator
+		{
+			switch casted := something.(type) {
+			case map[string]string:
+				iterator = internalMapKeyValueIterator[string]{casted}
+			case map[string]any:
+				iterator = internalMapKeyValueIterator[any]{casted}
+			default:
+	/////////////////////// CONTINUE
+				continue
+			}
+		}
+
+		err := fn(iterator)
 		if nil != err {
 			return err
 		}
