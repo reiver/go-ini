@@ -6,6 +6,58 @@ import (
 	"fmt"
 )
 
+func ExampleMarshal_sliceMapStringString() {
+
+	var src = []map[string]string{
+		map[string]string{
+			"apple":"ONE",
+			"Banana":"TWO",
+			"CHERRY":"THREE",
+			"dAtE":"FOUR",
+		},
+		map[string]string{
+			"apple":"1",
+			"Banana":"2",
+			"CHERRY":"3",
+			"dAtE":"4",
+		},
+		map[string]string{
+			"apple":"once",
+			"Banana":"twice",
+			"CHERRY":"thrice",
+			"dAtE":"fource",
+		},
+	}
+
+	p, err := ini.Marshal(src, "fruits") // <---------
+
+	if nil != err {
+		fmt.Printf("ERROR: %s\n", err)
+		return
+	}
+
+	var result string = string(p)
+
+	fmt.Print(result)
+
+	// Output:
+	// [[fruits]]
+	// apple = ONE
+	// Banana = TWO
+	// CHERRY = THREE
+	// dAtE = FOUR
+	// [[fruits]]
+	// apple = 1
+	// Banana = 2
+	// CHERRY = 3
+	// dAtE = 4
+	// [[fruits]]
+	// apple = once
+	// Banana = twice
+	// CHERRY = thrice
+	// dAtE = fource
+}
+
 func ExampleMarshal_mapStringString() {
 
 	var src = map[string]string{
@@ -14,7 +66,8 @@ func ExampleMarshal_mapStringString() {
 		"CHERRY":"THREE",
 	}
 
-	p, err := ini.Marshal(src)
+	p, err := ini.Marshal(src) // <---------
+
 	if nil != err {
 		fmt.Printf("ERROR: %s\n", err)
 		return
@@ -47,7 +100,8 @@ func ExampleMarshal_mapStringAny() {
 		},
 	}
 
-	p, err := ini.Marshal(src)
+	p, err := ini.Marshal(src) // <---------
+
 	if nil != err {
 		fmt.Printf("ERROR: %s\n", err)
 		return
@@ -102,7 +156,7 @@ func ExampleMarshal_mapStringAny_2() {
 		},
 	}
 
-	result, err := ini.Marshal(m)
+	result, err := ini.Marshal(m) // <---------
 
 	if nil != err {
 		fmt.Printf("ERROR: %s\n", err)
