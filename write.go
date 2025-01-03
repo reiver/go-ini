@@ -12,7 +12,7 @@ func Write(dst io.Writer, src any) error {
 		return errNilWriter
 	}
 
-	p, err := ContentOf(src)
+	p, err := Marshal(src)
 	if nil != err {
 		return err
 	}
