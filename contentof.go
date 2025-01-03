@@ -8,18 +8,18 @@ import (
 //
 // Some Go built-in types have an ini-content represention; such as map[string]any and map[string]string
 //
-// A custom type can also have an ini-content by implementing the [Contenter] interface.
+// A custom type can also have an ini-content by implementing the [Marshaler] interface.
 func ContentOf(v any, nesting ...string) ([]byte, error) {
 
-	var contenter Contenter
+	var marshaler Marshaler
 
 	switch casted := v.(type) {
-	case Contenter:
-		contenter = casted
+	case Marshaler:
+		marshaler = casted
 	case map[string]string:
-		contenter = internalMapStringString{casted}
+		marshaler = internalMapStringString{casted}
 	case map[string]any:
-		contenter = internalMapStringAny{casted}
+		marshaler = internalMapStringAny{casted}
 	default:
 		return nil, erorr.Errorf("ini: type %T does not have a 'content' representation", v)
 	}
@@ -28,6 +28,6 @@ func ContentOf(v any, nesting ...string) ([]byte, error) {
 		var buffer [256]byte
 		var p []byte = buffer[0:0]
 
-		return contenter.AppendINIContent(p, nesting...)
+		return marshaler.MarshalINI(p, nesting...)
 	}
 }

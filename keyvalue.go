@@ -6,8 +6,8 @@ import (
 
 // AppendKeyValue appends the INI representation of a key-vaue pair.
 //
-// You might use this function is you are implementing the [Contenter] interface for a custom type.
-// And in particular, use it (directly or indirectly) from you AppendINIContent method.
+// You might use this function is you are implementing the [Marshaler] interface for a custom type.
+// And in particular, use it (directly or indirectly) from you Marshal method.
 //
 // Also see [KeyValueToString] and [WriteKeyValue]
 func AppendKeyValue(p []byte, key string, value string) []byte {

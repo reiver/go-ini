@@ -6,8 +6,8 @@ import (
 
 // AppendSectionHeader appends the INI representation of a section header.
 //
-// You might use this function is you are implementing the [Contenter] interface for a custom type.
-// And in particular, use it (directly or indirectly) from you AppendINIContent method.
+// You might use this function is you are implementing the [Marshaler] interface for a custom type.
+// And in particular, use it (directly or indirectly) from you MarshalINI method.
 //
 // Also see [SectionHeaderToString] and [WriteSectionHeader]
 func AppendSectionHeader(p []byte, name ...string) []byte {

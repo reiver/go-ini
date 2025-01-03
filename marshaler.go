@@ -1,5 +1,8 @@
 package ini
 
+// Marshaler is used by custom types to return its INI value.
+//
+// Behind the scenes, Marshaler is used by [ContentOf]
 type Marshaler interface {
-	MarshalINI(...string) ([]byte, error)
+	MarshalINI([]byte, ...string) ([]byte, error)
 }

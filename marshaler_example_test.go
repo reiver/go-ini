@@ -12,7 +12,7 @@ type MyCustomType struct {
 	number uint64
 }
 
-func (receiver MyCustomType) AppendINIContent(p []byte, nesting ...string) ([]byte, error) {
+func (receiver MyCustomType) MarshalINI(p []byte, nesting ...string) ([]byte, error) {
 	if 0 < len(nesting) {
 		p = ini.AppendSectionHeader(p, nesting...)
 	}
@@ -23,7 +23,7 @@ func (receiver MyCustomType) AppendINIContent(p []byte, nesting ...string) ([]by
 	return p, nil
 }
 
-func ExampleContenter() {
+func ExampleMarshaler() {
 
 	var value = MyCustomType{
 		color: "red",

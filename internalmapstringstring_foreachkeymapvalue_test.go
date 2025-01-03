@@ -51,7 +51,7 @@ func TestInternalMapStringString_ForEachKeyMapValue(t *testing.T) {
 	for testNumber, test := range tests {
 
 		var actual []string
-		err := test.Value.ForEachKeyMapValue(func(key string, mapWrapper internalMapWrapper)error{
+		err := test.Value.ForEachKeyMapValue(func(key string, marshaler Marshaler)error{
 			actual = append(actual, key)
 
 			return nil

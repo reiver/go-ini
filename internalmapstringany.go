@@ -8,7 +8,7 @@ func (receiver internalMapStringAny) IsEmpty() bool {
 	return  len(receiver.value) <= 0
 }
 
-func (receiver internalMapStringAny) AppendINIContent(p []byte, nesting ...string) ([]byte, error) {
+func (receiver internalMapStringAny) MarshalINI(p []byte, nesting ...string) ([]byte, error) {
 
 	if receiver.IsEmpty() {
 		return p, nil
@@ -26,16 +26,16 @@ func (receiver internalMapStringAny) AppendINIContent(p []byte, nesting ...strin
 		return p, err
 	}
 
-	err = receiver.ForEachKeyMapValue(func(key string, iterator internalMapWrapper) error {
-		if nil == iterator {
-			return errNilInternalMapWrapper
+	err = receiver.ForEachKeyMapValue(func(key string, marshaler Marshaler) error {
+		if nil == marshaler {
+			return errNilMarshaler
 		}
 
 		var newNesting []string = append([]string(nil), nesting...)
 		newNesting = append(newNesting, key)
 
 		var e error
-		p, e = iterator.AppendINIContent(p, newNesting...)
+		p, e = marshaler.MarshalINI(p, newNesting...)
 		if nil != e {
 			return e
 		}
@@ -53,7 +53,7 @@ func (receiver internalMapStringAny) Keys() []string {
 	return mapKeys(receiver.value)
 }
 
-func (receiver internalMapStringAny) ForEachKeyMapValue(fn func(string,internalMapWrapper)error) error {
+func (receiver internalMapStringAny) ForEachKeyMapValue(fn func(string,Marshaler)error) error {
 	if receiver.IsEmpty() {
 		return nil
 	}
@@ -63,7 +63,7 @@ func (receiver internalMapStringAny) ForEachKeyMapValue(fn func(string,internalM
 	for _, key := range keys {
 		var valueAny any = receiver.value[key]
 
-		var value internalMapWrapper
+		var value Marshaler
 
 		switch casted := valueAny.(type) {
 		case map[string]string:
@@ -121,5 +121,5 @@ func (receiver internalMapStringAny) INIContent(nesting ...string) ([]byte, erro
 	var buffer [256]byte
 	var p []byte = buffer[0:0]
 
-	return receiver.AppendINIContent(p, nesting...)
+	return receiver.MarshalINI(p, nesting...)
 }
