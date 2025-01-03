@@ -15,7 +15,8 @@ func ContentOf(v any, nesting ...string) ([]byte, error) {
 	case Contenter:
 		return casted.INIContent(nesting...)
 	case map[string]any:
-		return contentOfMap(casted, nesting...)
+		var iterator internalKeyValueIterator = internalMapKeyValueIterator[any]{casted}
+		return contentOfInternalIterator(iterator, nesting...)
 	default:
 		return nil, erorr.Errorf("ini: type %T does not have a 'content' representation", v)
 	}

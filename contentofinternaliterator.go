@@ -1,17 +1,15 @@
 package ini
 
-func contentOfMap(m map[string]any, nesting ...string) ([]byte, error) {
+func contentOfInternalIterator(iterator internalKeyValueIterator, nesting ...string) ([]byte, error) {
 
-	if len(m) <= 0 {
-		return nil, nil
+	if nil == iterator {
+		return nil, errNilKeyValueIterator
 	}
 
 	var buffer [256]byte
 	var p []byte = buffer[0:0]
 
 	{
-		iterator := internalMapKeyValueIterator[any]{m}
-
 		var appended bool
 		err := iterator.For(func(key string, value string) error {
 			p = AppendKeyValue(p, key, value)
