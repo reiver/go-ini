@@ -60,18 +60,13 @@ func ExampleToString_mapStringAny() {
 	fmt.Print(result)
 
 	// Output:
-	//
 	// cookies = 2
 	// crackers = 1
-	//
 	// [dairy]
-	//
 	// cheese = 20
 	// milk = 2
 	// yogurt = 12
-	//
 	// [fruits]
-	//
 	// apple = ONE
 	// Banana = TWO
 	// CHERRY = THREE
