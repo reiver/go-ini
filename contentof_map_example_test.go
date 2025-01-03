@@ -26,6 +26,16 @@ func ExampleContentOf_mapAny() {
 			"CHERRY": "THRICE",
 			"dAtE":   "FOURCE",
 		},
+		"z":map[string]any{
+			"z-1":map[string]any{
+				"z-1-1":"HERE",
+				"z-1-2":map[string]string{
+					"z-1-2-1":"(1)",
+					"z-1-2-2":"(2)",
+					"z-1-2-3":"(3)",
+				},
+			},
+		},
 	}
 
 	result, err := ini.ContentOf(m)
@@ -58,5 +68,14 @@ func ExampleContentOf_mapAny() {
 	// Banana = TWICE
 	// CHERRY = THRICE
 	// dAtE = FOURCE
-	// --TODO--
+	//
+	// [z.z-1]
+	//
+	// z-1-1 = HERE
+	//
+	// [z.z-1.z-1-2]
+	//
+	// z-1-2-1 = (1)
+	// z-1-2-2 = (2)
+	// z-1-2-3 = (3)
 }
