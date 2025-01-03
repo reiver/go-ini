@@ -11,7 +11,7 @@ import (
 //
 // Also see [KeyValueToString] and [WriteKeyValue]
 func AppendKeyValue(p []byte, key string, value string) []byte {
-	p = EncodeAndAppendKey(p, key)
+	p = encodeAndAppendKey(p, key)
 	p = append(p, " = "...)
 	p = EncodeAndAppendValue(p, value)
 	p = append(p, '\n')

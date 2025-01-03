@@ -62,7 +62,7 @@ func AppendSequenceHeader(p []byte, name ...string) []byte {
 		if 0 < index {
 			p = append(p, '.')
 		}
-		p = EncodeAndAppendKey(p, part)
+		p = encodeAndAppendKey(p, part)
 	}
 	p = append(p, "]]"...)
 	p = append(p, '\n')

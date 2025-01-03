@@ -1,9 +1,7 @@
-package ini_test
+package ini
 
 import (
 	"testing"
-
-	"github.com/reiver/go-ini"
 )
 
 func TestEncodeKey(t *testing.T) {
@@ -79,7 +77,7 @@ func TestEncodeKey(t *testing.T) {
 
 	for testNumber, test := range tests {
 
-		actual := ini.EncodeKey(test.Key)
+		actual := encodeKey(test.Key)
 
 		expected := test.Expected
 

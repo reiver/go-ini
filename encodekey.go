@@ -5,8 +5,8 @@ import (
 	"github.com/reiver/go-unicode"
 )
 
-// EncodeAndAppendKey is similar to [EncodeKey] except it appends the result to a []byte.
-func EncodeAndAppendKey(p []byte, key string) []byte {
+// encodeAndAppendKey is similar to [encodeKey] except it appends the result to a []byte.
+func encodeAndAppendKey(p []byte, key string) []byte {
 	const NELstr string = string(unicode.NEL)
 	const LSstr  string = string(unicode.LS)
 	const PSstr  string = string(unicode.PS)
@@ -63,12 +63,12 @@ func EncodeAndAppendKey(p []byte, key string) []byte {
 	return p
 }
 
-// EncodeKey (potentially) encodes a key (from a key-value pair) to make it valid within INI content.
-func EncodeKey(key string) string {
+// encodeKey (potentially) encodes a key (from a key-value pair) to make it valid within INI content.
+func encodeKey(key string) string {
 	var buffer [256]byte
 	var p []byte = buffer[0:0]
 
-	p = EncodeAndAppendKey(p, key)
+	p = encodeAndAppendKey(p, key)
 
 	return string(p)
 }
