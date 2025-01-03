@@ -24,5 +24,10 @@ func ContentOf(v any, nesting ...string) ([]byte, error) {
 		return nil, erorr.Errorf("ini: type %T does not have a 'content' representation", v)
 	}
 
-	return contenter.INIContent(nesting...)
+	{
+		var buffer [256]byte
+		var p []byte = buffer[0:0]
+
+		return contenter.AppendINIContent(p, nesting...)
+	}
 }

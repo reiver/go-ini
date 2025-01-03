@@ -6,5 +6,5 @@ package ini
 //
 // See also [Sectioner] and [Valuer]
 type Contenter interface {
-	INIContent(...string) ([]byte, error)
+	AppendINIContent([]byte, ...string) ([]byte, error)
 }
