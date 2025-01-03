@@ -9,15 +9,23 @@ import (
 // Some Go built-in types have a ini-section; such as map[string]string
 //
 // A custom type can also have an ini-section by implementing the [Sectioner] interface.
-func SectionOf(v any) ([]byte, error) {
+func SectionOf(v any, nesting ...string) ([]byte, error) {
+
+	var sectioner Sectioner
 
 	switch casted := v.(type) {
 	case Sectioner:
-		return casted.INISection()
+		sectioner = casted
 	case map[string]string:
-		var iterator internalKeyValueIterator = internalMapKeyValueIterator[string]{casted}
-		return sectionOfInternalIterator(iterator)
+		sectioner = internalMapStringString{casted}
 	default:
 		return nil, erorr.Errorf("ini: type %T does not have a 'section' representation", v)
+	}
+
+	{
+		var buffer [256]byte
+		var p []byte = buffer[0:0]
+
+		return sectioner.AppendINISection(p, nesting...)
 	}
 }

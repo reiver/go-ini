@@ -28,6 +28,27 @@ func (receiver internalMapStringString) AppendINIContent(p []byte, nesting ...st
 	return p, nil
 }
 
+func (receiver internalMapStringString) AppendINISection(p []byte, nesting ...string) ([]byte, error) {
+	if receiver.IsEmpty() {
+		return p, nil
+	}
+
+	if 0 < len(nesting) {
+		p = AppendSectionHeader(p, nesting...)
+	}
+
+	err := receiver.ForEachKeyStringValue(func(key string, value string) error {
+		p = AppendKeyValue(p, key, value)
+		return nil
+	})
+	if nil != err {
+		return p, err
+	}
+
+	return p, nil
+}
+
+
 func (receiver internalMapStringString) Keys() []string {
 	return mapKeys(receiver.value)
 }

@@ -16,5 +16,5 @@ package ini
 //
 // For custom types that would be represented by more than just a simple INI value, see [KeySectionr]
 type Sectioner interface {
-	INISection() ([]byte, error)
+	AppendINISection([]byte, ...string) ([]byte, error)
 }
