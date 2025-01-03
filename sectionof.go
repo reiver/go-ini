@@ -15,7 +15,8 @@ func SectionOf(v any) ([]byte, error) {
 	case Sectioner:
 		return casted.INISection()
 	case map[string]string:
-		return sectionOfMap(casted)
+		var iterator internalKeyValueIterator = internalMapKeyValueIterator[string]{casted}
+		return sectionOfInternalIterator(iterator)
 	default:
 		return nil, erorr.Errorf("ini: type %T does not have a 'section' representation", v)
 	}
