@@ -4,7 +4,7 @@ import (
 	"io"
 )
 
-// AppendSequenceHeader appends the INI representation of a section header.
+// AppendSequenceHeader appends the INI representation of a sequence-header.
 //
 // You might use this function is you are implementing the [Marshaler] interface for a custom type.
 // And in particular, use it (directly or indirectly) from you MarshalINI method.
@@ -33,7 +33,25 @@ import (
 //	CHERRY = thrice
 //	dAtE = fource
 //
+// And in this example, the sequence-header is:
+//
+//	[[fruits]]
+//
+// Which could be created with a call similar to:
+//
+//	p = ini.AppendSequenceHeader(p, "fruits")
+//
+// For another example, this call:
+//
+//	p = ini.AppendSequenceHeader(p, "yek", "do", "se")
+//
+// Would producde the sequence-header:
+//
+//	[[yek.do.se]]
+//
 // Also see [SequenceHeaderToString] and [WriteSequenceHeader]
+//
+// Also, AppendSequenceHeader shouldn't be confused with [AppendSectionHeader]
 func AppendSequenceHeader(p []byte, name ...string) []byte {
 	if len(name) <= 0 {
 		return p
