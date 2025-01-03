@@ -13,7 +13,7 @@ import (
 func AppendKeyValue(p []byte, key string, value string) []byte {
 	p = encodeAndAppendKey(p, key)
 	p = append(p, " = "...)
-	p = EncodeAndAppendValue(p, value)
+	p = encodeAndAppendValue(p, value)
 	p = append(p, '\n')
 
 	return p
