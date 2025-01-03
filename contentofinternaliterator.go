@@ -1,13 +1,11 @@
 package ini
 
-func contentOfInternalIterator(iterator internalKeyValueIterator, nesting ...string) ([]byte, error) {
+
+func appendContentOfInternalIterator(p []byte, iterator internalKeyValueIterator, nesting ...string) ([]byte, error) {
 
 	if nil == iterator {
 		return nil, errNilKeyValueIterator
 	}
-
-	var buffer [256]byte
-	var p []byte = buffer[0:0]
 
 	{
 		var appended bool
@@ -26,6 +24,13 @@ func contentOfInternalIterator(iterator internalKeyValueIterator, nesting ...str
 		err = iterator.Sub(func(iterator internalKeyValueIterator, nesting ...string) error {
 			p = AppendSectionHeader(p, nesting...)
 			p = append(p, '\n')
+
+			var e error
+			p, e = appendContentOfInternalIterator(p, iterator, nesting...)
+			if nil != e {
+				return e
+			}
+
 			return nil
 		})
 		if nil != err {
@@ -34,4 +39,17 @@ func contentOfInternalIterator(iterator internalKeyValueIterator, nesting ...str
 	}
 
 	return p, nil
+
+}
+
+func contentOfInternalIterator(iterator internalKeyValueIterator, nesting ...string) ([]byte, error) {
+
+	if nil == iterator {
+		return nil, errNilKeyValueIterator
+	}
+
+	var buffer [256]byte
+	var p []byte = buffer[0:0]
+
+	return appendContentOfInternalIterator(p, iterator, nesting...)
 }
