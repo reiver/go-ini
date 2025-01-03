@@ -9,7 +9,34 @@ import (
 // You might use this function is you are implementing the [Marshaler] interface for a custom type.
 // And in particular, use it (directly or indirectly) from you MarshalINI method.
 //
+// In INI, a section used to create something to a single records. For example:
+//
+//	[basket]
+//
+//	apple = 1
+//	Banana = 2
+//	CHERRY = 3
+//	dAtE = 4
+//
+// And in this example, the section-header is:
+//
+//	[basket]
+//
+// Which could be created with a call similar to:
+//
+//	p = ini.AppendSectionHeader(p, "basket")
+//
+// For another example, this call:
+//
+//	p = ini.AppendSectionHeader(p, "yek", "do", "se")
+//
+// Would producde the section-header:
+//
+//	[yek.do.se]
+//
 // Also see [SectionHeaderToString] and [WriteSectionHeader]
+//
+// Also, AppendSectionHeader shouldn't be confused with [AppendSequenceHeader]
 func AppendSectionHeader(p []byte, name ...string) []byte {
 	if len(name) <= 0 {
 		return p
