@@ -14,7 +14,7 @@ package ini
 //		// ...
 //	}
 //
-// For custom types that would be represented by more than just a simple INI value, see [KeyValuer]
+// For custom types that would be represented by more than just a simple INI value, see [Marshaler]
 type Valuer interface {
 	INIValue() (string, error)
 }
