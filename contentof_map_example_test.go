@@ -51,30 +51,21 @@ func ExampleContentOf_mapAny() {
 	// aardvark = adult
 	// meese = pair
 	// moose = single
-	//
 	// [dairy]
-	//
 	// cheese = 20
 	// yogurt = 12
-	//
 	// [dairy.milk]
-	//
 	// 1% = 2
 	// 2% = 1
-	//
 	// [fruits]
-	//
 	// apple = ONCE
 	// Banana = TWICE
 	// CHERRY = THRICE
 	// dAtE = FOURCE
-	//
+	// [z]
 	// [z.z-1]
-	//
 	// z-1-1 = HERE
-	//
 	// [z.z-1.z-1-2]
-	//
 	// z-1-2-1 = (1)
 	// z-1-2-2 = (2)
 	// z-1-2-3 = (3)

@@ -11,13 +11,18 @@ import (
 // A custom type can also have an ini-content by implementing the [Contenter] interface.
 func ContentOf(v any, nesting ...string) ([]byte, error) {
 
+	var contenter Contenter
+
 	switch casted := v.(type) {
 	case Contenter:
-		return casted.INIContent(nesting...)
+		contenter = casted
+	case map[string]string:
+		contenter = internalMapStringString{casted}
 	case map[string]any:
-		var iterator internalKeyValueIterator = internalMapKeyValueIterator[any]{casted}
-		return contentOfInternalIterator(iterator, nesting...)
+		contenter = internalMapStringAny{casted}
 	default:
 		return nil, erorr.Errorf("ini: type %T does not have a 'content' representation", v)
 	}
+
+	return contenter.INIContent(nesting...)
 }
