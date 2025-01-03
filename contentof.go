@@ -16,6 +16,8 @@ func ContentOf(v any, nesting ...string) ([]byte, error) {
 	switch casted := v.(type) {
 	case Contenter:
 		contenter = casted
+	case Sectioner:
+		contenter = internalSectionerAsContenter{casted}
 	case map[string]string:
 		contenter = internalMapStringString{casted}
 	case map[string]any:
