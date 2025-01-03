@@ -6,7 +6,7 @@ import (
 	"reflect"
 )
 
-func TestInternalMapStringString_INIContent(t *testing.T) {
+func TestInternalMapStringString_MarshalINI(t *testing.T) {
 
 	tests := []struct{
 		Value internalMapStringString
@@ -203,7 +203,10 @@ func TestInternalMapStringString_INIContent(t *testing.T) {
 
 	for testNumber, test := range tests {
 
-		actual, err := test.Value.INIContent(test.Nesting...)
+		var actual []byte
+		var err error
+
+		actual, err = test.Value.MarshalINI(actual, test.Nesting...)
 		if nil != err {
 			t.Errorf("For test #%d, did not expect an error but actually got one.", testNumber)
 			t.Logf("ERROR: (%T) %s", err, err)

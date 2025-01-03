@@ -111,15 +111,3 @@ func (receiver internalMapStringAny) ForEachKeyStringValue(fn func(string,string
 
 	return nil
 }
-
-func (receiver internalMapStringAny) INIContent(nesting ...string) ([]byte, error) {
-
-	if receiver.IsEmpty() {
-		return nil, nil
-	}
-
-	var buffer [256]byte
-	var p []byte = buffer[0:0]
-
-	return receiver.MarshalINI(p, nesting...)
-}
