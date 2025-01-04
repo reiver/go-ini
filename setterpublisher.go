@@ -38,7 +38,7 @@ func (receiver *internalSetterPublisher) PublishINISequenceHeader(...string) err
 	return errINISetterCannotHandleSequenceHeader
 }
 
-func (receiver internalSetterPublisher) PublishININameValue(name string, value string) error {
+func (receiver internalSetterPublisher) PublishINIKeyValue(name string, value string) error {
 	var setter Setter = receiver.setter
 	if nil == setter {
 		return errNilSetter

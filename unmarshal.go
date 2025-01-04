@@ -97,12 +97,12 @@ func unmarshal(data []byte, publisher Publisher) error {
 		default:
 			name, value, size, err := ininamevalue.ParseBytes(p)
 			if nil != err {
-				return erorr.Errorf("ini: problem reading ini name-value: %w", err)
+				return erorr.Errorf("ini: problem reading ini key-value: %w", err)
 			}
 
 			if "" != name {
-				if err := publisher.PublishININameValue(name, value); nil != err {
-					return erorr.Errorf("ini: problem publishing INI name-value: %w", err)
+				if err := publisher.PublishINIKeyValue(name, value); nil != err {
+					return erorr.Errorf("ini: problem publishing INI key-value: %w", err)
 				}
 			}
 			p = p[size:]
