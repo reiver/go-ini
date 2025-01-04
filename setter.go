@@ -1,6 +1,5 @@
 package ini
 
 type Setter interface {
-	SetINI(name string, value string) error
+	SetININameValue(name string, value string) error
 }
-

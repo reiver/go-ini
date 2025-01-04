@@ -6,7 +6,7 @@ type internalMapStringStringSetter struct {
 
 var _ Setter = internalMapStringStringSetter{}
 
-func (receiver internalMapStringStringSetter) SetINI(name string, value string) error {
+func (receiver internalMapStringStringSetter) SetININameValue(name string, value string) error {
 	mapStringString := receiver.mapStringString
 	if nil == mapStringString {
 		return errNilMap
