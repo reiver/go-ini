@@ -15,6 +15,8 @@ func Append(p []byte, content any, nesting ...string) ([]byte, error) {
 		marshaler = casted
 	case map[string]string:
 		marshaler = internalMapStringString{casted}
+	case map[string][]string:
+		marshaler = internalMapStringSliceString{casted}
 	case map[string]any:
 		marshaler = internalMapStringAny{casted}
 	case []map[string]string:

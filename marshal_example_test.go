@@ -6,6 +6,40 @@ import (
 	"fmt"
 )
 
+func ExampleMarshal_MapStringSliceString() {
+
+	var src = map[string][]string{
+		"apple":[]string{"1"},
+		"Banana":[]string{"2","22"},
+		"CHERRY":[]string{"3","33","333"},
+		"dAtE":[]string{"4","44","444","4444"},
+	}
+
+	p, err := ini.Marshal(src, "fruits") // <---------
+
+	if nil != err {
+		fmt.Printf("ERROR: %s\n", err)
+		return
+	}
+
+	var result string = string(p)
+
+	fmt.Print(result)
+
+	// Output:
+	// [fruits]
+	// apple = 1
+	// Banana = 2
+	// Banana = 22
+	// CHERRY = 3
+	// CHERRY = 33
+	// CHERRY = 333
+	// dAtE = 4
+	// dAtE = 44
+	// dAtE = 444
+	// dAtE = 4444
+}
+
 func ExampleMarshal_sliceMapStringString() {
 
 	var src = []map[string]string{
