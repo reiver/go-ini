@@ -14,215 +14,105 @@ func TestParse(t *testing.T) {
 		ExpectedSize int
 	}{
 		{
-			String:        "value",
-			ExpectedValue: "value",
-			ExpectedSize:  5,
+			String:            "value",
+			ExpectedValue:     "value",
+			ExpectedSize:  len("value"),
 		},
 		{
-			String:        "value\n",
-			ExpectedValue: "value",
-			ExpectedSize:  5,
+			String:            "value\n",
+			ExpectedValue:     "value",
+			ExpectedSize:  len("value"),
 		},
 		{
-			String:        "value\n\r",
-			ExpectedValue: "value",
-			ExpectedSize:  5,
+			String:            "value\n\r",
+			ExpectedValue:     "value",
+			ExpectedSize:  len("value"),
 		},
 		{
-			String:        "value\r",
-			ExpectedValue: "value",
-			ExpectedSize:  5,
+			String:            "value\r",
+			ExpectedValue:     "value",
+			ExpectedSize:  len("value"),
 		},
 		{
-			String:        "value\r\n",
-			ExpectedValue: "value",
-			ExpectedSize:  5,
+			String:            "value\r\n",
+			ExpectedValue:     "value",
+			ExpectedSize:  len("value"),
 		},
 		{
-			String:        "value\u0085",
-			ExpectedValue: "value",
-			ExpectedSize:  5,
+			String:            "value\u0085",
+			ExpectedValue:     "value",
+			ExpectedSize:  len("value"),
 		},
 		{
-			String:        "value\u2028",
-			ExpectedValue: "value",
-			ExpectedSize:  5,
-		},
-
-
-
-		{
-			String:        "value\nline2=wow",
-			ExpectedValue: "value",
-			ExpectedSize:  5,
-		},
-		{
-			String:        "value\n\rline2=wow",
-			ExpectedValue: "value",
-			ExpectedSize:  5,
-		},
-		{
-			String:        "value\rline2=wow",
-			ExpectedValue: "value",
-			ExpectedSize:  5,
-		},
-		{
-			String:        "value\r\nline2=wow",
-			ExpectedValue: "value",
-			ExpectedSize:  5,
-		},
-		{
-			String:        "value\u0085line2=wow",
-			ExpectedValue: "value",
-			ExpectedSize:  5,
-		},
-		{
-			String:        "value\u2028line2=wow",
-			ExpectedValue: "value",
-			ExpectedSize:  5,
+			String:            "value\u2028",
+			ExpectedValue:     "value",
+			ExpectedSize:  len("value"),
 		},
 
 
 
 		{
-			String:        "value\nline2=wow\n",
-			ExpectedValue: "value",
-			ExpectedSize:  5,
+			String:            "value\nline2=wow",
+			ExpectedValue:     "value",
+			ExpectedSize:  len("value"),
 		},
 		{
-			String:        "value\n\rline2=wow\n\r",
-			ExpectedValue: "value",
-			ExpectedSize:  5,
+			String:            "value\n\rline2=wow",
+			ExpectedValue:     "value",
+			ExpectedSize:  len("value"),
 		},
 		{
-			String:        "value\rline2=wow\r",
-			ExpectedValue: "value",
-			ExpectedSize:  5,
+			String:            "value\rline2=wow",
+			ExpectedValue:     "value",
+			ExpectedSize:  len("value"),
 		},
 		{
-			String:        "value\r\nline2=wow\r\n",
-			ExpectedValue: "value",
-			ExpectedSize:  5,
+			String:            "value\r\nline2=wow",
+			ExpectedValue:     "value",
+			ExpectedSize:  len("value"),
 		},
 		{
-			String:        "value\u0085line2=wow\u0085",
-			ExpectedValue: "value",
-			ExpectedSize:  5,
+			String:            "value\u0085line2=wow",
+			ExpectedValue:     "value",
+			ExpectedSize:  len("value"),
 		},
 		{
-			String:        "value\u2028line2=wow\u2028",
-			ExpectedValue: "value",
-			ExpectedSize:  5,
-		},
-
-
-
-
-
-
-
-
-
-		{
-			String:        "value\u06F5",
-			ExpectedValue: "value\u06F5",
-			ExpectedSize:  7,
-		},
-		{
-			String:        "value\u06F5\n",
-			ExpectedValue: "value\u06F5",
-			ExpectedSize:  7,
-		},
-		{
-			String:        "value\u06F5\n\r",
-			ExpectedValue: "value\u06F5",
-			ExpectedSize:  7,
-		},
-		{
-			String:        "value\u06F5\r",
-			ExpectedValue: "value\u06F5",
-			ExpectedSize:  7,
-		},
-		{
-			String:        "value\u06F5\r\n",
-			ExpectedValue: "value\u06F5",
-			ExpectedSize:  7,
-		},
-		{
-			String:        "value\u06F5\u0085",
-			ExpectedValue: "value\u06F5",
-			ExpectedSize:  7,
-		},
-		{
-			String:        "value\u06F5\u2028",
-			ExpectedValue: "value\u06F5",
-			ExpectedSize:  7,
+			String:            "value\u2028line2=wow",
+			ExpectedValue:     "value",
+			ExpectedSize:  len("value"),
 		},
 
 
 
 		{
-			String:        "value\u06F5\nline2=wow",
-			ExpectedValue: "value\u06F5",
-			ExpectedSize:  7,
+			String:            "value\nline2=wow\n",
+			ExpectedValue:     "value",
+			ExpectedSize:  len("value"),
 		},
 		{
-			String:        "value\u06F5\n\rline2=wow",
-			ExpectedValue: "value\u06F5",
-			ExpectedSize:  7,
+			String:            "value\n\rline2=wow\n\r",
+			ExpectedValue:     "value",
+			ExpectedSize:  len("value"),
 		},
 		{
-			String:        "value\u06F5\rline2=wow",
-			ExpectedValue: "value\u06F5",
-			ExpectedSize:  7,
+			String:            "value\rline2=wow\r",
+			ExpectedValue:     "value",
+			ExpectedSize:  len("value"),
 		},
 		{
-			String:        "value\u06F5\r\nline2=wow",
-			ExpectedValue: "value\u06F5",
-			ExpectedSize:  7,
+			String:            "value\r\nline2=wow\r\n",
+			ExpectedValue:     "value",
+			ExpectedSize:  len("value"),
 		},
 		{
-			String:        "value\u06F5\u0085line2=wow",
-			ExpectedValue: "value\u06F5",
-			ExpectedSize:  7,
+			String:            "value\u0085line2=wow\u0085",
+			ExpectedValue:     "value",
+			ExpectedSize:  len("value"),
 		},
 		{
-			String:        "value\u06F5\u2028line2=wow",
-			ExpectedValue: "value\u06F5",
-			ExpectedSize:  7,
-		},
-
-
-
-		{
-			String:        "value\u06F5\nline2=wow\n",
-			ExpectedValue: "value\u06F5",
-			ExpectedSize:  7,
-		},
-		{
-			String:        "value\u06F5\n\rline2=wow\n\r",
-			ExpectedValue: "value\u06F5",
-			ExpectedSize:  7,
-		},
-		{
-			String:        "value\u06F5\rline2=wow\r",
-			ExpectedValue: "value\u06F5",
-			ExpectedSize:  7,
-		},
-		{
-			String:        "value\u06F5\r\nline2=wow\r\n",
-			ExpectedValue: "value\u06F5",
-			ExpectedSize:  7,
-		},
-		{
-			String:        "value\u06F5\u0085line2=wow\u0085",
-			ExpectedValue: "value\u06F5",
-			ExpectedSize:  7,
-		},
-		{
-			String:        "value\u06F5\u2028line2=wow\u2028",
-			ExpectedValue: "value\u06F5",
-			ExpectedSize:  7,
+			String:            "value\u2028line2=wow\u2028",
+			ExpectedValue:     "value",
+			ExpectedSize:  len("value"),
 		},
 
 
@@ -233,106 +123,217 @@ func TestParse(t *testing.T) {
 
 
 
+		// U+06F5 = ۵
 		{
-			String:        "value\u06F5 🙂 \t ",
-			ExpectedValue: "value\u06F5 🙂 \t ",
-			ExpectedSize:  15,
+			String:            "value\u06F5",
+			ExpectedValue:     "value\u06F5",
+			ExpectedSize:  len("value\u06F5"),
 		},
 		{
-			String:        "value\u06F5 🙂 \t \n",
-			ExpectedValue: "value\u06F5 🙂 \t ",
-			ExpectedSize:  15,
+			String:            "value\u06F5\n",
+			ExpectedValue:     "value\u06F5",
+			ExpectedSize:  len("value\u06F5"),
 		},
 		{
-			String:        "value\u06F5 🙂 \t \n\r",
-			ExpectedValue: "value\u06F5 🙂 \t ",
-			ExpectedSize:  15,
+			String:            "value\u06F5\n\r",
+			ExpectedValue:     "value\u06F5",
+			ExpectedSize:  len("value\u06F5"),
 		},
 		{
-			String:        "value\u06F5 🙂 \t \r",
-			ExpectedValue: "value\u06F5 🙂 \t ",
-			ExpectedSize:  15,
+			String:            "value\u06F5\r",
+			ExpectedValue:     "value\u06F5",
+			ExpectedSize:  len("value\u06F5"),
 		},
 		{
-			String:        "value\u06F5 🙂 \t \r\n",
-			ExpectedValue: "value\u06F5 🙂 \t ",
-			ExpectedSize:  15,
+			String:            "value\u06F5\r\n",
+			ExpectedValue:     "value\u06F5",
+			ExpectedSize:  len("value\u06F5"),
 		},
 		{
-			String:        "value\u06F5 🙂 \t \u0085",
-			ExpectedValue: "value\u06F5 🙂 \t ",
-			ExpectedSize:  15,
+			String:            "value\u06F5\u0085",
+			ExpectedValue:     "value\u06F5",
+			ExpectedSize:  len("value\u06F5"),
 		},
 		{
-			String:        "value\u06F5 🙂 \t \u2028",
-			ExpectedValue: "value\u06F5 🙂 \t ",
-			ExpectedSize:  15,
-		},
-
-
-
-		{
-			String:        "value\u06F5 🙂 \t \nline2=wow",
-			ExpectedValue: "value\u06F5 🙂 \t ",
-			ExpectedSize:  15,
-		},
-		{
-			String:        "value\u06F5 🙂 \t \n\rline2=wow",
-			ExpectedValue: "value\u06F5 🙂 \t ",
-			ExpectedSize:  15,
-		},
-		{
-			String:        "value\u06F5 🙂 \t \rline2=wow",
-			ExpectedValue: "value\u06F5 🙂 \t ",
-			ExpectedSize:  15,
-		},
-		{
-			String:        "value\u06F5 🙂 \t \r\nline2=wow",
-			ExpectedValue: "value\u06F5 🙂 \t ",
-			ExpectedSize:  15,
-		},
-		{
-			String:        "value\u06F5 🙂 \t \u0085line2=wow",
-			ExpectedValue: "value\u06F5 🙂 \t ",
-			ExpectedSize:  15,
-		},
-		{
-			String:        "value\u06F5 🙂 \t \u2028line2=wow",
-			ExpectedValue: "value\u06F5 🙂 \t ",
-			ExpectedSize:  15,
+			String:            "value\u06F5\u2028",
+			ExpectedValue:     "value\u06F5",
+			ExpectedSize:  len("value\u06F5"),
 		},
 
 
 
 		{
-			String:        "value\u06F5 🙂 \t \nline2=wow\n",
-			ExpectedValue: "value\u06F5 🙂 \t ",
-			ExpectedSize:  15,
+			String:            "value\u06F5\nline2=wow",
+			ExpectedValue:     "value\u06F5",
+			ExpectedSize:  len("value\u06F5"),
 		},
 		{
-			String:        "value\u06F5 🙂 \t \n\rline2=wow\n\r",
-			ExpectedValue: "value\u06F5 🙂 \t ",
-			ExpectedSize:  15,
+			String:            "value\u06F5\n\rline2=wow",
+			ExpectedValue:     "value\u06F5",
+			ExpectedSize:  len("value\u06F5"),
 		},
 		{
-			String:        "value\u06F5 🙂 \t \rline2=wow\r",
-			ExpectedValue: "value\u06F5 🙂 \t ",
-			ExpectedSize:  15,
+			String:            "value\u06F5\rline2=wow",
+			ExpectedValue:     "value\u06F5",
+			ExpectedSize:  len("value\u06F5"),
 		},
 		{
-			String:        "value\u06F5 🙂 \t \r\nline2=wow\r\n",
-			ExpectedValue: "value\u06F5 🙂 \t ",
-			ExpectedSize:  15,
+			String:            "value\u06F5\r\nline2=wow",
+			ExpectedValue:     "value\u06F5",
+			ExpectedSize:  len("value\u06F5"),
 		},
 		{
-			String:        "value\u06F5 🙂 \t \u0085line2=wow\u0085",
-			ExpectedValue: "value\u06F5 🙂 \t ",
-			ExpectedSize:  15,
+			String:            "value\u06F5\u0085line2=wow",
+			ExpectedValue:     "value\u06F5",
+			ExpectedSize:  len("value\u06F5"),
 		},
 		{
-			String:        "value\u06F5 🙂 \t \u2028line2=wow\u2028",
-			ExpectedValue: "value\u06F5 🙂 \t ",
-			ExpectedSize:  15,
+			String:            "value\u06F5\u2028line2=wow",
+			ExpectedValue:     "value\u06F5",
+			ExpectedSize:  len("value\u06F5"),
+		},
+
+
+
+		{
+			String:            "value\u06F5\nline2=wow\n",
+			ExpectedValue:     "value\u06F5",
+			ExpectedSize:  len("value\u06F5"),
+		},
+		{
+			String:            "value\u06F5\n\rline2=wow\n\r",
+			ExpectedValue:     "value\u06F5",
+			ExpectedSize:  len("value\u06F5"),
+		},
+		{
+			String:            "value\u06F5\rline2=wow\r",
+			ExpectedValue:     "value\u06F5",
+			ExpectedSize:  len("value\u06F5"),
+		},
+		{
+			String:            "value\u06F5\r\nline2=wow\r\n",
+			ExpectedValue:     "value\u06F5",
+			ExpectedSize:  len("value\u06F5"),
+		},
+		{
+			String:            "value\u06F5\u0085line2=wow\u0085",
+			ExpectedValue:     "value\u06F5",
+			ExpectedSize:  len("value\u06F5"),
+		},
+		{
+			String:            "value\u06F5\u2028line2=wow\u2028",
+			ExpectedValue:     "value\u06F5",
+			ExpectedSize:  len("value\u06F5"),
+		},
+
+
+
+
+
+
+
+
+
+		{
+			String:            "value\u06F5 🙂 \t ",
+			ExpectedValue:     "value\u06F5 🙂 \t ",
+			ExpectedSize:  len("value\u06F5 🙂 \t "),
+		},
+		{
+			String:            "value\u06F5 🙂 \t \n",
+			ExpectedValue:     "value\u06F5 🙂 \t ",
+			ExpectedSize:  len("value\u06F5 🙂 \t "),
+		},
+		{
+			String:            "value\u06F5 🙂 \t \n\r",
+			ExpectedValue:     "value\u06F5 🙂 \t ",
+			ExpectedSize:  len("value\u06F5 🙂 \t "),
+		},
+		{
+			String:            "value\u06F5 🙂 \t \r",
+			ExpectedValue:     "value\u06F5 🙂 \t ",
+			ExpectedSize:  len("value\u06F5 🙂 \t "),
+		},
+		{
+			String:            "value\u06F5 🙂 \t \r\n",
+			ExpectedValue:     "value\u06F5 🙂 \t ",
+			ExpectedSize:  len("value\u06F5 🙂 \t "),
+		},
+		{
+			String:            "value\u06F5 🙂 \t \u0085",
+			ExpectedValue:     "value\u06F5 🙂 \t ",
+			ExpectedSize:  len("value\u06F5 🙂 \t "),
+		},
+		{
+			String:            "value\u06F5 🙂 \t \u2028",
+			ExpectedValue:     "value\u06F5 🙂 \t ",
+			ExpectedSize:  len("value\u06F5 🙂 \t "),
+		},
+
+
+
+		{
+			String:            "value\u06F5 🙂 \t \nline2=wow",
+			ExpectedValue:     "value\u06F5 🙂 \t ",
+			ExpectedSize:  len("value\u06F5 🙂 \t "),
+		},
+		{
+			String:            "value\u06F5 🙂 \t \n\rline2=wow",
+			ExpectedValue:     "value\u06F5 🙂 \t ",
+			ExpectedSize:  len("value\u06F5 🙂 \t "),
+		},
+		{
+			String:            "value\u06F5 🙂 \t \rline2=wow",
+			ExpectedValue:     "value\u06F5 🙂 \t ",
+			ExpectedSize:  len("value\u06F5 🙂 \t "),
+		},
+		{
+			String:            "value\u06F5 🙂 \t \r\nline2=wow",
+			ExpectedValue:     "value\u06F5 🙂 \t ",
+			ExpectedSize:  len("value\u06F5 🙂 \t "),
+		},
+		{
+			String:            "value\u06F5 🙂 \t \u0085line2=wow",
+			ExpectedValue:     "value\u06F5 🙂 \t ",
+			ExpectedSize:  len("value\u06F5 🙂 \t "),
+		},
+		{
+			String:            "value\u06F5 🙂 \t \u2028line2=wow",
+			ExpectedValue:     "value\u06F5 🙂 \t ",
+			ExpectedSize:  len("value\u06F5 🙂 \t "),
+		},
+
+
+
+		{
+			String:            "value\u06F5 🙂 \t \nline2=wow\n",
+			ExpectedValue:     "value\u06F5 🙂 \t ",
+			ExpectedSize:  len("value\u06F5 🙂 \t "),
+		},
+		{
+			String:            "value\u06F5 🙂 \t \n\rline2=wow\n\r",
+			ExpectedValue:     "value\u06F5 🙂 \t ",
+			ExpectedSize:  len("value\u06F5 🙂 \t "),
+		},
+		{
+			String:            "value\u06F5 🙂 \t \rline2=wow\r",
+			ExpectedValue:     "value\u06F5 🙂 \t ",
+			ExpectedSize:  len("value\u06F5 🙂 \t "),
+		},
+		{
+			String:            "value\u06F5 🙂 \t \r\nline2=wow\r\n",
+			ExpectedValue:     "value\u06F5 🙂 \t ",
+			ExpectedSize:  len("value\u06F5 🙂 \t "),
+		},
+		{
+			String:            "value\u06F5 🙂 \t \u0085line2=wow\u0085",
+			ExpectedValue:     "value\u06F5 🙂 \t ",
+			ExpectedSize:  len("value\u06F5 🙂 \t "),
+		},
+		{
+			String:            "value\u06F5 🙂 \t \u2028line2=wow\u2028",
+			ExpectedValue:     "value\u06F5 🙂 \t ",
+			ExpectedSize:  len("value\u06F5 🙂 \t "),
 		},
 	}
 
