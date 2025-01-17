@@ -28,6 +28,10 @@ func Unmarshal(data []byte, dst any) error {
 				setter:casted,
 			}
 		case *map[string]string:
+			if nil == casted {
+				m := make(map[string]string)
+				casted = &m
+			}
 			setter := internalMapStringStringSetter{
 				mapStringString: casted,
 			}
