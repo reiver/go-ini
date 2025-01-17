@@ -21,6 +21,8 @@ func ParseBytes(bytes []byte) (value string, size int, err error) {
 		var valueBuffer [bufferSize]byte
 		var valueBytes []byte = valueBuffer[0:0]
 
+		var escape bool = false
+
 		loop: for {
 			length := len(p)
 			if length <= 0 {
@@ -38,13 +40,20 @@ func ParseBytes(bytes []byte) (value string, size int, err error) {
 				}
 			}
 
-			switch r {
-			case lf.Rune, cr.Rune, nel.Rune, ls.Rune:
+			switch {
+			case !escape && (lf.Rune == r || cr.Rune == r || nel.Rune == r || ls.Rune == r):
 				break loop
+			case !escape && ('\\' == r):
+				escape = true
+				p = p[runeSize:]
+				size += runeSize
 			default:
+				escape = false
+
 				var runeAsUTF8 string = string(r) // ex: 'E' -> "E"
 
 				valueBytes = append(valueBytes, runeAsUTF8...)
+
 				p = p[runeSize:]
 				size += runeSize
 			}

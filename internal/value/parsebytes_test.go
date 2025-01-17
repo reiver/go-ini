@@ -335,6 +335,30 @@ func TestParse(t *testing.T) {
 			ExpectedValue:     "value\u06F5 🙂 \t ",
 			ExpectedSize:  len("value\u06F5 🙂 \t "),
 		},
+
+
+
+
+		{
+			String:            "line 1",
+			ExpectedValue:     "line 1",
+			ExpectedSize:  len("line 1"),
+		},
+		{
+			String:            "line 1\\",
+			ExpectedValue:     "line 1",
+			ExpectedSize:  len("line 1\\"),
+		},
+		{
+			String:            "line 1\\\n",
+			ExpectedValue:     "line 1\n",
+			ExpectedSize:  len("line 1\\\n"),
+		},
+		{
+			String:            "line 1\\\nline 2",
+			ExpectedValue:     "line 1\nline 2",
+			ExpectedSize:  len("line 1\\\nline 2"),
+		},
 	}
 
 
