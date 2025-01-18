@@ -54,7 +54,7 @@ func ParseBytes(bytes []byte) (name []string, size int, err error) {
 			}
 		}
 
-		if Is1stMagic(r2) {
+		if !Is2ndMagic(r2) {
 			return nada, 0, erorr.Errorf("ini: the second character of an INI 'sequence' must be a %q (%U); instead got %q (%U)", magic2ndRune, magic2ndRune, r2, r2)
 		}
 	}
