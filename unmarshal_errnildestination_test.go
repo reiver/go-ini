@@ -6,18 +6,25 @@ import (
 	"github.com/reiver/go-ini"
 )
 
-func TestUnmarshal_errNilBytes(t *testing.T) {
+func TestUnmarshal_errNilDestination(t *testing.T) {
 
-	var dst map[string]string = map[string]string{}
+	var bytes []byte = []byte(`
+[stuff]
 
-	err := ini.Unmarshal(nil, &dst)
+apple  = once
+Banana = twice
+CHERRY = thrice
+dAte   = fource
+`)
+
+	err := ini.Unmarshal(bytes, nil)
 
 	if nil == err {
 		t.Errorf("Expected an error but did not actually got one.")
 		return
 	}
 
-	expected := "ini: nil bytes"
+	expected := "ini: nil destination"
 	actual   := err.Error()
 
 	if expected != actual {

@@ -17,6 +17,9 @@ func Unmarshal(data []byte, dst any) error {
 	if nil == data {
 		return errNilBytes
 	}
+	if nil == dst {
+		return errNilDestination
+	}
 
 	var publisher Publisher
 	{

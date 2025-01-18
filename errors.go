@@ -6,6 +6,7 @@ import (
 
 const (
 	errNilBytes              = erorr.Error("ini: nil bytes")
+	errNilDestination        = erorr.Error("ini: nil destination")
 	errInternalError         = erorr.Error("ini: internal error")
 	errNilInternalMapWrapper = erorr.Error("ini: nil internal-map-wrapper")
 	errNilMarshaler          = erorr.Error("ini: nil marshaler")
