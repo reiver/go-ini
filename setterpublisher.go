@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	errINISetterCannotHandleSequenceHeader = erorr.Error("ini: etter cannot handle sequence-header")
+	errINISetterCannotHandleSequenceHeader = erorr.Error("ini: setter cannot handle sequence-header")
 )
 
 type internalSetterPublisher struct {
