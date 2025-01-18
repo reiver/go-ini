@@ -184,6 +184,98 @@ func TestUnmarshal_publisher(t *testing.T) {
 				`INI-SECTION-HEADER: name="this.is.the.name"`,
 			},
 		},
+
+
+		{
+			INI: `[this\.is\.the\.name]`,
+			Expected: []string{
+				`INI-SECTION-HEADER: name="this.is.the.name"`,
+			},
+		},
+
+
+
+		{
+			INI: `[[this.is.the.name]]`,
+			Expected: []string{
+				`INI-SEQUENCE-HEADER: name="this"."is"."the"."name"`,
+			},
+		},
+
+
+
+
+
+
+
+
+
+		{
+			INI:
+`apple = ONE
+Banana = TWO
+Cherry = THREE
+
+[A]
+
+once
+twice
+thrice
+fource
+
+[B.C]
+
+ONCE   = 1234
+TWICE  = 2345
+THRICE = 3456
+FOURCE = 4567
+
+[[C]]
+
+id = 1
+name = Joe Blow
+
+[[C]]
+
+id = 2
+name = Jane Doe
+
+[[C]]
+
+id = 3
+name = John Doe
+
+[[D.EF.GHI]]
+
+toy = GraySkull
+`,
+			Expected: []string{
+				`INI-KEY-VALUE: key="apple" value="ONE"`,
+				`INI-KEY-VALUE: key="banana" value="TWO"`,
+				`INI-KEY-VALUE: key="cherry" value="THREE"`,
+				`INI-SECTION-HEADER: name="a"`,
+				`INI-KEY-VALUE: key="once" value=""`,
+				`INI-KEY-VALUE: key="twice" value=""`,
+				`INI-KEY-VALUE: key="thrice" value=""`,
+				`INI-KEY-VALUE: key="fource" value=""`,
+				`INI-SECTION-HEADER: name="b"."c"`,
+				`INI-KEY-VALUE: key="once" value="1234"`,
+				`INI-KEY-VALUE: key="twice" value="2345"`,
+				`INI-KEY-VALUE: key="thrice" value="3456"`,
+				`INI-KEY-VALUE: key="fource" value="4567"`,
+				`INI-SEQUENCE-HEADER: name="c"`,
+				`INI-KEY-VALUE: key="id" value="1"`,
+				`INI-KEY-VALUE: key="name" value="Joe Blow"`,
+				`INI-SEQUENCE-HEADER: name="c"`,
+				`INI-KEY-VALUE: key="id" value="2"`,
+				`INI-KEY-VALUE: key="name" value="Jane Doe"`,
+				`INI-SEQUENCE-HEADER: name="c"`,
+				`INI-KEY-VALUE: key="id" value="3"`,
+				`INI-KEY-VALUE: key="name" value="John Doe"`,
+				`INI-SEQUENCE-HEADER: name="d"."ef"."ghi"`,
+				`INI-KEY-VALUE: key="toy" value="GraySkull"`,
+			},
+		},
 	}
 
 	for testNumber, test := range tests {
@@ -203,6 +295,17 @@ func TestUnmarshal_publisher(t *testing.T) {
 			},
 			PublishINISectionHeaderFunc: func(name ...string) error {
 				var str string = "INI-SECTION-HEADER: name="
+				for index, part := range name {
+					if 0 < index {
+						str += "."
+					}
+					str += fmt.Sprintf("%q", part)
+				}
+				actual = append(actual, str)
+				return nil
+			},
+			PublishINISequenceHeaderFunc: func(name ...string) error {
+				var str string = "INI-SEQUENCE-HEADER: name="
 				for index, part := range name {
 					if 0 < index {
 						str += "."

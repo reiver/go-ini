@@ -8,6 +8,7 @@ import (
 	"github.com/reiver/go-ini/internal/comment"
 	"github.com/reiver/go-ini/internal/namevalue"
 	"github.com/reiver/go-ini/internal/section"
+	"github.com/reiver/go-ini/internal/sequence"
 )
 
 // Unmarshal parses the INI-encoded data and stores the result in the value pointed to by 'dst'.
@@ -96,15 +97,43 @@ func unmarshal(data []byte, publisher Publisher) error {
 			}
 			p = p[size:]
 		case inisection.IsMagic(r):
-			section, size, err := inisection.ParseBytes(p)
-			if nil != err {
-				return erorr.Errorf("ini: problem reading ini section: %w", err)
+			var ahead []byte = p[inisection.MagicSize:]
+			if len(ahead) <= 0 {
+				return erorr.Error("ini: both INI 'section' and 'sequence' must have a 2nd character")
 			}
 
-			if err := publisher.PublishINISectionHeader(section...); nil != err {
-				return erorr.Errorf("ini: problem publishing INI section: %w", err)
+			peek, size := utf8.DecodeRune(ahead)
+			if utf8.RuneError == peek {
+				switch size {
+				case 1:
+					return errRuneError
+				default:
+					return errInternalError
+				}
 			}
-			p = p[size:]
+
+			switch {
+			case inisequence.Is2ndMagic(peek):
+				name, size, err := inisequence.ParseBytes(p)
+				if nil != err {
+					return erorr.Errorf("ini: problem reading ini sequence: %w", err)
+				}
+
+				if err := publisher.PublishINISequenceHeader(name...); nil != err {
+					return erorr.Errorf("ini: problem publishing INI sequence: %w", err)
+				}
+				p = p[size:]
+			default:
+				name, size, err := inisection.ParseBytes(p)
+				if nil != err {
+					return erorr.Errorf("ini: problem reading ini section: %w", err)
+				}
+
+				if err := publisher.PublishINISectionHeader(name...); nil != err {
+					return erorr.Errorf("ini: problem publishing INI section: %w", err)
+				}
+				p = p[size:]
+			}
 		default:
 			name, value, size, err := ininamevalue.ParseBytes(p)
 			if nil != err {
