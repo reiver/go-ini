@@ -1,9 +1,7 @@
-package inisection_test
+package inisection
 
 import (
 	"testing"
-
-	"github.com/reiver/go-ini/internal/section"
 )
 
 func TestParseBytes(t *testing.T) {
@@ -235,7 +233,7 @@ func TestParseBytes(t *testing.T) {
 
 		var p []byte = []byte(test.String)
 
-		actualSection, actualSize, err := inisection.ParseBytes(p)
+		actualSection, actualSize, err := parseBytes(p)
 
 		if nil != err {
 			t.Errorf("For test #%d, did not expect an error but actually got one.", testNumber)

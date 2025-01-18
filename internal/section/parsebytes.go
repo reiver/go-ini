@@ -12,7 +12,22 @@ import (
 	"github.com/reiver/go-ini/internal/eol"
 )
 
-func ParseBytes(bytes []byte) (section string, size int, err error) {
+func ParseBytes(bytes []byte) (section []string, size int, err error) {
+	var sectionString string
+
+	sectionString, size, err = parseBytes(bytes)
+	if nil != err {
+		var nadaStrings []string
+		var nadaInt int
+		return nadaStrings, nadaInt, err
+	}
+
+	section = split(sectionString)
+
+	return section, size, nil
+}
+
+func parseBytes(bytes []byte) (section string, size int, err error) {
 
 	if len(bytes) <= 0 {
 		return "", 0, nil
