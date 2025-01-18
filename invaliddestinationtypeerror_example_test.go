@@ -6,7 +6,7 @@ import (
 	"github.com/reiver/go-ini"
 )
 
-func ExampleInvalidUnmarshalError() {
+func ExampleInvalidDestinationTypeError() {
 
 	var bytes []byte = []byte(
 `[stuff]
@@ -23,7 +23,7 @@ dAtE = fource
 
 	if nil != err {
 		switch casted := err.(type) {
-		case ini.InvalidUnmarshalError:
+		case ini.InvalidDestinationTypeError:
 			fmt.Printf("ini.Unmarshal() cannot unmarshal into something of type %s\n", casted.InvalidType())
 		default:
 			fmt.Println("unknown error:", err)

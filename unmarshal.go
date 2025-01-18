@@ -11,7 +11,7 @@ import (
 )
 
 // Unmarshal parses the INI-encoded data and stores the result in the value pointed to by 'dst'.
-// If 'dst' is nil or not a pointer, Unmarshal returns an InvalidUnmarshalError.
+// If 'dst' is nil or not a pointer, Unmarshal returns an InvalidDestinationTypeError.
 func Unmarshal(data []byte, dst any) error {
 
 	if nil == data {
@@ -38,8 +38,12 @@ func Unmarshal(data []byte, dst any) error {
 			publisher = &internalSetterPublisher{
 				setter:setter,
 			}
+//		case *map[string][]string:
+//			publisher = 
+//		case *map[string]any:
+//			publisher = &internalMapStringAnyPublisher{casted}
 		default:
-			return invalidUnmarshalError(dst)
+			return CreateInvalidDestinationTypeError(dst)
 		}
 	}
 
