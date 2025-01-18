@@ -4,16 +4,21 @@ import (
 	"fmt"
 )
 
+// InvalidUnmarshalError is returned by [Unmarshal] if it is given a 'destination' to unmarshal whose type is not supported by [Unmarshal].
 type InvalidUnmarshalError struct {
-	typ string
+	invalidType string
 }
 
 func invalidUnmarshalError(value any) error {
 	return InvalidUnmarshalError{
-		typ: fmt.Sprintf("%T", value),
+		invalidType: fmt.Sprintf("%T", value),
 	}
 }
 
 func (receiver InvalidUnmarshalError) Error() string {
-	return fmt.Sprintf("ini: cannot unmarshal into %s", receiver.typ)
+	return fmt.Sprintf("ini: cannot unmarshal into something of type %s", receiver.invalidType)
+}
+
+func (receiver InvalidUnmarshalError) InvalidType() string {
+	return receiver.invalidType
 }
