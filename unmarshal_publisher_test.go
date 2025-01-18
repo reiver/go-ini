@@ -155,9 +155,33 @@ func TestUnmarshal_publisher(t *testing.T) {
 
 
 		{
-			INI: "[this.is.the.name]",
+			INI: `[this.is.the.name]`,
 			Expected: []string{
 				`INI-SECTION-HEADER: name="this"."is"."the"."name"`,
+			},
+		},
+		{
+			INI: `[this.is\.the\.name]`,
+			Expected: []string{
+				`INI-SECTION-HEADER: name="this"."is.the.name"`,
+			},
+		},
+		{
+			INI: `[this\.is.the\.name]`,
+			Expected: []string{
+				`INI-SECTION-HEADER: name="this.is"."the.name"`,
+			},
+		},
+		{
+			INI: `[this\.is\.the.name]`,
+			Expected: []string{
+				`INI-SECTION-HEADER: name="this.is.the"."name"`,
+			},
+		},
+		{
+			INI: `[this\.is\.the\.name]`,
+			Expected: []string{
+				`INI-SECTION-HEADER: name="this.is.the.name"`,
 			},
 		},
 	}
