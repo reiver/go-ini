@@ -10,14 +10,14 @@ Online documentation, which includes examples, can be found at: http://godoc.org
 
 ## Example
 
-Here is an example:
+Here is an example of how to **unmarshal** INI data:
 
 ```golang
 import "github.com/reiver/go-ini"
 
 // ...
 
-var inidata []byte = `
+var inidata []byte = []byte(`
 apple  = 1
 banana = 2
 cherry = 3
@@ -32,7 +32,7 @@ thrice = ۱, ۲, ۳
 
 fource = ۱, ۲, ۳, ۴
 
-`
+`)
 
 // ...
 
