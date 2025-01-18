@@ -22,7 +22,7 @@ func ParseBytes(bytes []byte) (section []string, size int, err error) {
 		return nadaStrings, nadaInt, err
 	}
 
-	section = split(sectionString)
+	section = splitAndLower(sectionString)
 
 	return section, size, nil
 }

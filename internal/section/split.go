@@ -1,6 +1,10 @@
 package inisection
 
-func split(name string) []string {
+import (
+	"unicode"
+)
+
+func splitAndLower(name string) []string {
 	if "" == name {
 		return []string{}
 	}
@@ -26,7 +30,7 @@ func split(name string) []string {
 			}
 		}
 		escaped = false
-		part = append(part, r)
+		part = append(part, unicode.ToLower(r))
 	}
 
 	result = append(result, string(part))

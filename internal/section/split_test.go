@@ -6,7 +6,7 @@ import (
 	"reflect"
 )
 
-func TestSplit(t *testing.T) {
+func TestSplitAndLower(t *testing.T) {
 
 	tests := []struct{
 		Value string
@@ -20,11 +20,11 @@ func TestSplit(t *testing.T) {
 
 		{
 			Value: "A",
-			Expected: []string{"A"},
+			Expected: []string{"a"},
 		},
 		{
 			Value: "Z",
-			Expected: []string{"Z"},
+			Expected: []string{"z"},
 		},
 		{
 			Value: "a",
@@ -58,18 +58,18 @@ func TestSplit(t *testing.T) {
 			Expected: []string{"apple"},
 		},
 		{
-			Value: "apple.banana",
+			Value: "apple.Banana",
 			Expected: []string{"apple", "banana"},
 		},
 		{
-			Value: "apple.banana.cherry",
+			Value: "apple.banana.CHERRY",
 			Expected: []string{"apple", "banana", "cherry"},
 		},
 
 
 
 		{
-			Value: `abcd\.efg.hi.j`,
+			Value: `aBcd\.eFg.HI.j`,
 			Expected: []string{"abcd.efg", "hi", "j"},
 		},
 
@@ -80,23 +80,23 @@ func TestSplit(t *testing.T) {
 			Expected: []string{"apple"},
 		},
 		{
-			Value: `apple.banana\`,
+			Value: `apple.Banana\`,
 			Expected: []string{"apple", "banana"},
 		},
 		{
-			Value: `apple.banana.cherry\`,
+			Value: `apple.Banana.CHERRY\`,
 			Expected: []string{"apple", "banana", "cherry"},
 		},
 	}
 
 	for testNumber, test := range tests {
 
-		actual := split(test.Value)
+		actual := splitAndLower(test.Value)
 
 		expected := test.Expected
 
 		if !reflect.DeepEqual(expected, actual) {
-			t.Errorf("For test #%d, the actual (split) section-name is not what was expected.", testNumber)
+			t.Errorf("For test #%d, the actual (split-and-lowered) section-name is not what was expected.", testNumber)
 			t.Log("EXPECTED")
 			for index, part := range expected {
 				t.Logf("\t- [%d] %q", index, part)
