@@ -157,6 +157,27 @@ func TestUnmarshal_mapStringString_error(t *testing.T) {
 			INI: "[[abcdefg.hijk.lmnop]]",
 			ExpectedError: "ini: problem publishing INI sequence: ini: setter cannot handle sequence-headers — there was attempt to set sequence header [[abcdefg.hijk.lmnop]]",
 		},
+
+
+		{
+			INI: `
+[[fruit]]
+
+id = 1
+color = green
+
+[[fruit]]
+
+id = 2
+color = yellow
+
+[[fruit]]
+
+id = 3
+color = red
+`,
+			ExpectedError: "ini: problem publishing INI sequence: ini: setter cannot handle sequence-headers — there was attempt to set sequence header [[fruit]]",
+		},
 	}
 
 	for testNumber, test := range tests {
