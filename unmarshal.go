@@ -11,7 +11,7 @@ import (
 )
 
 // Unmarshal parses the INI-encoded data and stores the result in the value pointed to by 'dst'.
-// If 'dst' is nil or not a pointer, Unmarshal returns an InvalidDestinationTypeError.
+// If 'dst' is nil or not a pointer, Unmarshal returns an [InvalidDestinationTypeError].
 func Unmarshal(data []byte, dst any) error {
 
 	if nil == data {
