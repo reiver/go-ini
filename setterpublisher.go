@@ -1,6 +1,7 @@
 package ini
 
 import (
+	"bytes"
 	"strings"
 
 	"github.com/reiver/go-erorr"
@@ -42,6 +43,7 @@ func (receiver *internalSetterPublisher) PublishINISequenceHeader(name ...string
 
 		p = append(p, "ini: setter cannot handle sequence-headers — there was attempt to set sequence header "...)
 		p = AppendSequenceHeader(p, name...)
+		p = bytes.TrimRight(p, "\n\r")
 
 		errorMessage = string(p)
 	}
