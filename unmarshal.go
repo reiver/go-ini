@@ -101,7 +101,7 @@ func unmarshal(data []byte, publisher Publisher) error {
 				return erorr.Errorf("ini: problem reading ini section: %w", err)
 			}
 
-			if err := publisher.PublishINISectionHeader(section); nil != err {
+			if err := publisher.PublishINISectionHeader(section...); nil != err {
 				return erorr.Errorf("ini: problem publishing INI section: %w", err)
 			}
 			p = p[size:]
