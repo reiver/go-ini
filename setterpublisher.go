@@ -30,12 +30,23 @@ func (receiver *internalSetterPublisher) PublishINISectionHeader(section ...stri
 	return nil
 }
 
-func (receiver *internalSetterPublisher) PublishINISequenceHeader(...string) error {
+func (receiver *internalSetterPublisher) PublishINISequenceHeader(name ...string) error {
 	if nil == receiver {
 		return errNilReceiver
 	}
 
-	return errINISetterCannotHandleSequenceHeader
+	var errorMessage string
+	{
+		var buffer [256]byte
+		var p []byte = buffer[0:0]
+
+		p = append(p, "ini: setter cannot handle sequence-headers — there was attempt to set sequence header "...)
+		p = AppendSequenceHeader(p, name...)
+
+		errorMessage = string(p)
+	}
+
+	return erorr.Error(errorMessage)
 }
 
 func (receiver *internalSetterPublisher) PublishINIKeyValue(name string, value string) error {
