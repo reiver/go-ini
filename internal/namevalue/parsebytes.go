@@ -10,8 +10,10 @@ import (
 )
 
 func ParseBytes(bytes []byte) (name string, value string, size int, err error) {
+	const nada string = ""
+
 	if len(bytes) <= 0 {
-		return "", "", 0, nil
+		return nada, nada, 0, nil
 	}
 
 	var p []byte = bytes
@@ -21,7 +23,7 @@ func ParseBytes(bytes []byte) (name string, value string, size int, err error) {
 
 		spacingSize, err := inispacing.ParseBytes(p)
 		if nil != err {
-			return "", "", 0, err
+			return nada, nada, 0, err
 		}
 
 		size += spacingSize
@@ -33,7 +35,7 @@ func ParseBytes(bytes []byte) (name string, value string, size int, err error) {
 
 		name, nameSize, err = ininame.ParseBytes(p)
 		if nil != err {
-			return "", "", 0, err
+			return nada, nada, 0, err
 		}
 
 		size += nameSize
@@ -45,7 +47,7 @@ func ParseBytes(bytes []byte) (name string, value string, size int, err error) {
 
 		spacingSize, err := inispacing.ParseBytes(p)
 		if nil != err {
-			return "", "", 0, err
+			return nada, nada, 0, err
 		}
 
 		size += spacingSize
@@ -57,9 +59,9 @@ func ParseBytes(bytes []byte) (name string, value string, size int, err error) {
 		if utf8.RuneError == r {
 			switch size {
 			case 1:
-				return "", "", 0, errRuneError
+				return nada, nada, 0, errRuneError
 			default:
-				return "", "", 0, errInternalError
+				return nada, nada, 0, errInternalError
 			}
 		}
 
@@ -75,7 +77,7 @@ func ParseBytes(bytes []byte) (name string, value string, size int, err error) {
 
 		spacingSize, err := inispacing.ParseBytes(p)
 		if nil != err {
-			return "", "", 0, err
+			return nada, nada, 0, err
 		}
 
 		size += spacingSize
@@ -87,7 +89,7 @@ func ParseBytes(bytes []byte) (name string, value string, size int, err error) {
 
 		value, valueSize, err = inivalue.ParseBytes(p)
 		if nil != err {
-			return "", "", 0, err
+			return nada, nada, 0, err
 		}
 
 		size += valueSize
@@ -99,7 +101,7 @@ func ParseBytes(bytes []byte) (name string, value string, size int, err error) {
 
 		eolSize, err := inieol.ParseBytes(p)
 		if nil != err {
-			return "", "", 0, err
+			return nada, nada, 0, err
 		}
 
 		size += eolSize
