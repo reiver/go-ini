@@ -375,6 +375,235 @@ func TestParseBytes(t *testing.T) {
 
 
 
+		{
+			String:           "name&END\nvalue",
+			ExpectedName:     "name",
+			ExpectedValue:              "value",
+			ExpectedSize: len("name&END\nvalue"),
+		},
+		{
+			String:           "name&END\nvalueEND",
+			ExpectedName:     "name",
+			ExpectedValue:              "value",
+			ExpectedSize: len("name&END\nvalueEND"),
+		},
+		{
+			String:           "name&END\nvalue\n",
+			ExpectedName:     "name",
+			ExpectedValue:              "value\n",
+			ExpectedSize: len("name&END\nvalue\n"),
+		},
+		{
+			String:           "name&END\nvalue\nEND",
+			ExpectedName:     "name",
+			ExpectedValue:              "value\n",
+			ExpectedSize: len("name&END\nvalue\nEND"),
+		},
+		{
+			String:           "name&END\nvalue\nEND\n",
+			ExpectedName:     "name",
+			ExpectedValue:              "value\n",
+			ExpectedSize: len("name&END\nvalue\nEND\n"),
+		},
+		{
+			String:           "name&END\nvalue\nEND\nwow",
+			ExpectedName:     "name",
+			ExpectedValue:              "value\n",
+			ExpectedSize: len("name&END\nvalue\nEND\n"),
+		},
+
+
+		{
+			String:           "name&END\n\rvalue",
+			ExpectedName:     "name",
+			ExpectedValue:              "value",
+			ExpectedSize: len("name&END\n\rvalue"),
+		},
+		{
+			String:           "name&END\n\rvalueEND",
+			ExpectedName:     "name",
+			ExpectedValue:              "value",
+			ExpectedSize: len("name&END\n\rvalueEND"),
+		},
+		{
+			String:           "name&END\n\rvalue\n\r",
+			ExpectedName:     "name",
+			ExpectedValue:              "value\n\r",
+			ExpectedSize: len("name&END\n\rvalue\n\r"),
+		},
+		{
+			String:           "name&END\n\rvalue\n\rEND",
+			ExpectedName:     "name",
+			ExpectedValue:              "value\n\r",
+			ExpectedSize: len("name&END\n\rvalue\n\rEND"),
+		},
+		{
+			String:           "name&END\n\rvalue\n\rEND\n\r",
+			ExpectedName:     "name",
+			ExpectedValue:              "value\n\r",
+			ExpectedSize: len("name&END\n\rvalue\n\rEND\n\r"),
+		},
+		{
+			String:           "name&END\n\rvalue\n\rEND\n\rwow",
+			ExpectedName:     "name",
+			ExpectedValue:              "value\n\r",
+			ExpectedSize: len("name&END\n\rvalue\n\rEND\n\r"),
+		},
+
+
+		{
+			String:           "name&END\rvalue",
+			ExpectedName:     "name",
+			ExpectedValue:              "value",
+			ExpectedSize: len("name&END\rvalue"),
+		},
+		{
+			String:           "name&END\rvalueEND",
+			ExpectedName:     "name",
+			ExpectedValue:              "value",
+			ExpectedSize: len("name&END\rvalueEND"),
+		},
+		{
+			String:           "name&END\rvalue\r",
+			ExpectedName:     "name",
+			ExpectedValue:              "value\r",
+			ExpectedSize: len("name&END\rvalue\r"),
+		},
+		{
+			String:           "name&END\rvalue\rEND",
+			ExpectedName:     "name",
+			ExpectedValue:              "value\r",
+			ExpectedSize: len("name&END\rvalue\rEND"),
+		},
+		{
+			String:           "name&END\rvalue\rEND\r",
+			ExpectedName:     "name",
+			ExpectedValue:              "value\r",
+			ExpectedSize: len("name&END\rvalue\rEND\r"),
+		},
+		{
+			String:           "name&END\rvalue\rEND\rwow",
+			ExpectedName:     "name",
+			ExpectedValue:              "value\r",
+			ExpectedSize: len("name&END\rvalue\rEND\r"),
+		},
+
+
+		{
+			String:           "name&END\r\nvalue",
+			ExpectedName:     "name",
+			ExpectedValue:              "value",
+			ExpectedSize: len("name&END\r\nvalue"),
+		},
+		{
+			String:           "name&END\r\nvalueEND",
+			ExpectedName:     "name",
+			ExpectedValue:              "value",
+			ExpectedSize: len("name&END\r\nvalueEND"),
+		},
+		{
+			String:           "name&END\r\nvalue\r\n",
+			ExpectedName:     "name",
+			ExpectedValue:              "value\r\n",
+			ExpectedSize: len("name&END\r\nvalue\r\n"),
+		},
+		{
+			String:           "name&END\r\nvalue\r\nEND",
+			ExpectedName:     "name",
+			ExpectedValue:              "value\r\n",
+			ExpectedSize: len("name&END\r\nvalue\r\nEND"),
+		},
+		{
+			String:           "name&END\r\nvalue\r\nEND\r\n",
+			ExpectedName:     "name",
+			ExpectedValue:              "value\r\n",
+			ExpectedSize: len("name&END\r\nvalue\r\nEND\r\n"),
+		},
+		{
+			String:           "name&END\r\nvalue\r\nEND\r\nwow",
+			ExpectedName:     "name",
+			ExpectedValue:              "value\r\n",
+			ExpectedSize: len("name&END\r\nvalue\r\nEND\r\n"),
+		},
+
+
+		{
+			String:           "name&END\u0085value",
+			ExpectedName:     "name",
+			ExpectedValue:              "value",
+			ExpectedSize: len("name&END\u0085value"),
+		},
+		{
+			String:           "name&END\u0085valueEND",
+			ExpectedName:     "name",
+			ExpectedValue:              "value",
+			ExpectedSize: len("name&END\u0085valueEND"),
+		},
+		{
+			String:           "name&END\u0085value\u0085",
+			ExpectedName:     "name",
+			ExpectedValue:              "value\u0085",
+			ExpectedSize: len("name&END\u0085value\u0085"),
+		},
+		{
+			String:           "name&END\u0085value\u0085END",
+			ExpectedName:     "name",
+			ExpectedValue:              "value\u0085",
+			ExpectedSize: len("name&END\u0085value\u0085END"),
+		},
+		{
+			String:           "name&END\u0085value\u0085END\u0085",
+			ExpectedName:     "name",
+			ExpectedValue:              "value\u0085",
+			ExpectedSize: len("name&END\u0085value\u0085END\u0085"),
+		},
+		{
+			String:           "name&END\u0085value\u0085END\u0085wow",
+			ExpectedName:     "name",
+			ExpectedValue:              "value\u0085",
+			ExpectedSize: len("name&END\u0085value\u0085END\u0085"),
+		},
+
+
+		{
+			String:           "name&END\u2028value",
+			ExpectedName:     "name",
+			ExpectedValue:              "value",
+			ExpectedSize: len("name&END\u2028value"),
+		},
+		{
+			String:           "name&END\u2028valueEND",
+			ExpectedName:     "name",
+			ExpectedValue:              "value",
+			ExpectedSize: len("name&END\u2028valueEND"),
+		},
+		{
+			String:           "name&END\u2028value\u2028",
+			ExpectedName:     "name",
+			ExpectedValue:              "value\u2028",
+			ExpectedSize: len("name&END\u2028value\u2028"),
+		},
+		{
+			String:           "name&END\u2028value\u2028END",
+			ExpectedName:     "name",
+			ExpectedValue:              "value\u2028",
+			ExpectedSize: len("name&END\u2028value\u2028END"),
+		},
+		{
+			String:           "name&END\u2028value\u2028END\u2028",
+			ExpectedName:     "name",
+			ExpectedValue:              "value\u2028",
+			ExpectedSize: len("name&END\u2028value\u2028END\u2028"),
+		},
+		{
+			String:           "name&END\u2028value\u2028END\u2028wow",
+			ExpectedName:     "name",
+			ExpectedValue:              "value\u2028",
+			ExpectedSize: len("name&END\u2028value\u2028END\u2028"),
+		},
+
+
+
 
 
 

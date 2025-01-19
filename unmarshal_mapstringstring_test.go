@@ -48,6 +48,33 @@ func TestUnmarshal_mapStringString(t *testing.T) {
 
 
 		{
+			INI: "abc &END\n123\nEND",
+			Expected: map[string]string{
+				"abc":"123\n",
+			},
+		},
+		{
+			INI: "abc &END\n123\nEND\n",
+			Expected: map[string]string{
+				"abc":"123\n",
+			},
+		},
+		{
+			INI: "abc &END\n123\nEND\n\n",
+			Expected: map[string]string{
+				"abc":"123\n",
+			},
+		},
+
+
+
+
+
+
+
+
+
+		{
 			INI: `
 a   = 1
 ab  = 12

@@ -40,7 +40,9 @@ func ParseBytes(bytes []byte) (name string, size int, err error) {
 			}
 
 			switch r {
-			case '\t', ' ', ':', '=':
+			case '\t', ' ':
+				break nameLoop
+			case '&', ':', '=':
 				break nameLoop
 			case lf.Rune, cr.Rune, nel.Rune, ls.Rune:
 				break nameLoop

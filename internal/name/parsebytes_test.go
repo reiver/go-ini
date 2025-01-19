@@ -44,6 +44,11 @@ func TestParse(t *testing.T) {
 			ExpectedSize: 4,
 		},
 		{
+			String:       "name :value",
+			ExpectedName: "name",
+			ExpectedSize: 4,
+		},
+		{
 			String:       "name : value",
 			ExpectedName: "name",
 			ExpectedSize: 4,
@@ -54,7 +59,35 @@ func TestParse(t *testing.T) {
 			ExpectedSize: 4,
 		},
 		{
+			String:       "name= value",
+			ExpectedName: "name",
+			ExpectedSize: 4,
+		},
+		{
+			String:       "name= value",
+			ExpectedName: "name",
+			ExpectedSize: 4,
+		},
+		{
 			String:       "name = value",
+			ExpectedName: "name",
+			ExpectedSize: 4,
+		},
+
+
+
+		{
+			String:       "name&END",
+			ExpectedName: "name",
+			ExpectedSize: 4,
+		},
+		{
+			String:       "name &END",
+			ExpectedName: "name",
+			ExpectedSize: 4,
+		},
+		{
+			String:       "name  &END",
 			ExpectedName: "name",
 			ExpectedSize: 4,
 		},

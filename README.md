@@ -93,6 +93,27 @@ count: ۵
 color: red
 ```
 
+## Multi-Line Values
+
+There are 2 ways to create multi-line string values
+
+```ini
+name = line 1\
+line 2\
+line 3
+```
+
+And:
+
+```ini
+name &END
+line 1
+line 2
+line 3
+END
+
+(`END` could be replaced with whatever you want the string-termination token to be.)
+
 ## Import
 
 To import package **ini** use `import` code like the following:
