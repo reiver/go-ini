@@ -39,7 +39,97 @@ func TestUnmarshal_mapStringString(t *testing.T) {
 
 
 		{
+			INI: "abc=123",
+			Expected: map[string]string{
+				"abc":"123",
+			},
+		},
+		{
+			INI: "abc =123",
+			Expected: map[string]string{
+				"abc":"123",
+			},
+		},
+		{
+			INI: "abc= 123",
+			Expected: map[string]string{
+				"abc":"123",
+			},
+		},
+		{
 			INI: "abc = 123",
+			Expected: map[string]string{
+				"abc":"123",
+			},
+		},
+		{
+			INI: "abc  \t  \t\t =\t\t\t \t    \t 123",
+			Expected: map[string]string{
+				"abc":"123",
+			},
+		},
+
+
+
+		{
+			INI: "abc:123",
+			Expected: map[string]string{
+				"abc":"123",
+			},
+		},
+		{
+			INI: "abc :123",
+			Expected: map[string]string{
+				"abc":"123",
+			},
+		},
+		{
+			INI: "abc: 123",
+			Expected: map[string]string{
+				"abc":"123",
+			},
+		},
+		{
+			INI: "abc : 123",
+			Expected: map[string]string{
+				"abc":"123",
+			},
+		},
+		{
+			INI: "abc  \t  \t\t :\t\t\t \t    \t 123",
+			Expected: map[string]string{
+				"abc":"123",
+			},
+		},
+
+
+
+		{
+			INI: "abc 123",
+			Expected: map[string]string{
+				"abc":"123",
+			},
+		},
+		{
+			INI: "abc\t123",
+			Expected: map[string]string{
+				"abc":"123",
+			},
+		},
+		{
+			INI: "abc \t123",
+			Expected: map[string]string{
+				"abc":"123",
+			},
+		},
+		{
+			INI: "abc\t 123",
+			Expected: map[string]string{
+				"abc":"123",
+			},
+		},
+		{
+			INI: "abc  \t  \t\t \t\t\t \t    \t 123",
 			Expected: map[string]string{
 				"abc":"123",
 			},
