@@ -1,11 +1,11 @@
 package ininamevalue
 
 import (
-	gobytes "bytes"
 	"unicode/utf8"
 
 	"github.com/reiver/go-opt"
 
+	"github.com/reiver/go-ini/internal/ampersandvalue"
 	"github.com/reiver/go-ini/internal/eol"
 	"github.com/reiver/go-ini/internal/name"
 	"github.com/reiver/go-ini/internal/spacing"
@@ -116,28 +116,19 @@ func ParseBytes(bytes []byte) (name string, value string, size int, err error) {
 
 	if opt.Something('&') == delimiter {
 
-		var endOfString string = value
-		value = ""
+		{
+			var endOfMultiLineString string = value
+			value = ""
 
-		var buffer [256]byte
-		var end []byte = buffer[0:0]
-		end = append(end, endOfString...)
+			var valueSize int
 
-		var index int = gobytes.Index(p, end)
+			value, valueSize, err = iniampersandvalue.ParseBytes(endOfMultiLineString, p)
+			if nil != err {
+				return nada, nada, 0, err
+			}
 
-		switch {
-		case index < 0:
-			value = string(p)
-			valueSize := len(value)
 			size += valueSize
 			p = p[valueSize:]
-		default:
-			value = string(p[:index])
-			valueSize := len(value)
-			size += valueSize
-			endSize := len(end)
-			size += endSize
-			p = p[valueSize+endSize:]
 		}
 
 		{
